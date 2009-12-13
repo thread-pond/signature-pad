@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title>Regenerate a Signature &middot; Signature Pad</title>
+	<style type="text/css">
+		body { font: normal 100.01%/137.5% "Helvetica Neue",Helvetica,Arial,sans-serif; }
+		p { margin: 0.515em 0 0; padding: 0 6px; }
+	</style>
+	<link rel="stylesheet" type="text/css" href="../assets/jquery.signaturepad.css">
+	<!--[if IE]><script type="text/javascript" src="../assets/excanvas.min.js"></script><![endif]-->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+</head>
+<body>
+	<div class="sigPad signed">
+		<div class="sigWrapper">
+			<div class="typed">Sir John A. Macdonald</div>
+			<canvas class="pad" width="198" height="55"></canvas>
+		</div>
+		<p>Sir John A. Macdonald<br>July 1, 1867</p>
+	</div>
+	
+	<script type="text/javascript" src="../assets/jquery.signaturepad.min.js"></script>
+	<script type="text/javascript" src="sample-signature-output.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.sigPad').signaturePad({displayOnly:true}).regenerate(sig);
+		});
+	</script>
+	<script type="text/javascript" src="../assets/json2.min.js"></script>
+</body>

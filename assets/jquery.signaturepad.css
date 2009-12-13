@@ -1,0 +1,206 @@
+/**
+ *	SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas
+ *	based signature pad. Records the drawn signature in JSON for later regeneration.
+ *
+ *	Primary Screen Styles
+ *	@media		screen
+ *	
+ *	@project	ca.thomasjbradley.applications.signaturepad
+ *	@author		Thomas J Bradley <hey@thomasjbradley.ca>
+ *	@link		http://thomasjbradley.ca/labs/signature-pad
+ *	@copyright	Copyright MMIX–, Thomas J Bradley
+ *	@license	New BSD License
+ *	@version	1.0.1
+ */
+
+@font-face {
+	font-family: 'Journal';
+	src: url('journal.eot');
+	src: local('Journal Regular'), local('Journal'), url('journal.woff') format('woff'), url('journal.ttf') format('truetype'), url('journal.svg#Journal') format('svg');
+	}
+	
+@media screen {
+
+.sigPad {
+	margin: 0;
+	padding: 0;
+	width: 200px;
+	}
+	
+.sigPad label {
+	display: block;
+	margin: 0 0 0.515em;
+	padding: 0;
+	
+	color: #000;
+	font: italic normal 1em/1.375 Georgia,Times,sans-serif;
+	}
+	
+.sigPad label.error {
+	color: #f33;
+	}
+	
+.sigPad input {
+	margin: 0;
+	padding: 0.2em 0;
+	width: 198px;
+	
+	border: 1px solid #b0879f;
+	
+	font-size: 1em;
+	}
+	
+.sigPad input.error {
+	border-color: #f33;
+	}
+	
+.sigPad button {
+	margin: 1em 0 0 0;
+	padding: 0.6em 0.6em 0.7em;
+	
+	background-color: #f0e2eb;
+	border: 0;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	
+	cursor: pointer;
+	
+	color: #ea088c;
+	font: bold 1em/1.375 "Helvetica Neue",Helvetica,Arial,sans-serif;
+	text-align: left;
+	}
+	
+.sigPad button:hover {
+	background-color: #ea088c;
+	
+	color: #fff;
+	}
+
+.sig {
+	display: none;
+	}
+	
+.sigNav {
+	display: none;
+	height: 2.25em;
+	margin: 0;
+	padding: 0;
+	position: relative;
+
+	list-style-type: none;
+	}
+	
+	.sigNav li {
+		display: inline;
+		float: left;
+		margin: 0;
+		padding: 0;
+		}
+		
+		.sigNav a,
+		.sigNav a:link,
+		.sigNav a:visited {
+			display: block;
+			margin: 0;
+			padding: 0 0.6em;
+			
+			background-color: #fff;
+			
+			color: #ea088c;
+			font-weight: bold;
+			line-height: 2.25em;
+			text-decoration: underline;
+			}
+			
+		.sigNav a.current,
+		.sigNav a.current:link,
+		.sigNav a.current:visited {
+			background-color: #b0879f;
+			border-top-left-radius: 8px;
+			border-top-right-radius: 8px;
+			-moz-border-radius-topleft: 8px;
+			-moz-border-radius-topright: 8px;
+			-webkit-border-top-left-radius: 8px;
+			-webkit-border-top-right-radius: 8px;
+			
+			color: #fff;
+			text-decoration: none;
+			}
+			
+		.sigNav .typeIt a.current,
+		.sigNav .typeIt a.current:link,
+		.sigNav .typeIt a.current:visited {
+			background-color: #eee;
+			
+			color: #555;
+			}
+			
+		.sigNav .clearButton {
+			bottom: 0.2em;
+			display: none;
+			position: absolute;
+			right: 0;
+			
+			font-size: 0.75em;
+			line-height: 1.375;
+			}
+	
+.sigWrapper {
+	min-height: 55px;
+	border: 1px solid #eee;
+	}
+	
+.sigWrapper.current {
+	border-color: #b0879f;
+	}
+
+.signed .sigWrapper {
+	border: 0;
+	}
+
+.pad {
+	position: relative;
+	}
+	
+	.current .pad {
+		cursor: url("pen.png") 8 8, crosshair;
+		}
+	
+.typed {
+	height: 55px;
+	margin: 0;
+	padding: 0 5px;
+	position: absolute;
+	z-index: 90;
+	
+	cursor: default;
+
+	color: #145394;
+	font: normal 1.875em/50px "Journal",Georgia,Times,serif;
+	}
+	
+.typeItDesc,
+.drawItDesc {
+	display: none;
+	margin: 0.75em 0 0.515em;
+	padding: 0.515em 0 0;
+	
+	border-top: 3px solid #f0e2eb;
+	
+	color: #000;
+	font: italic normal 1em/1.375 Georgia,Times,sans-serif;
+	}
+	
+p.error {
+	display: block;
+	margin: 0.5em 0;
+	padding: 0.4em;
+	
+	background-color: #f33;
+	
+	color: #fff;
+	font-weight: bold;
+	}
+	
+}
