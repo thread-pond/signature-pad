@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title>Require a Drawn Signature &middot; Signature Pad</title>
+	<style type="text/css">
+		body { font: normal 100.01%/137.5% "Helvetica Neue",Helvetica,Arial,sans-serif; }
+	</style>
+	<link rel="stylesheet" type="text/css" href="../assets/jquery.signaturepad.css">
+	<!--[if IE]><script type="text/javascript" src="../assets/excanvas.min.js"></script><![endif]-->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+</head>
+<body>
+	<form method="post" action="" class="sigPad">
+		<label for="name">Print your name</label>
+		<input type="text" name="name" id="name" class="name">
+		<p class="drawItDesc">Draw your signature</p>
+		<ul class="sigNav">
+			<li class="drawIt"><a href="#draw-it" >Draw It</a></li>
+			<li class="clearButton"><a href="#clear">Clear</a></li>
+		</ul>
+		<div class="sig sigWrapper">
+			<div class="typed"></div>
+			<canvas class="pad" width="198" height="55"></canvas>
+			<input type="hidden" name="output" class="output">
+		</div>
+		<button type="submit">I accept the terms of this agreement.</button>
+	</form>
+	
+	<script type="text/javascript" src="../assets/jquery.signaturepad.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.sigPad').signaturePad({drawOnly:true});
+		});
+	</script>
+	<script type="text/javascript" src="../assets/json2.min.js"></script>
+</body>

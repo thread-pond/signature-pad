@@ -8,7 +8,9 @@ Dependencies: excanvas, json2
 @link       http://thomasjbradley.ca/labs/signature-pad
 @copyright  Copyright MMIX–, Thomas J Bradley
 @license    New BSD License
-@version    1.0.1
+@version    1.1.0
+
+Versioned using Semantic Versioning <http://semver.org/>
 
 
 COMPLETE DOCUMENTATION:
@@ -17,8 +19,14 @@ http://thomasjbradley.ca/lab/signature-pad
 
 VERSION HISTORY:
 
-1.0.1
-- Added WOFF, SVG fonts and @font-face support for Google Chrome
+1.1.0 (Jan. 4, 2010)
+- Added option to require and validate a drawn signature
+- Added option to default to drawIt mode
+- Fixed a bug where pressing validate multiple times would remove name input
 
-1.0.0
+1.0.1 (Dec. 3, 2009)
+- Fixed @font-face support for Google Chrome by adding SVG fonts
+- Fixed future @font-face support by adding WOFF font
+
+1.0.0 (Nov. 30, 2009)
 - Initial Release
