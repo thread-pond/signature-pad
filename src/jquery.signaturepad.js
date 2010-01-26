@@ -7,9 +7,9 @@
  *	@project	ca.thomasjbradley.applications.signaturepad
  *	@author		Thomas J Bradley <hey@thomasjbradley.ca>
  *	@link		http://thomasjbradley.ca/labs/signature-pad
- *	@copyright	Copyright MMIX–, Thomas J Bradley
+ *	@copyright	Copyright MMX–, Thomas J Bradley
  *	@license	New BSD License
- *	@version	1.1.0
+ *	@version	1.1.1
  */
 
 /**
