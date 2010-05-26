@@ -9,7 +9,7 @@
  *	@link		http://thomasjbradley.ca/labs/signature-pad
  *	@copyright	Copyright MMX–, Thomas J Bradley
  *	@license	New BSD License
- *	@version	1.1.1
+ *	@version	1.1.2
  */
 
 /**
@@ -315,7 +315,7 @@ function SignaturePad(selector, options)
 	 */
 	function type(val)
 	{
-		$(settings.typed, context).html(val);
+		$(settings.typed, context).html(val.replace(/>/g, '&gt;').replace(/</g, '&lt;'));
 
 		while($(settings.typed, context).width() > element.width)
 		{
