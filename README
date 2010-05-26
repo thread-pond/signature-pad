@@ -19,7 +19,7 @@ http://thomasjbradley.ca/lab/signature-pad
 
 VERSION HISTORY:
 
-1.1.2 (May. 26, 2010)
+1.1.2 (May 26, 2010)
 - Fixed an XSS-like bug, where entering a <script> or an <iframe> element into
   the name field would cause the code to be executed
   < and > are now converted to entities
