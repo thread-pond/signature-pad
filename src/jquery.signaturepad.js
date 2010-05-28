@@ -2,14 +2,15 @@
  *	SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas
  *	based signature pad. Records the drawn signature in JSON for later regeneration.
  *
- *	Dependencies: excanvas, json2
+ *	Dependencies: excanvas, json2, jquery-1.3.2+
  *	
  *	@project	ca.thomasjbradley.applications.signaturepad
  *	@author		Thomas J Bradley <hey@thomasjbradley.ca>
  *	@link		http://thomasjbradley.ca/labs/signature-pad
+ *	@link		http://github.com/thomasjbradley/signature-pad
  *	@copyright	Copyright MMX–, Thomas J Bradley
  *	@license	New BSD License
- *	@version	1.1.2
+ *	@version	1.1.3
  */
 
 /**
@@ -140,7 +141,14 @@ function SignaturePad(selector, options)
 				typeIt();
 			}
 
-			$(selector).submit(function(){ return validateForm(); });
+			if($(selector).is('form'))
+			{
+				$(selector).submit(function(){ return validateForm(); });
+			}
+			else
+			{
+				$(selector).parents('form').submit(function(){ return validateForm(); });
+			}
 
 			$(settings.typeItDesc, context).show();
 			$(settings.sigNav, context).show();
@@ -458,6 +466,7 @@ function SignaturePad(selector, options)
 
 		$('p.'+settings.errorClass, context).remove();
 		context.removeClass(settings.errorClass);
+		$('input, label', context).removeClass(settings.errorClass);
 
 		if(settings.drawOnly && output.length < 1)
 		{
@@ -465,7 +474,7 @@ function SignaturePad(selector, options)
 			valid = false;
 		}
 
-		if( $(settings.name, context).val() == '' )
+		if($(settings.name, context).val() == '')
 		{
 			$(selector).prepend('<p class="'+settings.errorClass+'">'+settings.errorMessage+'</p>');
 			$(settings.name, context).focus();
