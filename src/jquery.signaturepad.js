@@ -10,7 +10,7 @@
  *	@link		http://github.com/thomasjbradley/signature-pad
  *	@copyright	Copyright MMX–, Thomas J Bradley
  *	@license	New BSD License
- *	@version	1.1.3
+ *	@version	1.2.0
  */
 
 /**
@@ -235,12 +235,11 @@ function SignaturePad(selector, options)
 		{
 			return JSON.stringify(output);
 		}
-
 	});
 	
 	/**
 	 *	Triggers the abilities to draw on the canvas
-	 *	Sets up mouse events, hides and shows descriptions and sets current classes
+	 *	Sets up mouse/touch events, hides and shows descriptions and sets current classes
 	 *
 	 *	@access	private
 	 *
@@ -253,6 +252,29 @@ function SignaturePad(selector, options)
 
 		canvas.mousedown(function(e){ startDrawing(e, this); });
 		canvas.mouseup(function(e){ stopDrawing(); });
+
+		if(typeof this.ontouchstart != 'undefined')
+		{
+			canvas.each(function()
+			{
+				this.ontouchstart = function(e)
+				{
+					e.preventDefault();
+					startDrawing(e, this);
+				};
+
+				this.ontouchend = function(e)
+				{
+					stopDrawing();
+				};
+
+				this.ontouchcancel = function(e)
+				{
+					stopDrawing();
+				};
+			});
+		}
+
 		$(settings.clear, context).click(function(e){ clearCanvas(); return false; });
 
 		$(settings.typeIt, context).click(function(e){ typeIt(); return false; });
@@ -330,11 +352,10 @@ function SignaturePad(selector, options)
 			var oldSize = $(settings.typed, context).css('font-size').replace(/px/, '');
 			$(settings.typed, context).css('font-size', oldSize-1+'px');
 		}
-
 	}
 
 	/**
-	 *	Callback registered to mousedown of canvas
+	 *	Callback registered to mouse/touch events of canvas
 	 *	Triggers the drawLine function
 	 *
 	 *	@access	private
@@ -345,11 +366,22 @@ function SignaturePad(selector, options)
 	 */
 	function startDrawing(e, o)
 	{
-		canvas.mousemove(function(e){ drawLine(e, this); });
+		canvas.mousemove(function(ev){ drawLine(ev, this); });
+		
+		if(typeof this.ontouchstart != 'undefined')
+		{
+			canvas.each(function()
+			{
+				this.ontouchmove = function(ev)
+				{
+					drawLine(ev, this);
+				}
+			});
+		}
 	}
 	
 	/**
-	 *	Callback registered to mouseup of the canvas
+	 *	Callback registered to mouse/touch events of the canvas
 	 *	Stops the drawing abilities
 	 *
 	 *	@access	private
@@ -360,6 +392,14 @@ function SignaturePad(selector, options)
 	function stopDrawing()
 	{
 		canvas.unbind('mousemove');
+
+		if(typeof this.ontouchstart != 'undefined')
+		{
+			canvas.each(function()
+			{
+				this.ontouchmove = null;
+			});
+		}
 
 		previous.x = null;
 		previous.y = null;
@@ -380,14 +420,22 @@ function SignaturePad(selector, options)
 	 */
 	function drawLine(e, o)
 	{
-		var newX = Math.floor(e.pageX - o.offsetLeft);
-		var newY = Math.floor(e.pageY - o.offsetTop);
+		if(typeof e.changedTouches != 'undefined')
+		{
+			var newX = Math.floor(e.changedTouches[0].pageX - o.offsetLeft);
+			var newY = Math.floor(e.changedTouches[0].pageY - o.offsetTop);
+		}
+		else
+		{
+			var newX = Math.floor(e.pageX - o.offsetLeft);
+			var newY = Math.floor(e.pageY - o.offsetTop);
+		}
 
 		if(previous.x === null)
 		{
 			previous.x = newX;
 		}
-		
+
 		if(previous.y === null)
 		{
 			previous.y = newY;
