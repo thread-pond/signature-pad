@@ -10,7 +10,7 @@
  *	@link		http://github.com/thomasjbradley/signature-pad
  *	@copyright	Copyright MMX–, Thomas J Bradley
  *	@license	New BSD License
- *	@version	1.2.0
+ *	@version	1.2.1
  */
 
 /**
@@ -102,8 +102,8 @@ function SignaturePad(selector, options)
 	var output = [];
 
 	// Disable selection on the typed div and canvas
-	$(settings.typed, context).bind('selectstart', function(e){ return $(e.target).is(':input'); });
-	canvas.bind('selectstart', function(e){ return $(e.target).is(':input'); });
+	$(settings.typed, context).bind('selectstart.signaturepad', function(e){ return $(e.target).is(':input'); });
+	canvas.bind('selectstart.signaturepad', function(e){ return $(e.target).is(':input'); });
 
 	if(!element.getContext)
 	{
@@ -120,13 +120,18 @@ function SignaturePad(selector, options)
 		{
 			if(!settings.drawOnly)
 			{
-				$(settings.name, context).keyup(function(){
+				$(settings.name, context).bind('keyup.signaturepad', function()
+				{
 					type($(this).val());
 				});
-				$(settings.name, context).blur(function(){
+				
+				$(settings.name, context).bind('blur.signaturepad', function()
+				{
 					type($(this).val());
 				});
-				$(settings.drawIt, context).click(function(e){
+				
+				$(settings.drawIt, context).bind('click.signaturepad', function(e)
+				{
 					drawIt();
 					return false;
 				});
@@ -143,11 +148,11 @@ function SignaturePad(selector, options)
 
 			if($(selector).is('form'))
 			{
-				$(selector).submit(function(){ return validateForm(); });
+				$(selector).bind('submit.signaturepad', function(){ return validateForm(); });
 			}
 			else
 			{
-				$(selector).parents('form').submit(function(){ return validateForm(); });
+				$(selector).parents('form').bind('submit.signaturepad', function(){ return validateForm(); });
 			}
 
 			$(settings.typeItDesc, context).show();
@@ -165,8 +170,8 @@ function SignaturePad(selector, options)
 		}
 	}
 	
-	$.extend(self, {
-
+	$.extend(self,
+	{
 		/**
 		 *	Regenerates a signature on the canvas using an array of objects
 		 *	Follows same format as object property
@@ -250,8 +255,8 @@ function SignaturePad(selector, options)
 		$(settings.typed, context).hide();
 		clearCanvas();
 
-		canvas.mousedown(function(e){ startDrawing(e, this); });
-		canvas.mouseup(function(e){ stopDrawing(); });
+		canvas.bind('mousedown.signaturepad', function(e){ startDrawing(e, this); });
+		canvas.bind('mouseup.signaturepad', function(e){ stopDrawing(); });
 
 		if(typeof this.ontouchstart != 'undefined')
 		{
@@ -275,11 +280,11 @@ function SignaturePad(selector, options)
 			});
 		}
 
-		$(settings.clear, context).click(function(e){ clearCanvas(); return false; });
+		$(settings.clear, context).bind('click.signaturepad', function(e){ clearCanvas(); return false; });
 
-		$(settings.typeIt, context).click(function(e){ typeIt(); return false; });
-		$(settings.drawIt, context).unbind('click');
-		$(settings.drawIt, context).click(function(e){ return false; });
+		$(settings.typeIt, context).bind('click.signaturepad', function(e){ typeIt(); return false; });
+		$(settings.drawIt, context).unbind('click.signaturepad');
+		$(settings.drawIt, context).bind('click.signaturepad', function(e){ return false; });
 
 		$(settings.typeIt, context).removeClass(settings.currentClass);
 		$(settings.drawIt, context).addClass(settings.currentClass);
@@ -299,10 +304,10 @@ function SignaturePad(selector, options)
 	 */
 	function disableCanvas()
 	{
-		canvas.unbind('mousedown');	
-		canvas.unbind('mouseup');
-		canvas.unbind('mousemove');
-		$(settings.clear, context).unbind('click');
+		canvas.unbind('mousedown.signaturepad');	
+		canvas.unbind('mouseup.signaturepad');
+		canvas.unbind('mousemove.signaturepad');
+		$(settings.clear, context).unbind('click.signaturepad');
 	}
 
 	/**
@@ -319,9 +324,9 @@ function SignaturePad(selector, options)
 		disableCanvas();
 		$(settings.typed, context).show();
 
-		$(settings.drawIt, context).click(function(e){ drawIt(); return false; });
-		$(settings.typeIt, context).unbind('click');
-		$(settings.typeIt, context).click(function(e){ return false; });
+		$(settings.drawIt, context).bind('click.signaturepad', function(e){ drawIt(); return false; });
+		$(settings.typeIt, context).unbind('click.signaturepad');
+		$(settings.typeIt, context).bind('click.signaturepad', function(e){ return false; });
 
 		$(settings.output, context).val('');
 
@@ -366,7 +371,7 @@ function SignaturePad(selector, options)
 	 */
 	function startDrawing(e, o)
 	{
-		canvas.mousemove(function(ev){ drawLine(ev, this); });
+		canvas.bind('mousemove.signaturepad', function(ev){ drawLine(ev, this); });
 		
 		if(typeof this.ontouchstart != 'undefined')
 		{
@@ -391,7 +396,7 @@ function SignaturePad(selector, options)
 	 */
 	function stopDrawing()
 	{
-		canvas.unbind('mousemove');
+		canvas.unbind('mousemove.signaturepad');
 
 		if(typeof this.ontouchstart != 'undefined')
 		{
@@ -549,7 +554,7 @@ $.fn.signaturePad = function(options)
 	var api = null;
 
 	this.each(function(){
-		api = new SignaturePad($(this), options);
+		api = new SignaturePad(this, options);
 	});
 
 	return api;
