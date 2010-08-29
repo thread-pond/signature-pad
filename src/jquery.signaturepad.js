@@ -10,7 +10,7 @@
  *	@link		http://github.com/thomasjbradley/signature-pad
  *	@copyright	Copyright MMX–, Thomas J Bradley
  *	@license	New BSD License
- *	@version	1.2.1
+ *	@version	1.2.2
  */
 
 /**
@@ -425,15 +425,17 @@ function SignaturePad(selector, options)
 	 */
 	function drawLine(e, o)
 	{
+		var offset = $(o).offset();
+		
 		if(typeof e.changedTouches != 'undefined')
 		{
-			var newX = Math.floor(e.changedTouches[0].pageX - o.offsetLeft);
-			var newY = Math.floor(e.changedTouches[0].pageY - o.offsetTop);
+			var newX = Math.floor(e.changedTouches[0].pageX - offset.left);
+			var newY = Math.floor(e.changedTouches[0].pageY - offset.top);
 		}
 		else
 		{
-			var newX = Math.floor(e.pageX - o.offsetLeft);
-			var newY = Math.floor(e.pageY - o.offsetTop);
+			var newX = Math.floor(e.pageX - offset.left);
+			var newY = Math.floor(e.pageY - offset.top);
 		}
 
 		if(previous.x === null)
