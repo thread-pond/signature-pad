@@ -9,7 +9,7 @@ Dependencies: excanvas, json2, jquery-1.3.2+
 @link       http://github.com/thomasjbradley/signature-pad
 @copyright  Copyright MMX–, Thomas J Bradley
 @license    New BSD License
-@version    1.2.2
+@version    1.3.0
 
 Versioned using Semantic Versioning <http://semver.org/>
 
@@ -23,6 +23,9 @@ http://github.com/thomasjbradley/signature-pad
 
 VERSION HISTORY:
 
+1.3.0 (Aug. 29, 2010)
+- Added getSignatureImage() method that calls toDataURL() on the canvas
+
 1.2.2 (Aug. 29, 2010)
 - Fixed an offset bug; contributed by Farit Nabiullin
 
@@ -33,7 +36,7 @@ VERSION HISTORY:
 - Added touch device support
 
 1.1.3 (May 28, 2010)
-- Fixed bug in validation if multiple signature pads were used in jquery 1.4.2
+- Fixed bug in validation if multiple signature pads were used in jQuery 1.4.2
 
 1.1.2 (May 26, 2010)
 - Fixed an XSS-like bug, where entering a <script> or an <iframe> element into

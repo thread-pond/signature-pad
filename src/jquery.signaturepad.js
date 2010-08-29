@@ -10,7 +10,7 @@
  *	@link		http://github.com/thomasjbradley/signature-pad
  *	@copyright	Copyright MMX–, Thomas J Bradley
  *	@license	New BSD License
- *	@version	1.2.2
+ *	@version	1.3.0
  */
 
 /**
@@ -113,9 +113,9 @@ function SignaturePad(selector, options)
 	if(element.getContext)
 	{
 		canvasContext = element.getContext('2d');
-
+		
 		$(settings.sig, context).show();
-
+		
 		if(!settings.displayOnly)
 		{
 			if(!settings.drawOnly)
@@ -136,7 +136,7 @@ function SignaturePad(selector, options)
 					return false;
 				});
 			}
-
+			
 			if(settings.drawOnly || settings.defaultAction == 'drawIt')
 			{
 				drawIt();
@@ -145,7 +145,7 @@ function SignaturePad(selector, options)
 			{
 				typeIt();
 			}
-
+			
 			if($(selector).is('form'))
 			{
 				$(selector).bind('submit.signaturepad', function(){ return validateForm(); });
@@ -154,14 +154,14 @@ function SignaturePad(selector, options)
 			{
 				$(selector).parents('form').bind('submit.signaturepad', function(){ return validateForm(); });
 			}
-
+			
 			$(settings.typeItDesc, context).show();
 			$(settings.sigNav, context).show();
-
+			
 			// Hack for IE7 and IE8, if clearCanvas() is called instantly it doesn't draw the sig line
 			setTimeout(clearCanvas, 50);
 		}
-
+		
 		// Hack for IE8 standards mode
 		// excanvas sets overflow:hidden on its internal Vml div; overflow:visible works in all modes
 		if(canvas.children('div').length > 0)
@@ -186,12 +186,12 @@ function SignaturePad(selector, options)
 		{
 			self.clearCanvas();
 			$(settings.typed, context).hide();
-
+			
 			if(typeof paths === 'string')
 			{
 				paths = JSON.parse(paths);
 			}
-
+			
 			for(var i in paths)
 			{
 				if(typeof paths[i] === 'object')
@@ -202,7 +202,7 @@ function SignaturePad(selector, options)
 					canvasContext.stroke();
 				}
 			}
-		},
+		}
 
 		/**
 		 *	Clears the canvas
@@ -212,10 +212,10 @@ function SignaturePad(selector, options)
 		 *
 		 *	@return void
 		 */
-		clearCanvas: function()
+		,clearCanvas: function()
 		{
 			clearCanvas();
-		},
+		}
 
 		/**
 		 *	Returns the signature as a Js array
@@ -224,10 +224,10 @@ function SignaturePad(selector, options)
 		 *
 		 *	@return	array
 		 */
-		getSignature: function()
+		,getSignature: function()
 		{
 			return output;
-		},
+		}
 
 		/**
 		 *	Returns the signature as a Json string
@@ -236,12 +236,25 @@ function SignaturePad(selector, options)
 		 *
 		 *	@return	string
 		 */
-		getSignatureString: function()
+		,getSignatureString: function()
 		{
 			return JSON.stringify(output);
 		}
+
+		/**
+		 *	Returns the signature as an image
+		 *	Doesn't work in IE; relies on canvas.toDataURL();
+		 *
+		 *	@access	public
+		 *
+		 *	@return	string
+		 */
+		,getSignatureImage: function()
+		{
+			return element.toDataURL();
+		}
 	});
-	
+
 	/**
 	 *	Triggers the abilities to draw on the canvas
 	 *	Sets up mouse/touch events, hides and shows descriptions and sets current classes
@@ -254,10 +267,10 @@ function SignaturePad(selector, options)
 	{
 		$(settings.typed, context).hide();
 		clearCanvas();
-
+		
 		canvas.bind('mousedown.signaturepad', function(e){ startDrawing(e, this); });
 		canvas.bind('mouseup.signaturepad', function(e){ stopDrawing(); });
-
+		
 		if(typeof this.ontouchstart != 'undefined')
 		{
 			canvas.each(function()
@@ -267,29 +280,29 @@ function SignaturePad(selector, options)
 					e.preventDefault();
 					startDrawing(e, this);
 				};
-
+				
 				this.ontouchend = function(e)
 				{
 					stopDrawing();
 				};
-
+				
 				this.ontouchcancel = function(e)
 				{
 					stopDrawing();
 				};
 			});
 		}
-
+		
 		$(settings.clear, context).bind('click.signaturepad', function(e){ clearCanvas(); return false; });
-
+		
 		$(settings.typeIt, context).bind('click.signaturepad', function(e){ typeIt(); return false; });
 		$(settings.drawIt, context).unbind('click.signaturepad');
 		$(settings.drawIt, context).bind('click.signaturepad', function(e){ return false; });
-
+		
 		$(settings.typeIt, context).removeClass(settings.currentClass);
 		$(settings.drawIt, context).addClass(settings.currentClass);
 		$(settings.sig, context).addClass(settings.currentClass);
-
+		
 		$(settings.typeItDesc, context).hide();
 		$(settings.drawItDesc, context).show();
 		$(settings.clear, context).show();
@@ -323,17 +336,17 @@ function SignaturePad(selector, options)
 		clearCanvas();
 		disableCanvas();
 		$(settings.typed, context).show();
-
+		
 		$(settings.drawIt, context).bind('click.signaturepad', function(e){ drawIt(); return false; });
 		$(settings.typeIt, context).unbind('click.signaturepad');
 		$(settings.typeIt, context).bind('click.signaturepad', function(e){ return false; });
-
+		
 		$(settings.output, context).val('');
-
+		
 		$(settings.drawIt, context).removeClass(settings.currentClass);
 		$(settings.typeIt, context).addClass(settings.currentClass);
 		$(settings.sig, context).removeClass(settings.currentClass);
-
+		
 		$(settings.drawItDesc, context).hide();
 		$(settings.clear, context).hide();
 		$(settings.typeItDesc, context).show();
@@ -351,7 +364,7 @@ function SignaturePad(selector, options)
 	function type(val)
 	{
 		$(settings.typed, context).html(val.replace(/>/g, '&gt;').replace(/</g, '&lt;'));
-
+		
 		while($(settings.typed, context).width() > element.width)
 		{
 			var oldSize = $(settings.typed, context).css('font-size').replace(/px/, '');
@@ -380,7 +393,7 @@ function SignaturePad(selector, options)
 				this.ontouchmove = function(ev)
 				{
 					drawLine(ev, this);
-				}
+				};
 			});
 		}
 	}
@@ -397,7 +410,7 @@ function SignaturePad(selector, options)
 	function stopDrawing()
 	{
 		canvas.unbind('mousemove.signaturepad');
-
+		
 		if(typeof this.ontouchstart != 'undefined')
 		{
 			canvas.each(function()
@@ -405,13 +418,13 @@ function SignaturePad(selector, options)
 				this.ontouchmove = null;
 			});
 		}
-
+		
 		previous.x = null;
 		previous.y = null;
-
+		
 		$(settings.output, context).val(JSON.stringify(output));
 	}
-	
+
 	/**
 	 *	Draws a line on canvas using the mouse position
 	 *	Checks previous position to not draw over top of pervious drawing
@@ -425,19 +438,19 @@ function SignaturePad(selector, options)
 	 */
 	function drawLine(e, o)
 	{
-		var offset = $(o).offset();
+		var offset = $(o).offset(), newX, newY;
 		
 		if(typeof e.changedTouches != 'undefined')
 		{
-			var newX = Math.floor(e.changedTouches[0].pageX - offset.left);
-			var newY = Math.floor(e.changedTouches[0].pageY - offset.top);
+			newX = Math.floor(e.changedTouches[0].pageX - offset.left);
+			newY = Math.floor(e.changedTouches[0].pageY - offset.top);
 		}
 		else
 		{
-			var newX = Math.floor(e.pageX - offset.left);
-			var newY = Math.floor(e.pageY - offset.top);
+			newX = Math.floor(e.pageX - offset.left);
+			newY = Math.floor(e.pageY - offset.top);
 		}
-
+		
 		if(previous.x === null)
 		{
 			previous.x = newX;
@@ -447,19 +460,19 @@ function SignaturePad(selector, options)
 		{
 			previous.y = newY;
 		}
-
+		
 		canvasContext.beginPath();
 		canvasContext.moveTo(previous.x, previous.y);
 		canvasContext.lineTo(newX, newY);
 		canvasContext.stroke();
 		canvasContext.closePath();
-
+		
 		output.push({'lx': newX, 'ly': newY, 'mx': previous.x, 'my': previous.y});
-
+		
 		previous.x = newX;
 		previous.y = newY;
 	}
-	
+
 	/**
 	 *	Clears all drawings off the canvas and redraws the signature line
 	 *
@@ -470,25 +483,25 @@ function SignaturePad(selector, options)
 	function clearCanvas()
 	{
 		stopDrawing();
-
+		
 		canvasContext.clearRect(0, 0, element.width, element.height);
-
+		
 		// Hack for IE6; doesn't always perform properly with transparent background
 		canvasContext.fillStyle = settings.bgColour;
 		canvasContext.fillRect(0, 0, element.width, element.height);
-
+		
 		if(!settings.displayOnly)
 		{
 			drawSigLine();
 		}
-
+		
 		canvasContext.lineWidth = settings.penWidth;
 		canvasContext.strokeStyle = settings.penColour;
-
+		
 		$(settings.output, context).val('');
 		output = [];
 	}
-	
+
 	/**
 	 *	Draws the signature line
 	 *
@@ -506,7 +519,7 @@ function SignaturePad(selector, options)
 		canvasContext.stroke();
 		canvasContext.closePath();
 	}
-	
+
 	/**
 	 *	Validates the form to confirm a name was typed in the field
 	 *	If drawOnly also confirms that the user drew a signature
@@ -518,18 +531,18 @@ function SignaturePad(selector, options)
 	function validateForm()
 	{
 		var valid = true;
-
+		
 		$('p.'+settings.errorClass, context).remove();
 		context.removeClass(settings.errorClass);
 		$('input, label', context).removeClass(settings.errorClass);
-
+		
 		if(settings.drawOnly && output.length < 1)
 		{
 			$(selector).prepend('<p class="'+settings.errorClass+'">'+settings.errorMessageDraw+'</p>');
 			valid = false;
 		}
-
-		if($(settings.name, context).val() == '')
+		
+		if($(settings.name, context).val() === '')
 		{
 			$(selector).prepend('<p class="'+settings.errorClass+'">'+settings.errorMessage+'</p>');
 			$(settings.name, context).focus();
@@ -537,7 +550,7 @@ function SignaturePad(selector, options)
 			$('label[for='+$(settings.name).attr('id')+']', context).addClass(settings.errorClass);
 			valid = false;
 		}
-
+		
 		return valid;
 	}
 	
@@ -554,11 +567,11 @@ function SignaturePad(selector, options)
 $.fn.signaturePad = function(options)
 {
 	var api = null;
-
+	
 	this.each(function(){
 		api = new SignaturePad(this, options);
 	});
-
+	
 	return api;
 };
 
@@ -568,33 +581,31 @@ $.fn.signaturePad = function(options)
  *	@var	 object
  */
 $.fn.signaturePad.defaults = {
-	defaultAction: 'typeIt',	// What action should be highlighted first: typeIt or drawIt
-	displayOnly: false,			// Initialise canvas for signature display only; ignore buttons and inputs
-	drawOnly: false,			// Whether the to allow a typed signature or not
-	canvas: 'canvas',			// Selector for selecting the canvas element
-	sig: '.sig',				// Parts of the signature form that require Javascript (hidden by default)
-	sigNav: '.sigNav',			// The TypeIt/DrawIt navigation (hidden by default)
-	bgColour: '#fff',			// The colour fill for the background of the canvas
-	penColour: '#145394',		// Colour of the drawing ink
-	penWidth: 2,				// Thickness of the pen
-	lineColour: '#ccc',			// Colour of the signature line
-	lineWidth: 2,				// Thickness of the signature line
-	lineMargin: 5,				// Margin on right and left of signature line
-	lineTop: 35,				// Distance to draw the line from the top
-	name: '.name',				// The input field for typing a name
-	typed: '.typed',			// The Html element to accept the printed name
-	clear: '.clearButton',		// Button for clearing the canvas
-	typeIt: '.typeIt a',		// Button to trigger name typing actions (current by default)
-	drawIt: '.drawIt a',		// Button to trigger name drawing actions
-	typeItDesc: '.typeItDesc',	// The description for TypeIt actions
-	drawItDesc: '.drawItDesc',	// The description for DrawIt actions (hidden by default)
-	output: '.output',			// The hidden input field for remembering line coordinates
-	currentClass: 'current',	// The class used to mark items as being currently active
-	errorClass: 'error',		// The class applied to the new error Html element
-								// The error message displayed on invalid submission
-	errorMessage: 'Please enter your name',
-								// The error message displayed when drawOnly and no signature is drawn
-	errorMessageDraw: 'Please sign the document'
+	defaultAction: 'typeIt' // What action should be highlighted first: typeIt or drawIt
+	,displayOnly: false // Initialise canvas for signature display only; ignore buttons and inputs
+	,drawOnly: false // Whether the to allow a typed signature or not
+	,canvas: 'canvas' // Selector for selecting the canvas element
+	,sig: '.sig' // Parts of the signature form that require Javascript (hidden by default)
+	,sigNav: '.sigNav' // The TypeIt/DrawIt navigation (hidden by default)
+	,bgColour: '#fff' // The colour fill for the background of the canvas
+	,penColour: '#145394' // Colour of the drawing ink
+	,penWidth: 2 // Thickness of the pen
+	,lineColour: '#ccc' // Colour of the signature line
+	,lineWidth: 2 // Thickness of the signature line
+	,lineMargin: 5 // Margin on right and left of signature line
+	,lineTop: 35 // Distance to draw the line from the top
+	,name: '.name' // The input field for typing a name
+	,typed: '.typed' // The Html element to accept the printed name
+	,clear: '.clearButton' // Button for clearing the canvas
+	,typeIt: '.typeIt a' // Button to trigger name typing actions (current by default)
+	,drawIt: '.drawIt a' // Button to trigger name drawing actions
+	,typeItDesc: '.typeItDesc' // The description for TypeIt actions
+	,drawItDesc: '.drawItDesc' // The description for DrawIt actions (hidden by default)
+	,output: '.output' // The hidden input field for remembering line coordinates
+	,currentClass: 'current' // The class used to mark items as being currently active
+	,errorClass: 'error' // The class applied to the new error Html element
+	,errorMessage: 'Please enter your name' // The error message displayed on invalid submission
+	,errorMessageDraw: 'Please sign the document' // The error message displayed when drawOnly and no signature is drawn
 };
 
 })(jQuery);
