@@ -24,7 +24,7 @@ http://github.com/thomasjbradley/signature-pad
 VERSION HISTORY:
 
 1.2.2 (Aug. 29, 2010)
-- Fixed an offset bug; contributed by Farit Nabiullin <faritnabiullin@yahoo.com>
+- Fixed an offset bug; contributed by Farit Nabiullin
 
 1.2.1 (Jun. 7, 2010)
 - Added namespaces to all event bindings
