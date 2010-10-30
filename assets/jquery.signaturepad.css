@@ -11,7 +11,7 @@
  *	@link		http://github.com/thomasjbradley/signature-pad
  *	@copyright	Copyright MMX–, Thomas J Bradley
  *	@license	New BSD License
- *	@version	1.3.0
+ *	@version	1.3.1
  */
 
 @font-face {
@@ -148,7 +148,9 @@
 			}
 	
 .sigWrapper {
-	min-height: 55px;
+	clear: both;
+	height: 55px;
+	
 	border: 1px solid #eee;
 	}
 	

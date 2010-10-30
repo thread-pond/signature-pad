@@ -10,7 +10,7 @@
  *	@link		http://github.com/thomasjbradley/signature-pad
  *	@copyright	Copyright MMX–, Thomas J Bradley
  *	@license	New BSD License
- *	@version	1.3.0
+ *	@version	1.3.1
  */
 
 /**
@@ -392,7 +392,7 @@ function SignaturePad(selector, options)
 			{
 				this.ontouchmove = function(ev)
 				{
-					drawLine(ev, this);
+					drawLine(ev, this, calculateTouchZoomDiff(this));
 				};
 			});
 		}
@@ -426,6 +426,34 @@ function SignaturePad(selector, options)
 	}
 
 	/**
+	 *	For touch based devices calculates the offset difference to accomodate
+	 *	for zooming and scrolling
+	 *	Targets iPad specifically, which returns the incorrect .offset().top|.left
+	 *	for an object when zoomed in; appears to ignore scroll position
+	 *
+	 *	@access	private
+	 *	@param	object	o	The object context registered to the mousedown event; canvas
+	 *
+	 *	@return	object
+	 */
+	function calculateTouchZoomDiff(o)
+	{
+		var oldScrollTop = $(document).scrollTop();
+		var oldScrollLeft = $(document).scrollLeft();
+		var oldDiffTop = o.offsetTop - $(o).offset().top;
+		var oldDiffLeft = o.offsetLeft - $(o).offset().left;
+		$(document).scrollTop(0).scrollLeft(0);
+		var newDiffTop = o.offsetTop - $(o).offset().top;
+		var newDiffLeft = o.offsetLeft - $(o).offset().left;
+		$(document).scrollTop(oldScrollTop).scrollLeft(oldScrollLeft);
+		
+		return {
+			'top': (oldDiffTop != newDiffTop) ? $(document).scrollTop() : 0
+			,'left': (oldDiffLeft != newDiffLeft) ? $(document).scrollLeft() : 0
+		};
+	}
+
+	/**
 	 *	Draws a line on canvas using the mouse position
 	 *	Checks previous position to not draw over top of pervious drawing
 	 *		(makes the line really thick and poorly anti-aliased)
@@ -433,20 +461,22 @@ function SignaturePad(selector, options)
 	 *	@access	private
 	 *	@param	object	e	The event object
 	 *	@param	object	o	The object context registered to the event; canvas
+	 *	@param	int	diff	The difference between offset for touch devices
 	 *
 	 *	@return	void
 	 */
-	function drawLine(e, o)
+	function drawLine(e, o, diff)
 	{
 		var offset = $(o).offset(), newX, newY;
 		
 		if(typeof e.changedTouches != 'undefined')
 		{
-			newX = Math.floor(e.changedTouches[0].pageX - offset.left);
-			newY = Math.floor(e.changedTouches[0].pageY - offset.top);
+			newX = Math.floor(e.changedTouches[0].pageX - offset.left + diff.left);
+			newY = Math.floor(e.changedTouches[0].pageY - offset.top + diff.top);
 		}
 		else
 		{
+			$('#name').val($(document).scrollTop() + ',' + e.pageY + ',' + offset.top + ',' + o.offsetTop);
 			newX = Math.floor(e.pageX - offset.left);
 			newY = Math.floor(e.pageY - offset.top);
 		}
