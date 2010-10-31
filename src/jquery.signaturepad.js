@@ -10,7 +10,7 @@
  *	@link		http://github.com/thomasjbradley/signature-pad
  *	@copyright	Copyright MMX–, Thomas J Bradley
  *	@license	New BSD License
- *	@version	1.3.1
+ *	@version	1.3.2
  */
 
 /**
@@ -439,13 +439,26 @@ function SignaturePad(selector, options)
 	function calculateTouchZoomDiff(o)
 	{
 		var oldScrollTop = $(document).scrollTop();
+		var newDiffTop = 0;
+		
+		if(oldScrollTop > 0)
+		{
+			var oldDiffTop = o.offsetTop - $(o).offset().top;
+			$(document).scrollTop(0);
+			var newDiffTop = o.offsetTop - $(o).offset().top;
+			$(document).scrollTop(oldScrollTop)
+		}
+		
 		var oldScrollLeft = $(document).scrollLeft();
-		var oldDiffTop = o.offsetTop - $(o).offset().top;
-		var oldDiffLeft = o.offsetLeft - $(o).offset().left;
-		$(document).scrollTop(0).scrollLeft(0);
-		var newDiffTop = o.offsetTop - $(o).offset().top;
-		var newDiffLeft = o.offsetLeft - $(o).offset().left;
-		$(document).scrollTop(oldScrollTop).scrollLeft(oldScrollLeft);
+		var newDiffLeft = 0;
+		
+		if(oldScrollLeft > 0)
+		{
+			var oldDiffLeft = o.offsetLeft - $(o).offset().left;
+			$(document).scrollLeft(0);
+			var newDiffLeft = o.offsetLeft - $(o).offset().left;
+			$(document).scrollLeft(oldScrollLeft);
+		}
 		
 		return {
 			'top': (oldDiffTop != newDiffTop) ? $(document).scrollTop() : 0
