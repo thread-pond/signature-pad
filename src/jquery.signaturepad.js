@@ -10,7 +10,7 @@
  *	@link		http://github.com/thomasjbradley/signature-pad
  *	@copyright	Copyright MMX–, Thomas J Bradley
  *	@license	New BSD License
- *	@version	1.3.2
+ *	@version	1.4.0
  */
 
 /**
@@ -200,7 +200,14 @@ function SignaturePad(selector, options)
 					canvasContext.moveTo(paths[i].mx, paths[i].my);
 					canvasContext.lineTo(paths[i].lx, paths[i].ly);
 					canvasContext.stroke();
+					
+					output.push({'lx': paths[i].lx, 'ly': paths[i].ly, 'mx': paths[i].mx, 'my': paths[i].my});
 				}
+			}
+			
+			if($(settings.output, context).length > 0)
+			{
+				$(settings.output, context).val(JSON.stringify(output));
 			}
 		}
 
@@ -489,7 +496,6 @@ function SignaturePad(selector, options)
 		}
 		else
 		{
-			$('#name').val($(document).scrollTop() + ',' + e.pageY + ',' + offset.top + ',' + o.offsetTop);
 			newX = Math.floor(e.pageX - offset.left);
 			newY = Math.floor(e.pageY - offset.top);
 		}
