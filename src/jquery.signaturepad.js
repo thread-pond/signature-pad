@@ -10,7 +10,7 @@
  *	@link		http://github.com/thomasjbradley/signature-pad
  *	@copyright	Copyright MMX–, Thomas J Bradley
  *	@license	New BSD License
- *	@version	1.4.0
+ *	@version	1.5.0
  */
 
 /**
@@ -445,25 +445,25 @@ function SignaturePad(selector, options)
 	 */
 	function calculateTouchZoomDiff(o)
 	{
-		var oldScrollTop = $(document).scrollTop();
-		var newDiffTop = 0;
+		var oldScrollLeft, oldScrollTop = $(document).scrollTop();
+		var newDiffTop = 0, oldDiffTop, newDiffLeft, oldDiffLeft;
 		
 		if(oldScrollTop > 0)
 		{
-			var oldDiffTop = o.offsetTop - $(o).offset().top;
+			oldDiffTop = o.offsetTop - $(o).offset().top;
 			$(document).scrollTop(0);
-			var newDiffTop = o.offsetTop - $(o).offset().top;
-			$(document).scrollTop(oldScrollTop)
+			newDiffTop = o.offsetTop - $(o).offset().top;
+			$(document).scrollTop(oldScrollTop);
 		}
 		
-		var oldScrollLeft = $(document).scrollLeft();
-		var newDiffLeft = 0;
+		oldScrollLeft = $(document).scrollLeft();
+		newDiffLeft = 0;
 		
 		if(oldScrollLeft > 0)
 		{
-			var oldDiffLeft = o.offsetLeft - $(o).offset().left;
+			oldDiffLeft = o.offsetLeft - $(o).offset().left;
 			$(document).scrollLeft(0);
-			var newDiffLeft = o.offsetLeft - $(o).offset().left;
+			newDiffLeft = o.offsetLeft - $(o).offset().left;
 			$(document).scrollLeft(oldScrollLeft);
 		}
 		
@@ -579,6 +579,11 @@ function SignaturePad(selector, options)
 	 */
 	function validateForm()
 	{
+		if(settings.validateFields === false)
+		{
+			return true;
+		}
+		
 		var valid = true;
 		
 		$('p.'+settings.errorClass, context).remove();
@@ -652,6 +657,7 @@ $.fn.signaturePad.defaults = {
 	,drawItDesc: '.drawItDesc' // The description for DrawIt actions (hidden by default)
 	,output: '.output' // The hidden input field for remembering line coordinates
 	,currentClass: 'current' // The class used to mark items as being currently active
+	,validateFields: true // Whether the name, draw fields should be validated
 	,errorClass: 'error' // The class applied to the new error Html element
 	,errorMessage: 'Please enter your name' // The error message displayed on invalid submission
 	,errorMessageDraw: 'Please sign the document' // The error message displayed when drawOnly and no signature is drawn

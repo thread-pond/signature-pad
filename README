@@ -9,7 +9,7 @@ Dependencies: excanvas, json2, jquery-1.3.2+
 @link       http://github.com/thomasjbradley/signature-pad
 @copyright  Copyright MMX–, Thomas J Bradley
 @license    New BSD License
-@version    1.4.0
+@version    1.5.0
 
 Versioned using Semantic Versioning <http://semver.org/>
 
@@ -22,6 +22,10 @@ http://github.com/thomasjbradley/signature-pad
 
 
 VERSION HISTORY:
+
+1.5.0 (Dev. 3, 2010)
+- Added an option to disabled field validation
+- Cleaned up some code
 
 1.4.0 (Nov. 30, 2010)
 - Regenerate method now repopulates the output so signature can be appended
