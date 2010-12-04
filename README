@@ -24,7 +24,7 @@ http://github.com/thomasjbradley/signature-pad
 VERSION HISTORY:
 
 1.5.0 (Dev. 3, 2010)
-- Added an option to disabled field validation
+- Added an option to disable field validation
 - Cleaned up some code
 
 1.4.0 (Nov. 30, 2010)
