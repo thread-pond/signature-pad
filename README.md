@@ -71,9 +71,9 @@ Version History
 
 **1.1.2 (May 26, 2010)**
 
-- Fixed an XSS-like bug, where entering a &lt;script&gt; or an &lt;iframe&gt; element into
+- Fixed an XSS-like bug, where entering a <script> or an <iframe> element into
   the name field would cause the code to be executed
-  &lt; and &gt; are now converted to entities
+  < and > are now converted to entities
 
 **1.1.1 (Jan. 26, 2010)**
 
