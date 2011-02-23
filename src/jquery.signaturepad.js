@@ -100,6 +100,13 @@ function SignaturePad(selector, options)
 	 *	@var	array
 	 */
 	var output = [];
+	
+	/**
+	 *	Stores a timeout for when the mouse leaves the canvas
+	 *	If the mouse has left the canvas for a specific amount of time
+	 *	Stops drawing on the canvas
+	 */
+	var mouseLeaveTimeout = false;
 
 	// Disable selection on the typed div and canvas
 	$(settings.typed, context).bind('selectstart.signaturepad', function(e){ return $(e.target).is(':input'); });
@@ -277,6 +284,18 @@ function SignaturePad(selector, options)
 		
 		canvas.bind('mousedown.signaturepad', function(e){ startDrawing(e, this); });
 		canvas.bind('mouseup.signaturepad', function(e){ stopDrawing(); });
+		canvas.bind('mouseleave.signaturepad', function(e)
+		{
+			if(!mouseLeaveTimeout)
+			{
+				mouseLeaveTimeout = setTimeout(function()
+				{
+					stopDrawing()
+					clearTimeout(mouseLeaveTimeout)
+					mouseLeaveTimeout = false
+				}, 200)
+			}
+		})
 		
 		if(typeof this.ontouchstart != 'undefined')
 		{
@@ -324,9 +343,10 @@ function SignaturePad(selector, options)
 	 */
 	function disableCanvas()
 	{
-		canvas.unbind('mousedown.signaturepad');	
+		canvas.unbind('mousedown.signaturepad');
 		canvas.unbind('mouseup.signaturepad');
 		canvas.unbind('mousemove.signaturepad');
+		canvas.unbind('mouseleave.signaturepad');
 		$(settings.clear, context).unbind('click.signaturepad');
 	}
 
@@ -488,6 +508,9 @@ function SignaturePad(selector, options)
 	function drawLine(e, o, diff)
 	{
 		var offset = $(o).offset(), newX, newY;
+		
+		clearTimeout(mouseLeaveTimeout)
+		mouseLeaveTimeout = false
 		
 		if(typeof e.changedTouches != 'undefined')
 		{
