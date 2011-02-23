@@ -513,6 +513,7 @@ function SignaturePad(selector, options)
 		canvasContext.beginPath();
 		canvasContext.moveTo(previous.x, previous.y);
 		canvasContext.lineTo(newX, newY);
+		canvasContext.lineCap = settings.penCap;
 		canvasContext.stroke();
 		canvasContext.closePath();
 		
@@ -644,6 +645,7 @@ $.fn.signaturePad.defaults = {
 	,bgColour: '#fff' // The colour fill for the background of the canvas
 	,penColour: '#145394' // Colour of the drawing ink
 	,penWidth: 2 // Thickness of the pen
+	,penCap: 'round' // Determines how the end points of each line are drawn (values: 'butt', 'round', 'square')
 	,lineColour: '#ccc' // Colour of the signature line
 	,lineWidth: 2 // Thickness of the signature line
 	,lineMargin: 5 // Margin on right and left of signature line
