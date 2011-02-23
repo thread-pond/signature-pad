@@ -3,15 +3,15 @@
  *	based signature pad. Records the drawn signature in JSON for later regeneration.
  *
  *	Primary Screen Styles
- *	@media		screen
+ *	@media screen
  *	
- *	@project	ca.thomasjbradley.applications.signaturepad
- *	@author		Thomas J Bradley <hey@thomasjbradley.ca>
- *	@link		http://thomasjbradley.ca/lab/signature-pad
- *	@link		http://github.com/thomasjbradley/signature-pad
- *	@copyright	Copyright MMX–, Thomas J Bradley
- *	@license	New BSD License
- *	@version	1.5.0
+ *	@project ca.thomasjbradley.applications.signaturepad
+ *	@author Thomas J Bradley <hey@thomasjbradley.ca>
+ *	@link http://thomasjbradley.ca/lab/signature-pad
+ *	@link http://github.com/thomasjbradley/signature-pad
+ *	@copyright Copyright MMXI, Thomas J Bradley
+ *	@license New BSD License
+ *	@version 1.5.1
  */
 
 @font-face {

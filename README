@@ -7,9 +7,9 @@ Dependencies: excanvas, json2, jquery-1.3.2+
 @author     Thomas J Bradley <hey@thomasjbradley.ca>
 @link       http://thomasjbradley.ca/lab/signature-pad
 @link       http://github.com/thomasjbradley/signature-pad
-@copyright  Copyright MMX–, Thomas J Bradley
+@copyright  Copyright MMXI, Thomas J Bradley
 @license    New BSD License
-@version    1.5.0
+@version    1.5.1
 
 Versioned using Semantic Versioning <http://semver.org/>
 
@@ -23,7 +23,12 @@ http://github.com/thomasjbradley/signature-pad
 
 VERSION HISTORY:
 
-1.5.0 (Dev. 3, 2010)
+1.5.1 (Feb. 23, 2011)
+- Added an option/fixed a bug: the pen would be jagged if thicker than 4 pixels
+- Fixed a bug: if the pen left the canvas it would continue to draw
+- Switch to proper JSDoc
+
+1.5.0 (Dec. 3, 2010)
 - Added an option to disable field validation
 - Cleaned up some code
 
@@ -43,7 +48,7 @@ VERSION HISTORY:
 - Added getSignatureImage() method that calls toDataURL() on the canvas
 
 1.2.2 (Aug. 29, 2010)
-- Fixed an offset bug; contributed by Farit Nabiullin
+- Fixed an offset bug
 
 1.2.1 (Jun. 7, 2010)
 - Added namespaces to all event bindings

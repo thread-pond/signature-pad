@@ -4,13 +4,13 @@
  *
  *	Dependencies: excanvas, json2, jquery-1.3.2+
  *	
- *	@project	ca.thomasjbradley.applications.signaturepad
- *	@author		Thomas J Bradley <hey@thomasjbradley.ca>
- *	@link		http://thomasjbradley.ca/lab/signature-pad
- *	@link		http://github.com/thomasjbradley/signature-pad
- *	@copyright	Copyright MMX–, Thomas J Bradley
- *	@license	New BSD License
- *	@version	1.5.0
+ *	@project ca.thomasjbradley.applications.signaturepad
+ *	@author Thomas J Bradley <hey@thomasjbradley.ca>
+ *	@link http://thomasjbradley.ca/lab/signature-pad
+ *	@link http://github.com/thomasjbradley/signature-pad
+ *	@copyright Copyright MMXI, Thomas J Bradley
+ *	@license New BSD License
+ *	@version 1.5.1
  */
 
 /**
@@ -22,8 +22,6 @@
  *		or
  *		var api = $('.sigPad').signaturePad({displayOnly:true});
  *		api.regenerate(sig);
- *
- *	@package	src
  */
 (function($){
 
@@ -32,48 +30,48 @@ function SignaturePad(selector, options)
 	/**
 	 *	Reference to the object for use in public methods
 	 *
-	 *	@access	private
-	 *	@var	object
+	 *	@private
+	 *	@type {Object}
 	 */
 	var self = this;
 
 	/**
 	 *	Holds the merged default settings and user passed settings
 	 *
-	 *	@access	private
-	 *	@var	object
+	 *	@private
+	 *	@type {Object}
 	 */
 	var settings = $.extend({}, $.fn.signaturePad.defaults, options);
 
 	/**
 	 *	The current context, as passed by jQuery, of selected items
 	 *
-	 *	@access	private
-	 *	@var	object
+	 *	@private
+	 *	@type {Object}
 	 */
 	var context = $(selector);
 
 	/**
 	 *	jQuery reference to the canvas element inside the signature pad
 	 *
-	 *	@access	private
-	 *	@var	object
+	 *	@private
+	 *	@type {Object}
 	 */
 	var canvas = $(settings.canvas, context);
 
 	/**
 	 *	Dom reference to the canvas element inside the signature pad
 	 *
-	 *	@access	private
-	 *	@var	object
+	 *	@private
+	 *	@type {Object}
 	 */
 	var element = canvas.get(0);
 
 	/**
 	 *	The drawing context for the signature canvas
 	 *
-	 *	@access	private
-	 *	@var	object
+	 *	@private
+	 *	@type {Object}
 	 */
 	var canvasContext = null;
 
@@ -81,8 +79,8 @@ function SignaturePad(selector, options)
 	 *	Holds the previous point of drawing
 	 *	Disallows drawing over the same location to make lines more delicate
 	 *
-	 *	@access	private
-	 *	@var	object
+	 *	@private
+	 *	@type {Object}
 	 */
 	var previous = {'x':null, 'y':null};
 
@@ -96,8 +94,8 @@ function SignaturePad(selector, options)
 	 *		lx: lineTo y coordinate
 	 *	}
 	 *
-	 *	@access	private
-	 *	@var	array
+	 *	@private
+	 *	@type {Array}
 	 */
 	var output = [];
 	
@@ -105,6 +103,9 @@ function SignaturePad(selector, options)
 	 *	Stores a timeout for when the mouse leaves the canvas
 	 *	If the mouse has left the canvas for a specific amount of time
 	 *	Stops drawing on the canvas
+	 *
+	 *	@private
+	 *	@type {Object}
 	 */
 	var mouseLeaveTimeout = false;
 
@@ -187,10 +188,7 @@ function SignaturePad(selector, options)
 		 *	Follows same format as object property
 		 *	@see var object
 		 *
-		 *	@access	public
-		 *	@param	array	paths	An array of the lines and points
-		 *	
-		 *	@return	void
+		 *	@param {Array} paths An array of the lines and points
 		 */
 		regenerate: function(paths)
 		{
@@ -224,10 +222,6 @@ function SignaturePad(selector, options)
 		/**
 		 *	Clears the canvas
 		 *	Redraws the background colour and the signature line
-		 *
-		 *	@access	public
-		 *
-		 *	@return void
 		 */
 		,clearCanvas: function()
 		{
@@ -237,9 +231,7 @@ function SignaturePad(selector, options)
 		/**
 		 *	Returns the signature as a Js array
 		 *
-		 *	@access	public
-		 *
-		 *	@return	array
+		 *	@return {Array}
 		 */
 		,getSignature: function()
 		{
@@ -249,9 +241,7 @@ function SignaturePad(selector, options)
 		/**
 		 *	Returns the signature as a Json string
 		 *
-		 *	@access	public
-		 *
-		 *	@return	string
+		 *	@return {String}
 		 */
 		,getSignatureString: function()
 		{
@@ -262,9 +252,7 @@ function SignaturePad(selector, options)
 		 *	Returns the signature as an image
 		 *	Doesn't work in IE; relies on canvas.toDataURL();
 		 *
-		 *	@access	public
-		 *
-		 *	@return	string
+		 *	@return {String}
 		 */
 		,getSignatureImage: function()
 		{
@@ -276,9 +264,7 @@ function SignaturePad(selector, options)
 	 *	Triggers the abilities to draw on the canvas
 	 *	Sets up mouse/touch events, hides and shows descriptions and sets current classes
 	 *
-	 *	@access	private
-	 *
-	 *	@return	void
+	 *	@private
 	 */
 	function drawIt()
 	{
@@ -340,9 +326,7 @@ function SignaturePad(selector, options)
 	/**
 	 *	Removes all the mouse events from the canvas
 	 *
-	 *	@access	private
-	 *
-	 *	@return	void
+	 *	@private
 	 */
 	function disableCanvas()
 	{
@@ -357,9 +341,7 @@ function SignaturePad(selector, options)
 	 *	Triggers the abilities to type in the input for generating a signature
 	 *	Sets up mouse events, hides and shows descriptions and sets current classes
 	 *
-	 *	@access	private
-	 *
-	 *	@return	void
+	 *	@private
 	 */
 	function typeIt()
 	{
@@ -386,10 +368,8 @@ function SignaturePad(selector, options)
 	 *	Callback registered on keyup and blur events for input field
 	 *	Writes the text fields value as Html into an element
 	 *
-	 *	@access	private
-	 *	@param	string	val	The value of the input field
-	 *	
-	 *	@return	void
+	 *	@private
+	 *	@param {String} val The value of the input field
 	 */
 	function type(val)
 	{
@@ -406,11 +386,9 @@ function SignaturePad(selector, options)
 	 *	Callback registered to mouse/touch events of canvas
 	 *	Triggers the drawLine function
 	 *
-	 *	@access	private
-	 *	@param	object	e	The event object
-	 *	@param	object	o	The object context registered to the event; canvas
-	 *
-	 *	@return	void
+	 *	@private
+	 *	@param {Object} e The event object
+	 *	@param {Object} o The object context registered to the event; canvas
 	 */
 	function startDrawing(e, o)
 	{
@@ -432,10 +410,8 @@ function SignaturePad(selector, options)
 	 *	Callback registered to mouse/touch events of the canvas
 	 *	Stops the drawing abilities
 	 *
-	 *	@access	private
-	 *	@param	object	e	The event object
-	 *
-	 *	@return	void
+	 *	@private
+	 *	@param {Object} e The event object
 	 */
 	function stopDrawing()
 	{
@@ -461,10 +437,10 @@ function SignaturePad(selector, options)
 	 *	Targets iPad specifically, which returns the incorrect .offset().top|.left
 	 *	for an object when zoomed in; appears to ignore scroll position
 	 *
-	 *	@access	private
-	 *	@param	object	o	The object context registered to the mousedown event; canvas
+	 *	@private
+	 *	@param {Object} o The object context registered to the mousedown event; canvas
 	 *
-	 *	@return	object
+	 *	@return {Object}
 	 */
 	function calculateTouchZoomDiff(o)
 	{
@@ -501,12 +477,10 @@ function SignaturePad(selector, options)
 	 *	Checks previous position to not draw over top of pervious drawing
 	 *		(makes the line really thick and poorly anti-aliased)
 	 *	
-	 *	@access	private
-	 *	@param	object	e	The event object
-	 *	@param	object	o	The object context registered to the event; canvas
-	 *	@param	int	diff	The difference between offset for touch devices
-	 *
-	 *	@return	void
+	 *	@private
+	 *	@param {Object} e The event object
+	 *	@param {Object} o The object context registered to the event; canvas
+	 *	@param {Number} diff The difference between offset for touch devices
 	 */
 	function drawLine(e, o, diff)
 	{
@@ -552,9 +526,7 @@ function SignaturePad(selector, options)
 	/**
 	 *	Clears all drawings off the canvas and redraws the signature line
 	 *
-	 *	@access	private
-	 *
-	 *	@return	void
+	 *	@private
 	 */
 	function clearCanvas()
 	{
@@ -581,9 +553,7 @@ function SignaturePad(selector, options)
 	/**
 	 *	Draws the signature line
 	 *
-	 *	@access	private
-	 *
-	 *	@return	void
+	 *	@private
 	 */
 	function drawSigLine()
 	{
@@ -600,9 +570,9 @@ function SignaturePad(selector, options)
 	 *	Validates the form to confirm a name was typed in the field
 	 *	If drawOnly also confirms that the user drew a signature
 	 *
-	 *	@access	private
+	 *	@private
 	 *
-	 *	@return	bool
+	 *	@return {Boolean}
 	 */
 	function validateForm()
 	{
@@ -636,9 +606,9 @@ function SignaturePad(selector, options)
  *	Create the plugin
  *	Returns an Api which can be used to call specific methods
  *
- *	@param	object	options	The options array
+ *	@param {Object} options The options array
  *
- *	@return	object	The Api for controlling the instance
+ *	@return {Object} The Api for controlling the instance
  */
 $.fn.signaturePad = function(options)
 {
@@ -654,7 +624,7 @@ $.fn.signaturePad = function(options)
 /**
  *	Expose the defaults so they can be overwritten for multiple instances
  *
- *	@var	 object
+ *	@type {Object}
  */
 $.fn.signaturePad.defaults = {
 	defaultAction: 'typeIt' // What action should be highlighted first: typeIt or drawIt
