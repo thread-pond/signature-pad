@@ -153,13 +153,16 @@ function SignaturePad(selector, options)
 				typeIt();
 			}
 			
-			if($(selector).is('form'))
+			if(settings.validateFields)
 			{
-				$(selector).bind('submit.signaturepad', function(){ return validateForm(); });
-			}
-			else
-			{
-				$(selector).parents('form').bind('submit.signaturepad', function(){ return validateForm(); });
+				if($(selector).is('form'))
+				{
+					$(selector).bind('submit.signaturepad', function(){ return validateForm() })
+				}
+				else
+				{
+					$(selector).parents('form').bind('submit.signaturepad', function(){ return validateForm() })
+				}
 			}
 			
 			$(settings.typeItDesc, context).show();
@@ -603,11 +606,6 @@ function SignaturePad(selector, options)
 	 */
 	function validateForm()
 	{
-		if(settings.validateFields === false)
-		{
-			return true;
-		}
-		
 		var valid = true;
 		
 		$('p.'+settings.errorClass, context).remove();
