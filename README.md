@@ -4,20 +4,20 @@ SignaturePad
 SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas
 based signature pad. Records the drawn signature in JSON for later regeneration.
 
-Copyright MMXI, Thomas J Bradley, hey@thomasjbradley.ca
+Copyright MMXI, Thomas J Bradley, [hey@thomasjbradley.ca](mailto:hey@thomasjbradley.ca)
 
 Dependencies: excanvas, json2, jquery-1.3.2+
 
-Versioned using Semantic Versioning, http://semver.org/
+Versioned using Semantic Versioning, [http://semver.org/](http://semver.org/)
 
 
 Complete Documentation
 ----------------------
-http://thomasjbradley.ca/lab/signature-pad
+[http://thomasjbradley.ca/lab/signature-pad](http://thomasjbradley.ca/lab/signature-pad)
 
 Source Code
 -----------
-http://github.com/thomasjbradley/signature-pad
+[http://github.com/thomasjbradley/signature-pad](http://github.com/thomasjbradley/signature-pad)
 
 
 Version History
@@ -71,9 +71,9 @@ Version History
 
 **1.1.2 (May 26, 2010)**
 
-- Fixed an XSS-like bug, where entering a <script> or an <iframe> element into
+- Fixed an XSS-like bug, where entering a &lt;script&gt; or an &lt;iframe&gt; element into
   the name field would cause the code to be executed
-  < and > are now converted to entities
+  &lt; and &gt; are now converted to entities
 
 **1.1.1 (Jan. 26, 2010)**
 
