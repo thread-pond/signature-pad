@@ -27,6 +27,7 @@ VERSION HISTORY:
 - Added an option/fixed a bug: the pen would be jagged if thicker than 4 pixels
 - Fixed a bug: if the pen left the canvas it would continue to draw
 - Switch to proper JSDoc
+- Cleanup and removal of extraneous semi-colons
 
 1.5.0 (Dec. 3, 2010)
 - Added an option to disable field validation
