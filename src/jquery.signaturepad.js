@@ -15,13 +15,13 @@
 
 /**
  *	Usage for accepting signatures:
- *		$('.sigPad').signaturePad();
+ *		$('.sigPad').signaturePad()
  *
  *	Usage for displaying previous signatures:
- *		$('.sigPad').signaturePad({displayOnly:true}).regenerate(sig);
+ *		$('.sigPad').signaturePad({displayOnly:true}).regenerate(sig)
  *		or
- *		var api = $('.sigPad').signaturePad({displayOnly:true});
- *		api.regenerate(sig);
+ *		var api = $('.sigPad').signaturePad({displayOnly:true})
+ *		api.regenerate(sig)
  */
 (function($){
 
@@ -33,7 +33,7 @@ function SignaturePad(selector, options)
 	 *	@private
 	 *	@type {Object}
 	 */
-	var self = this;
+	var self = this
 
 	/**
 	 *	Holds the merged default settings and user passed settings
@@ -41,7 +41,7 @@ function SignaturePad(selector, options)
 	 *	@private
 	 *	@type {Object}
 	 */
-	var settings = $.extend({}, $.fn.signaturePad.defaults, options);
+	,settings = $.extend({}, $.fn.signaturePad.defaults, options)
 
 	/**
 	 *	The current context, as passed by jQuery, of selected items
@@ -49,7 +49,7 @@ function SignaturePad(selector, options)
 	 *	@private
 	 *	@type {Object}
 	 */
-	var context = $(selector);
+	,context = $(selector)
 
 	/**
 	 *	jQuery reference to the canvas element inside the signature pad
@@ -57,7 +57,7 @@ function SignaturePad(selector, options)
 	 *	@private
 	 *	@type {Object}
 	 */
-	var canvas = $(settings.canvas, context);
+	,canvas = $(settings.canvas, context)
 
 	/**
 	 *	Dom reference to the canvas element inside the signature pad
@@ -65,7 +65,7 @@ function SignaturePad(selector, options)
 	 *	@private
 	 *	@type {Object}
 	 */
-	var element = canvas.get(0);
+	,element = canvas.get(0)
 
 	/**
 	 *	The drawing context for the signature canvas
@@ -73,7 +73,7 @@ function SignaturePad(selector, options)
 	 *	@private
 	 *	@type {Object}
 	 */
-	var canvasContext = null;
+	,canvasContext = null
 
 	/**
 	 *	Holds the previous point of drawing
@@ -82,7 +82,7 @@ function SignaturePad(selector, options)
 	 *	@private
 	 *	@type {Object}
 	 */
-	var previous = {'x':null, 'y':null};
+	,previous = {'x':null, 'y':null}
 
 	/**
 	 *	An array holding all the points and lines to generate the signature
@@ -97,7 +97,7 @@ function SignaturePad(selector, options)
 	 *	@private
 	 *	@type {Array}
 	 */
-	var output = [];
+	,output = []
 	
 	/**
 	 *	Stores a timeout for when the mouse leaves the canvas
@@ -107,22 +107,22 @@ function SignaturePad(selector, options)
 	 *	@private
 	 *	@type {Object}
 	 */
-	var mouseLeaveTimeout = false;
+	,mouseLeaveTimeout = false
 
 	// Disable selection on the typed div and canvas
-	$(settings.typed, context).bind('selectstart.signaturepad', function(e){ return $(e.target).is(':input'); });
-	canvas.bind('selectstart.signaturepad', function(e){ return $(e.target).is(':input'); });
+	$(settings.typed, context).bind('selectstart.signaturepad', function(e){ return $(e.target).is(':input') })
+	canvas.bind('selectstart.signaturepad', function(e){ return $(e.target).is(':input') })
 
 	if(!element.getContext)
 	{
-		G_vmlCanvasManager.initElement(element);
+		G_vmlCanvasManager.initElement(element)
 	}
 
 	if(element.getContext)
 	{
-		canvasContext = element.getContext('2d');
+		canvasContext = element.getContext('2d')
 		
-		$(settings.sig, context).show();
+		$(settings.sig, context).show()
 		
 		if(!settings.displayOnly)
 		{
@@ -130,28 +130,28 @@ function SignaturePad(selector, options)
 			{
 				$(settings.name, context).bind('keyup.signaturepad', function()
 				{
-					type($(this).val());
-				});
+					type($(this).val())
+				})
 				
 				$(settings.name, context).bind('blur.signaturepad', function()
 				{
-					type($(this).val());
-				});
+					type($(this).val())
+				})
 				
 				$(settings.drawIt, context).bind('click.signaturepad', function(e)
 				{
-					drawIt();
-					return false;
-				});
+					drawIt()
+					return false
+				})
 			}
 			
 			if(settings.drawOnly || settings.defaultAction == 'drawIt')
 			{
-				drawIt();
+				drawIt()
 			}
 			else
 			{
-				typeIt();
+				typeIt()
 			}
 			
 			if(settings.validateFields)
@@ -166,18 +166,18 @@ function SignaturePad(selector, options)
 				}
 			}
 			
-			$(settings.typeItDesc, context).show();
-			$(settings.sigNav, context).show();
+			$(settings.typeItDesc, context).show()
+			$(settings.sigNav, context).show()
 			
 			// Hack for IE7 and IE8, if clearCanvas() is called instantly it doesn't draw the sig line
-			setTimeout(clearCanvas, 50);
+			setTimeout(clearCanvas, 50)
 		}
 		
 		// Hack for IE8 standards mode
 		// excanvas sets overflow:hidden on its internal Vml div; overflow:visible works in all modes
 		if(canvas.children('div').length > 0)
 		{
-			canvas.children('div').css('overflow', 'visible');
+			canvas.children('div').css('overflow', 'visible')
 		}
 	}
 	
@@ -192,31 +192,27 @@ function SignaturePad(selector, options)
 		 */
 		regenerate: function(paths)
 		{
-			self.clearCanvas();
-			$(settings.typed, context).hide();
+			self.clearCanvas()
+			$(settings.typed, context).hide()
 			
 			if(typeof paths === 'string')
-			{
-				paths = JSON.parse(paths);
-			}
+				paths = JSON.parse(paths)
 			
 			for(var i in paths)
 			{
 				if(typeof paths[i] === 'object')
 				{
-					canvasContext.beginPath();
-					canvasContext.moveTo(paths[i].mx, paths[i].my);
-					canvasContext.lineTo(paths[i].lx, paths[i].ly);
-					canvasContext.stroke();
+					canvasContext.beginPath()
+					canvasContext.moveTo(paths[i].mx, paths[i].my)
+					canvasContext.lineTo(paths[i].lx, paths[i].ly)
+					canvasContext.stroke()
 					
-					output.push({'lx': paths[i].lx, 'ly': paths[i].ly, 'mx': paths[i].mx, 'my': paths[i].my});
+					output.push({'lx': paths[i].lx, 'ly': paths[i].ly, 'mx': paths[i].mx, 'my': paths[i].my})
 				}
 			}
 			
 			if($(settings.output, context).length > 0)
-			{
-				$(settings.output, context).val(JSON.stringify(output));
-			}
+				$(settings.output, context).val(JSON.stringify(output))
 		}
 
 		/**
@@ -225,7 +221,7 @@ function SignaturePad(selector, options)
 		 */
 		,clearCanvas: function()
 		{
-			clearCanvas();
+			clearCanvas()
 		}
 
 		/**
@@ -235,7 +231,7 @@ function SignaturePad(selector, options)
 		 */
 		,getSignature: function()
 		{
-			return output;
+			return output
 		}
 
 		/**
@@ -245,20 +241,20 @@ function SignaturePad(selector, options)
 		 */
 		,getSignatureString: function()
 		{
-			return JSON.stringify(output);
+			return JSON.stringify(output)
 		}
 
 		/**
 		 *	Returns the signature as an image
-		 *	Doesn't work in IE; relies on canvas.toDataURL();
+		 *	Doesn't work in IE; relies on canvas.toDataURL()
 		 *
 		 *	@return {String}
 		 */
 		,getSignatureImage: function()
 		{
-			return element.toDataURL();
+			return element.toDataURL()
 		}
-	});
+	})
 
 	/**
 	 *	Triggers the abilities to draw on the canvas
@@ -268,11 +264,11 @@ function SignaturePad(selector, options)
 	 */
 	function drawIt()
 	{
-		$(settings.typed, context).hide();
-		clearCanvas();
+		$(settings.typed, context).hide()
+		clearCanvas()
 		
-		canvas.bind('mousedown.signaturepad', function(e){ startDrawing(e, this); });
-		canvas.bind('mouseup.signaturepad', function(e){ stopDrawing(); });
+		canvas.bind('mousedown.signaturepad', function(e){ startDrawing(e, this) })
+		canvas.bind('mouseup.signaturepad', function(e){ stopDrawing() })
 		canvas.bind('mouseleave.signaturepad', function(e)
 		{
 			if(!mouseLeaveTimeout)
@@ -292,35 +288,35 @@ function SignaturePad(selector, options)
 			{
 				this.ontouchstart = function(e)
 				{
-					e.preventDefault();
-					startDrawing(e, this);
-				};
+					e.preventDefault()
+					startDrawing(e, this)
+				}
 				
 				this.ontouchend = function(e)
 				{
-					stopDrawing();
-				};
+					stopDrawing()
+				}
 				
 				this.ontouchcancel = function(e)
 				{
-					stopDrawing();
-				};
-			});
+					stopDrawing()
+				}
+			})
 		}
 		
-		$(settings.clear, context).bind('click.signaturepad', function(e){ clearCanvas(); return false; });
+		$(settings.clear, context).bind('click.signaturepad', function(e){ clearCanvas(); return false })
 		
-		$(settings.typeIt, context).bind('click.signaturepad', function(e){ typeIt(); return false; });
-		$(settings.drawIt, context).unbind('click.signaturepad');
-		$(settings.drawIt, context).bind('click.signaturepad', function(e){ return false; });
+		$(settings.typeIt, context).bind('click.signaturepad', function(e){ typeIt(); return false })
+		$(settings.drawIt, context).unbind('click.signaturepad')
+		$(settings.drawIt, context).bind('click.signaturepad', function(e){ return false })
 		
-		$(settings.typeIt, context).removeClass(settings.currentClass);
-		$(settings.drawIt, context).addClass(settings.currentClass);
-		$(settings.sig, context).addClass(settings.currentClass);
+		$(settings.typeIt, context).removeClass(settings.currentClass)
+		$(settings.drawIt, context).addClass(settings.currentClass)
+		$(settings.sig, context).addClass(settings.currentClass)
 		
-		$(settings.typeItDesc, context).hide();
-		$(settings.drawItDesc, context).show();
-		$(settings.clear, context).show();
+		$(settings.typeItDesc, context).hide()
+		$(settings.drawItDesc, context).show()
+		$(settings.clear, context).show()
 	}
 
 	/**
@@ -330,11 +326,11 @@ function SignaturePad(selector, options)
 	 */
 	function disableCanvas()
 	{
-		canvas.unbind('mousedown.signaturepad');
-		canvas.unbind('mouseup.signaturepad');
-		canvas.unbind('mousemove.signaturepad');
-		canvas.unbind('mouseleave.signaturepad');
-		$(settings.clear, context).unbind('click.signaturepad');
+		canvas.unbind('mousedown.signaturepad')
+		canvas.unbind('mouseup.signaturepad')
+		canvas.unbind('mousemove.signaturepad')
+		canvas.unbind('mouseleave.signaturepad')
+		$(settings.clear, context).unbind('click.signaturepad')
 	}
 
 	/**
@@ -345,23 +341,23 @@ function SignaturePad(selector, options)
 	 */
 	function typeIt()
 	{
-		clearCanvas();
-		disableCanvas();
-		$(settings.typed, context).show();
+		clearCanvas()
+		disableCanvas()
+		$(settings.typed, context).show()
 		
-		$(settings.drawIt, context).bind('click.signaturepad', function(e){ drawIt(); return false; });
-		$(settings.typeIt, context).unbind('click.signaturepad');
-		$(settings.typeIt, context).bind('click.signaturepad', function(e){ return false; });
+		$(settings.drawIt, context).bind('click.signaturepad', function(e){ drawIt(); return false })
+		$(settings.typeIt, context).unbind('click.signaturepad')
+		$(settings.typeIt, context).bind('click.signaturepad', function(e){ return false })
 		
-		$(settings.output, context).val('');
+		$(settings.output, context).val('')
 		
-		$(settings.drawIt, context).removeClass(settings.currentClass);
-		$(settings.typeIt, context).addClass(settings.currentClass);
-		$(settings.sig, context).removeClass(settings.currentClass);
+		$(settings.drawIt, context).removeClass(settings.currentClass)
+		$(settings.typeIt, context).addClass(settings.currentClass)
+		$(settings.sig, context).removeClass(settings.currentClass)
 		
-		$(settings.drawItDesc, context).hide();
-		$(settings.clear, context).hide();
-		$(settings.typeItDesc, context).show();
+		$(settings.drawItDesc, context).hide()
+		$(settings.clear, context).hide()
+		$(settings.typeItDesc, context).show()
 	}
 
 	/**
@@ -373,12 +369,12 @@ function SignaturePad(selector, options)
 	 */
 	function type(val)
 	{
-		$(settings.typed, context).html(val.replace(/>/g, '&gt;').replace(/</g, '&lt;'));
+		$(settings.typed, context).html(val.replace(/>/g, '&gt;').replace(/</g, '&lt;'))
 		
 		while($(settings.typed, context).width() > element.width)
 		{
-			var oldSize = $(settings.typed, context).css('font-size').replace(/px/, '');
-			$(settings.typed, context).css('font-size', oldSize-1+'px');
+			var oldSize = $(settings.typed, context).css('font-size').replace(/px/, '')
+			$(settings.typed, context).css('font-size', oldSize-1+'px')
 		}
 	}
 
@@ -392,7 +388,7 @@ function SignaturePad(selector, options)
 	 */
 	function startDrawing(e, o)
 	{
-		canvas.bind('mousemove.signaturepad', function(ev){ drawLine(ev, this); });
+		canvas.bind('mousemove.signaturepad', function(ev){ drawLine(ev, this) })
 		
 		if(typeof this.ontouchstart != 'undefined')
 		{
@@ -400,9 +396,9 @@ function SignaturePad(selector, options)
 			{
 				this.ontouchmove = function(ev)
 				{
-					drawLine(ev, this, calculateTouchZoomDiff(this));
-				};
-			});
+					drawLine(ev, this, calculateTouchZoomDiff(this))
+				}
+			})
 		}
 	}
 	
@@ -415,20 +411,20 @@ function SignaturePad(selector, options)
 	 */
 	function stopDrawing()
 	{
-		canvas.unbind('mousemove.signaturepad');
+		canvas.unbind('mousemove.signaturepad')
 		
 		if(typeof this.ontouchstart != 'undefined')
 		{
 			canvas.each(function()
 			{
-				this.ontouchmove = null;
-			});
+				this.ontouchmove = null
+			})
 		}
 		
-		previous.x = null;
-		previous.y = null;
+		previous.x = null
+		previous.y = null
 		
-		$(settings.output, context).val(JSON.stringify(output));
+		$(settings.output, context).val(JSON.stringify(output))
 	}
 
 	/**
@@ -444,32 +440,31 @@ function SignaturePad(selector, options)
 	 */
 	function calculateTouchZoomDiff(o)
 	{
-		var oldScrollLeft, oldScrollTop = $(document).scrollTop();
-		var newDiffTop = 0, oldDiffTop, newDiffLeft, oldDiffLeft;
+		var oldScrollLeft, oldScrollTop = $(document).scrollTop(), newDiffTop = 0, oldDiffTop, newDiffLeft, oldDiffLeft
 		
 		if(oldScrollTop > 0)
 		{
-			oldDiffTop = o.offsetTop - $(o).offset().top;
-			$(document).scrollTop(0);
-			newDiffTop = o.offsetTop - $(o).offset().top;
-			$(document).scrollTop(oldScrollTop);
+			oldDiffTop = o.offsetTop - $(o).offset().top
+			$(document).scrollTop(0)
+			newDiffTop = o.offsetTop - $(o).offset().top
+			$(document).scrollTop(oldScrollTop)
 		}
 		
-		oldScrollLeft = $(document).scrollLeft();
-		newDiffLeft = 0;
+		oldScrollLeft = $(document).scrollLeft()
+		newDiffLeft = 0
 		
 		if(oldScrollLeft > 0)
 		{
-			oldDiffLeft = o.offsetLeft - $(o).offset().left;
-			$(document).scrollLeft(0);
-			newDiffLeft = o.offsetLeft - $(o).offset().left;
-			$(document).scrollLeft(oldScrollLeft);
+			oldDiffLeft = o.offsetLeft - $(o).offset().left
+			$(document).scrollLeft(0)
+			newDiffLeft = o.offsetLeft - $(o).offset().left
+			$(document).scrollLeft(oldScrollLeft)
 		}
 		
 		return {
 			'top': (oldDiffTop != newDiffTop) ? $(document).scrollTop() : 0
 			,'left': (oldDiffLeft != newDiffLeft) ? $(document).scrollLeft() : 0
-		};
+		}
 	}
 
 	/**
@@ -484,43 +479,39 @@ function SignaturePad(selector, options)
 	 */
 	function drawLine(e, o, diff)
 	{
-		var offset = $(o).offset(), newX, newY;
+		var offset = $(o).offset(), newX, newY
 		
 		clearTimeout(mouseLeaveTimeout)
 		mouseLeaveTimeout = false
 		
 		if(typeof e.changedTouches != 'undefined')
 		{
-			newX = Math.floor(e.changedTouches[0].pageX - offset.left + diff.left);
-			newY = Math.floor(e.changedTouches[0].pageY - offset.top + diff.top);
+			newX = Math.floor(e.changedTouches[0].pageX - offset.left + diff.left)
+			newY = Math.floor(e.changedTouches[0].pageY - offset.top + diff.top)
 		}
 		else
 		{
-			newX = Math.floor(e.pageX - offset.left);
-			newY = Math.floor(e.pageY - offset.top);
+			newX = Math.floor(e.pageX - offset.left)
+			newY = Math.floor(e.pageY - offset.top)
 		}
 		
 		if(previous.x === null)
-		{
-			previous.x = newX;
-		}
+			previous.x = newX
 
 		if(previous.y === null)
-		{
-			previous.y = newY;
-		}
+			previous.y = newY
 		
-		canvasContext.beginPath();
-		canvasContext.moveTo(previous.x, previous.y);
-		canvasContext.lineTo(newX, newY);
-		canvasContext.lineCap = settings.penCap;
-		canvasContext.stroke();
-		canvasContext.closePath();
+		canvasContext.beginPath()
+		canvasContext.moveTo(previous.x, previous.y)
+		canvasContext.lineTo(newX, newY)
+		canvasContext.lineCap = settings.penCap
+		canvasContext.stroke()
+		canvasContext.closePath()
 		
-		output.push({'lx': newX, 'ly': newY, 'mx': previous.x, 'my': previous.y});
+		output.push({'lx': newX, 'ly': newY, 'mx': previous.x, 'my': previous.y})
 		
-		previous.x = newX;
-		previous.y = newY;
+		previous.x = newX
+		previous.y = newY
 	}
 
 	/**
@@ -530,24 +521,22 @@ function SignaturePad(selector, options)
 	 */
 	function clearCanvas()
 	{
-		stopDrawing();
+		stopDrawing()
 		
-		canvasContext.clearRect(0, 0, element.width, element.height);
+		canvasContext.clearRect(0, 0, element.width, element.height)
 		
 		// Hack for IE6; doesn't always perform properly with transparent background
-		canvasContext.fillStyle = settings.bgColour;
-		canvasContext.fillRect(0, 0, element.width, element.height);
+		canvasContext.fillStyle = settings.bgColour
+		canvasContext.fillRect(0, 0, element.width, element.height)
 		
 		if(!settings.displayOnly)
-		{
-			drawSigLine();
-		}
+			drawSigLine()
 		
-		canvasContext.lineWidth = settings.penWidth;
-		canvasContext.strokeStyle = settings.penColour;
+		canvasContext.lineWidth = settings.penWidth
+		canvasContext.strokeStyle = settings.penColour
 		
-		$(settings.output, context).val('');
-		output = [];
+		$(settings.output, context).val('')
+		output = []
 	}
 
 	/**
@@ -557,13 +546,13 @@ function SignaturePad(selector, options)
 	 */
 	function drawSigLine()
 	{
-		canvasContext.beginPath();
-		canvasContext.lineWidth = settings.lineWidth;
-		canvasContext.strokeStyle = settings.lineColour;
-		canvasContext.moveTo(settings.lineMargin, settings.lineTop);
-		canvasContext.lineTo(element.width - settings.lineMargin, settings.lineTop);
-		canvasContext.stroke();
-		canvasContext.closePath();
+		canvasContext.beginPath()
+		canvasContext.lineWidth = settings.lineWidth
+		canvasContext.strokeStyle = settings.lineColour
+		canvasContext.moveTo(settings.lineMargin, settings.lineTop)
+		canvasContext.lineTo(element.width - settings.lineMargin, settings.lineTop)
+		canvasContext.stroke()
+		canvasContext.closePath()
 	}
 
 	/**
@@ -576,28 +565,28 @@ function SignaturePad(selector, options)
 	 */
 	function validateForm()
 	{
-		var valid = true;
+		var valid = true
 		
-		$('p.'+settings.errorClass, context).remove();
-		context.removeClass(settings.errorClass);
-		$('input, label', context).removeClass(settings.errorClass);
+		$('p.'+settings.errorClass, context).remove()
+		context.removeClass(settings.errorClass)
+		$('input, label', context).removeClass(settings.errorClass)
 		
 		if(settings.drawOnly && output.length < 1)
 		{
-			$(selector).prepend('<p class="'+settings.errorClass+'">'+settings.errorMessageDraw+'</p>');
-			valid = false;
+			$(selector).prepend('<p class="'+settings.errorClass+'">'+settings.errorMessageDraw+'</p>')
+			valid = false
 		}
 		
 		if($(settings.name, context).val() === '')
 		{
-			$(selector).prepend('<p class="'+settings.errorClass+'">'+settings.errorMessage+'</p>');
-			$(settings.name, context).focus();
-			$(settings.name, context).addClass(settings.errorClass);
-			$('label[for='+$(settings.name).attr('id')+']', context).addClass(settings.errorClass);
-			valid = false;
+			$(selector).prepend('<p class="'+settings.errorClass+'">'+settings.errorMessage+'</p>')
+			$(settings.name, context).focus()
+			$(settings.name, context).addClass(settings.errorClass)
+			$('label[for='+$(settings.name).attr('id')+']', context).addClass(settings.errorClass)
+			valid = false
 		}
 		
-		return valid;
+		return valid
 	}
 	
 }
@@ -612,14 +601,15 @@ function SignaturePad(selector, options)
  */
 $.fn.signaturePad = function(options)
 {
-	var api = null;
+	var api = null
 	
-	this.each(function(){
-		api = new SignaturePad(this, options);
-	});
+	this.each(function()
+	{
+		api = new SignaturePad(this, options)
+	})
 	
-	return api;
-};
+	return api
+}
 
 /**
  *	Expose the defaults so they can be overwritten for multiple instances
@@ -654,6 +644,6 @@ $.fn.signaturePad.defaults = {
 	,errorClass: 'error' // The class applied to the new error Html element
 	,errorMessage: 'Please enter your name' // The error message displayed on invalid submission
 	,errorMessageDraw: 'Please sign the document' // The error message displayed when drawOnly and no signature is drawn
-};
+}
 
-})(jQuery);
+})(jQuery)
