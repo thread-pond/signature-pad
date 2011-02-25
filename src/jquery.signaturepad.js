@@ -1,8 +1,8 @@
 /**
- *	SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas
+ *	@preserve SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas
  *	based signature pad. Records the drawn signature in JSON for later regeneration.
  *
- *	Dependencies: excanvas, json2, jquery-1.3.2+
+ *	Dependencies: flashcanvas, json2, jquery-1.3.2+
  *	
  *	@project ca.thomasjbradley.applications.signaturepad
  *	@author Thomas J Bradley <hey@thomasjbradley.ca>
@@ -10,7 +10,7 @@
  *	@link http://github.com/thomasjbradley/signature-pad
  *	@copyright Copyright MMXI, Thomas J Bradley
  *	@license New BSD License
- *	@version 1.5.1
+ *	@version 2.0.0
  */
 
 /**
@@ -112,12 +112,10 @@ function SignaturePad(selector, options)
 	// Disable selection on the typed div and canvas
 	$(settings.typed, context).bind('selectstart.signaturepad', function(e){ return $(e.target).is(':input') })
 	canvas.bind('selectstart.signaturepad', function(e){ return $(e.target).is(':input') })
-
+	
 	if(!element.getContext)
-	{
-		G_vmlCanvasManager.initElement(element)
-	}
-
+		FlashCanvas.initElement(element)
+	
 	if(element.getContext)
 	{
 		canvasContext = element.getContext('2d')
@@ -168,16 +166,6 @@ function SignaturePad(selector, options)
 			
 			$(settings.typeItDesc, context).show()
 			$(settings.sigNav, context).show()
-			
-			// Hack for IE7 and IE8, if clearCanvas() is called instantly it doesn't draw the sig line
-			setTimeout(clearCanvas, 50)
-		}
-		
-		// Hack for IE8 standards mode
-		// excanvas sets overflow:hidden on its internal Vml div; overflow:visible works in all modes
-		if(canvas.children('div').length > 0)
-		{
-			canvas.children('div').css('overflow', 'visible')
 		}
 	}
 	
@@ -246,7 +234,6 @@ function SignaturePad(selector, options)
 
 		/**
 		 *	Returns the signature as an image
-		 *	Doesn't work in IE; relies on canvas.toDataURL()
 		 *
 		 *	@return {String}
 		 */
@@ -424,7 +411,8 @@ function SignaturePad(selector, options)
 		previous.x = null
 		previous.y = null
 		
-		$(settings.output, context).val(JSON.stringify(output))
+		if(output.length > 0)
+			$(settings.output, context).val(JSON.stringify(output))
 	}
 
 	/**
@@ -524,10 +512,6 @@ function SignaturePad(selector, options)
 		stopDrawing()
 		
 		canvasContext.clearRect(0, 0, element.width, element.height)
-		
-		// Hack for IE6; doesn't always perform properly with transparent background
-		canvasContext.fillStyle = settings.bgColour
-		canvasContext.fillRect(0, 0, element.width, element.height)
 		
 		if(!settings.displayOnly)
 			drawSigLine()

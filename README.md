@@ -6,7 +6,7 @@ based signature pad. Records the drawn signature in JSON for later regeneration.
 
 Copyright MMXI, Thomas J Bradley, <hey@thomasjbradley.ca>
 
-Dependencies: excanvas, json2, jquery-1.3.2+
+Dependencies: flashcanvas, json2, jquery-1.3.2+
 
 Versioned using Semantic Versioning, <http://semver.org/>
 
@@ -22,6 +22,11 @@ Source Code
 
 Version History
 ---------------
+**2.0.0 (Feb. 25, 2011)**
+
+- Switched to FlashCanvas instead of ExplorerCanvas (more reliable, less hacks needed, actively being developed)
+- .getSignatureImage() now works cross-browser thanks to FlashCanvas
+
 **1.5.1 (Feb. 23, 2011)**
 
 - Added an option/fixed a bug: the pen would be jagged if thicker than 4 pixels
@@ -78,7 +83,7 @@ Version History
 **1.1.1 (Jan. 26, 2010)**
 
 - Fixed a bug in IE 8, where IE 8 would not regenerate signatures
-  Required a new version of excanvas (r71 from svn trunk)
+  Required a new version of flashcanvas (r71 from svn trunk)
   IE6 still requires older release r3 to work
 
 **1.1.0 (Jan. 4, 2010)**
