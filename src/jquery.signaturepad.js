@@ -3,7 +3,7 @@
  *	based signature pad. Records the drawn signature in JSON for later regeneration.
  *
  *	Dependencies: flashcanvas, json2, jquery-1.3.2+
- *	
+ *
  *	@project ca.thomasjbradley.applications.signaturepad
  *	@author Thomas J Bradley <hey@thomasjbradley.ca>
  *	@link http://thomasjbradley.ca/lab/signature-pad
@@ -98,7 +98,7 @@ function SignaturePad(selector, options)
 	 *	@type {Array}
 	 */
 	,output = []
-	
+
 	/**
 	 *	Stores a timeout for when the mouse leaves the canvas
 	 *	If the mouse has left the canvas for a specific amount of time
@@ -112,16 +112,16 @@ function SignaturePad(selector, options)
 	// Disable selection on the typed div and canvas
 	$(settings.typed, context).bind('selectstart.signaturepad', function(e){ return $(e.target).is(':input') });
 	canvas.bind('selectstart.signaturepad', function(e){ return $(e.target).is(':input') });
-	
+
 	if(!element.getContext)
 		FlashCanvas.initElement(element);
-	
+
 	if(element.getContext)
 	{
 		canvasContext = element.getContext('2d');
-		
+
 		$(settings.sig, context).show();
-		
+
 		if(!settings.displayOnly)
 		{
 			if(!settings.drawOnly)
@@ -130,19 +130,19 @@ function SignaturePad(selector, options)
 				{
 					type($(this).val());
 				});
-				
+
 				$(settings.name, context).bind('blur.signaturepad', function()
 				{
 					type($(this).val());
 				});
-				
+
 				$(settings.drawIt, context).bind('click.signaturepad', function(e)
 				{
 					drawIt();
 					return false;
 				});
 			}
-			
+
 			if(settings.drawOnly || settings.defaultAction == 'drawIt')
 			{
 				drawIt();
@@ -151,7 +151,7 @@ function SignaturePad(selector, options)
 			{
 				typeIt();
 			}
-			
+
 			if(settings.validateFields)
 			{
 				if($(selector).is('form'))
@@ -163,12 +163,12 @@ function SignaturePad(selector, options)
 					$(selector).parents('form').bind('submit.signaturepad', function(){ return validateForm() });
 				}
 			}
-			
+
 			$(settings.typeItDesc, context).show();
 			$(settings.sigNav, context).show();
 		}
 	}
-	
+
 	$.extend(self,
 	{
 		/**
@@ -182,10 +182,10 @@ function SignaturePad(selector, options)
 		{
 			self.clearCanvas();
 			$(settings.typed, context).hide();
-			
+
 			if(typeof paths === 'string')
 				paths = JSON.parse(paths);
-			
+
 			for(var i in paths)
 			{
 				if(typeof paths[i] === 'object')
@@ -194,11 +194,11 @@ function SignaturePad(selector, options)
 					canvasContext.moveTo(paths[i].mx, paths[i].my);
 					canvasContext.lineTo(paths[i].lx, paths[i].ly);
 					canvasContext.stroke();
-					
+
 					output.push({'lx': paths[i].lx, 'ly': paths[i].ly, 'mx': paths[i].mx, 'my': paths[i].my});
 				}
 			}
-			
+
 			if($(settings.output, context).length > 0)
 				$(settings.output, context).val(JSON.stringify(output));
 		}
@@ -253,7 +253,7 @@ function SignaturePad(selector, options)
 	{
 		$(settings.typed, context).hide();
 		clearCanvas();
-		
+
 		canvas.bind('mousedown.signaturepad', function(e){ startDrawing(e, this) });
 		canvas.bind('mouseup.signaturepad', function(e){ stopDrawing() });
 		canvas.bind('mouseleave.signaturepad', function(e)
@@ -268,7 +268,7 @@ function SignaturePad(selector, options)
 				}, 200);
 			}
 		});
-		
+
 		if(typeof this.ontouchstart != 'undefined')
 		{
 			canvas.each(function()
@@ -278,29 +278,29 @@ function SignaturePad(selector, options)
 					e.preventDefault();
 					startDrawing(e, this);
 				};
-				
+
 				this.ontouchend = function(e)
 				{
 					stopDrawing();
 				};
-				
+
 				this.ontouchcancel = function(e)
 				{
 					stopDrawing();
 				};
 			});
 		}
-		
+
 		$(settings.clear, context).bind('click.signaturepad', function(e){ clearCanvas(); return false; });
-		
+
 		$(settings.typeIt, context).bind('click.signaturepad', function(e){ typeIt(); return false; });
 		$(settings.drawIt, context).unbind('click.signaturepad');
-		$(settings.drawIt, context).bind('click.signaturepad', function(e){ return false });
-		
+		$(settings.drawIt, context).bind('click.signaturepad', function(e){ return false; });
+
 		$(settings.typeIt, context).removeClass(settings.currentClass);
 		$(settings.drawIt, context).addClass(settings.currentClass);
 		$(settings.sig, context).addClass(settings.currentClass);
-		
+
 		$(settings.typeItDesc, context).hide();
 		$(settings.drawItDesc, context).show();
 		$(settings.clear, context).show();
@@ -331,17 +331,17 @@ function SignaturePad(selector, options)
 		clearCanvas();
 		disableCanvas();
 		$(settings.typed, context).show();
-		
+
 		$(settings.drawIt, context).bind('click.signaturepad', function(e){ drawIt(); return false });
 		$(settings.typeIt, context).unbind('click.signaturepad');
 		$(settings.typeIt, context).bind('click.signaturepad', function(e){ return false });
-		
+
 		$(settings.output, context).val('');
-		
+
 		$(settings.drawIt, context).removeClass(settings.currentClass);
 		$(settings.typeIt, context).addClass(settings.currentClass);
 		$(settings.sig, context).removeClass(settings.currentClass);
-		
+
 		$(settings.drawItDesc, context).hide();
 		$(settings.clear, context).hide();
 		$(settings.typeItDesc, context).show();
@@ -357,7 +357,7 @@ function SignaturePad(selector, options)
 	function type(val)
 	{
 		$(settings.typed, context).html(val.replace(/>/g, '&gt;').replace(/</g, '&lt;'));
-		
+
 		while($(settings.typed, context).width() > element.width)
 		{
 			var oldSize = $(settings.typed, context).css('font-size').replace(/px/, '');
@@ -376,7 +376,7 @@ function SignaturePad(selector, options)
 	function startDrawing(e, o)
 	{
 		canvas.bind('mousemove.signaturepad', function(ev){ drawLine(ev, this) });
-		
+
 		if(typeof this.ontouchstart != 'undefined')
 		{
 			canvas.each(function()
@@ -388,7 +388,7 @@ function SignaturePad(selector, options)
 			});
 		}
 	}
-	
+
 	/**
 	 *	Callback registered to mouse/touch events of the canvas
 	 *	Stops the drawing abilities
@@ -399,7 +399,7 @@ function SignaturePad(selector, options)
 	function stopDrawing()
 	{
 		canvas.unbind('mousemove.signaturepad');
-		
+
 		if(typeof this.ontouchstart != 'undefined')
 		{
 			canvas.each(function()
@@ -407,10 +407,10 @@ function SignaturePad(selector, options)
 				this.ontouchmove = null;
 			})
 		}
-		
+
 		previous.x = null;
 		previous.y = null;
-		
+
 		if(output.length > 0)
 			$(settings.output, context).val(JSON.stringify(output));
 	}
@@ -429,7 +429,7 @@ function SignaturePad(selector, options)
 	function calculateTouchZoomDiff(o)
 	{
 		var oldScrollLeft, oldScrollTop = $(document).scrollTop(), newDiffTop = 0, oldDiffTop, newDiffLeft, oldDiffLeft;
-		
+
 		if(oldScrollTop > 0)
 		{
 			oldDiffTop = o.offsetTop - $(o).offset().top;
@@ -437,10 +437,10 @@ function SignaturePad(selector, options)
 			newDiffTop = o.offsetTop - $(o).offset().top;
 			$(document).scrollTop(oldScrollTop);
 		}
-		
+
 		oldScrollLeft = $(document).scrollLeft();
 		newDiffLeft = 0;
-		
+
 		if(oldScrollLeft > 0)
 		{
 			oldDiffLeft = o.offsetLeft - $(o).offset().left;
@@ -448,7 +448,7 @@ function SignaturePad(selector, options)
 			newDiffLeft = o.offsetLeft - $(o).offset().left;
 			$(document).scrollLeft(oldScrollLeft);
 		}
-		
+
 		return {
 			'top': (oldDiffTop != newDiffTop) ? $(document).scrollTop() : 0
 			,'left': (oldDiffLeft != newDiffLeft) ? $(document).scrollLeft() : 0
@@ -459,7 +459,7 @@ function SignaturePad(selector, options)
 	 *	Draws a line on canvas using the mouse position
 	 *	Checks previous position to not draw over top of pervious drawing
 	 *		(makes the line really thick and poorly anti-aliased)
-	 *	
+	 *
 	 *	@private
 	 *	@param {Object} e The event object
 	 *	@param {Object} o The object context registered to the event; canvas
@@ -468,10 +468,10 @@ function SignaturePad(selector, options)
 	function drawLine(e, o, diff)
 	{
 		var offset = $(o).offset(), newX, newY;
-		
+
 		clearTimeout(mouseLeaveTimeout);
 		mouseLeaveTimeout = false;
-		
+
 		if(typeof e.changedTouches != 'undefined')
 		{
 			newX = Math.floor(e.changedTouches[0].pageX - offset.left + diff.left);
@@ -482,22 +482,22 @@ function SignaturePad(selector, options)
 			newX = Math.floor(e.pageX - offset.left);
 			newY = Math.floor(e.pageY - offset.top);
 		}
-		
+
 		if(previous.x === null)
 			previous.x = newX;
 
 		if(previous.y === null)
 			previous.y = newY;
-		
+
 		canvasContext.beginPath();
 		canvasContext.moveTo(previous.x, previous.y);
 		canvasContext.lineTo(newX, newY);
 		canvasContext.lineCap = settings.penCap;
 		canvasContext.stroke();
 		canvasContext.closePath();
-		
+
 		output.push({'lx': newX, 'ly': newY, 'mx': previous.x, 'my': previous.y});
-		
+
 		previous.x = newX;
 		previous.y = newY;
 	}
@@ -510,15 +510,15 @@ function SignaturePad(selector, options)
 	function clearCanvas()
 	{
 		stopDrawing();
-		
+
 		canvasContext.clearRect(0, 0, element.width, element.height);
-		
+
 		if(!settings.displayOnly)
 			drawSigLine();
-		
+
 		canvasContext.lineWidth = settings.penWidth;
 		canvasContext.strokeStyle = settings.penColour;
-		
+
 		$(settings.output, context).val('');
 		output = [];
 	}
@@ -550,29 +550,70 @@ function SignaturePad(selector, options)
 	function validateForm()
 	{
 		var valid = true;
-		
-		$('p.'+settings.errorClass, context).remove();
-		context.removeClass(settings.errorClass);
-		$('input, label', context).removeClass(settings.errorClass);
-		
+		var errors = {};
+
+        // call custom onBeforeValidate callback to clear errors only if provided
+        var onBeforeArguments = [selector, context, settings];
+		(settings.onBeforeValidate && typeof settings.onBeforeValidate == 'function') ?
+            settings.onBeforeValidate.apply(self,onBeforeArguments) :
+            onBeforeValidate.apply(self, onBeforeArguments);
+
 		if(settings.drawOnly && output.length < 1)
 		{
-			$(selector).prepend('<p class="'+settings.errorClass+'">'+settings.errorMessageDraw+'</p>');
-			valid = false
+			errors.drawInvalid = true;
+			valid = false;
 		}
-		
+
 		if($(settings.name, context).val() === '')
 		{
-			$(selector).prepend('<p class="'+settings.errorClass+'">'+settings.errorMessage+'</p>');
+			errors.nameInvalid = true;
+			valid = false;
+		}
+
+        // call custom onFormError function to show errors only if provided
+        var onErrorArguments = [errors, selector, context, settings];
+        (settings.onFormError && typeof settings.onFormError == 'function') ?
+            settings.onFormError.apply(self,onErrorArguments) :
+            onFormError.apply(self, onErrorArguments);
+
+		return valid;
+	}
+
+    /**
+     * Default onBeforeValidate function to clear errors.
+     *
+     * @param selector {String} - top selector
+     * @param context {Object} - current context object
+     * @param settings {Object} - provided settings
+     */
+    function onBeforeValidate(selector, context, settings) {
+        $('p.'+settings.errorClass, context).remove();
+		context.removeClass(settings.errorClass);
+		$('input, label', context).removeClass(settings.errorClass);
+    }
+
+
+    /**
+     * Default onBeforeValidate function to show errors.
+     *
+     * @param errors {Object} - object contains validation errors (e.g. nameInvalid=true)
+     * @param selector {String} - top selector
+     * @param context {Object} - current context object
+     * @param settings {Object} - provided settings
+     */
+    function onFormError(errors, selector, context, settings) {
+        if(errors.nameInvalid) {
+            $(selector).prepend('<p class="'+settings.errorClass+'">'+settings.errorMessage+'</p>');
 			$(settings.name, context).focus();
 			$(settings.name, context).addClass(settings.errorClass);
 			$('label[for='+$(settings.name).attr('id')+']', context).addClass(settings.errorClass);
-			valid = false
-		}
-		
-		return valid;
-	}
-	
+        }
+
+        if(errors.drawInvalid) {
+            $(selector).prepend('<p class="'+settings.errorClass+'">'+settings.errorMessageDraw+'</p>');
+        }
+    }
+
 }
 
 /**
@@ -586,12 +627,12 @@ function SignaturePad(selector, options)
 $.fn.signaturePad = function(options)
 {
 	var api = null;
-	
+
 	this.each(function()
 	{
 		api = new SignaturePad(this, options)
 	});
-	
+
 	return api;
 };
 
