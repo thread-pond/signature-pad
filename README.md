@@ -83,7 +83,7 @@ Version History
 **1.1.1 (Jan. 26, 2010)**
 
 - Fixed a bug in IE 8, where IE 8 would not regenerate signatures
-  Required a new version of explorercanvas (r71 from svn trunk)
+  Required a new version of ExplorerCanvas (r71 from svn trunk)
   IE6 still requires older release r3 to work
 
 **1.1.0 (Jan. 4, 2010)**
