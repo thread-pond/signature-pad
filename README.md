@@ -94,8 +94,8 @@ Version History
 
 **1.0.1 (Dec. 3, 2009)**
 
-- Fixed @font-face support for Google Chrome by adding SVG fonts
-- Fixed future @font-face support by adding WOFF font
+- Fixed `@font-face` support for Google Chrome by adding SVG fonts
+- Fixed future `@font-face` support by adding WOFF font
 
 **1.0.0 (Nov. 30, 2009)**
 
