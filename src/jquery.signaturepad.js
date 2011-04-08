@@ -10,7 +10,7 @@
  *	@link http://github.com/thomasjbradley/signature-pad
  *	@copyright Copyright MMXI, Thomas J Bradley
  *	@license New BSD License
- *	@version 2.0.0
+ *	@version 2.0.1
  */
 
 /**

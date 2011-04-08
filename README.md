@@ -22,6 +22,10 @@ Source Code
 
 Version History
 ---
+**2.0.1 (Apr. 7, 2011)**
+
+- Fixed a bug in `regenerate()` related to the `penCap`
+
 **2.0.0 (Feb. 25, 2011)**
 
 - Switched to FlashCanvas instead of ExplorerCanvas (more reliable, less hacks needed, actively being developed)
