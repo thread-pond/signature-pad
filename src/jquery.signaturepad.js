@@ -193,7 +193,9 @@ function SignaturePad(selector, options)
 					canvasContext.beginPath()
 					canvasContext.moveTo(paths[i].mx, paths[i].my)
 					canvasContext.lineTo(paths[i].lx, paths[i].ly)
+					canvasContext.lineCap = settings.penCap
 					canvasContext.stroke()
+					canvasContext.closePath()
 					
 					output.push({'lx': paths[i].lx, 'ly': paths[i].ly, 'mx': paths[i].mx, 'my': paths[i].my})
 				}
