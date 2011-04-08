@@ -22,6 +22,10 @@ Source Code
 
 Version History
 ---
+**2.0.2 (Apr. 7, 2011)**
+
+- Added an unintentional missing feature: when clicking on the pad, a dot is now drawn
+
 **2.0.1 (Apr. 7, 2011)**
 
 - Fixed a bug in `regenerate()` related to the `penCap`

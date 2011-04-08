@@ -10,7 +10,7 @@
  *	@link http://github.com/thomasjbradley/signature-pad
  *	@copyright Copyright MMXI, Thomas J Bradley
  *	@license New BSD License
- *	@version 2.0.1
+ *	@version 2.0.2
  */
 
 /**
@@ -255,7 +255,7 @@ function SignaturePad(selector, options)
 	{
 		$(settings.typed, context).hide()
 		clearCanvas()
-		
+	
 		canvas.bind('mousedown.signaturepad', function(e){ startDrawing(e, this) })
 		canvas.bind('mouseup.signaturepad', function(e){ stopDrawing() })
 		canvas.bind('mouseleave.signaturepad', function(e)
@@ -350,7 +350,7 @@ function SignaturePad(selector, options)
 	}
 
 	/**
-	 *	Callback registered on keyup and blur events for input field
+	 *	Callback registered on key up and blur events for input field
 	 *	Writes the text fields value as Html into an element
 	 *
 	 *	@private
@@ -378,7 +378,7 @@ function SignaturePad(selector, options)
 	function startDrawing(e, o)
 	{
 		canvas.bind('mousemove.signaturepad', function(ev){ drawLine(ev, this) })
-		
+
 		if(typeof this.ontouchstart != 'undefined')
 		{
 			canvas.each(function()
@@ -388,6 +388,14 @@ function SignaturePad(selector, options)
 					drawLine(ev, this, calculateTouchZoomDiff(this))
 				}
 			})
+			
+			// Draws a single point on initial mouse down, for people with periods in their name
+			drawLine(e, o, calculateTouchZoomDiff(o), 1)
+		}
+		else
+		{
+			// Draws a single point on initial mouse down, for people with periods in their name
+			drawLine(e, o, null, 1)
 		}
 	}
 	
@@ -418,13 +426,13 @@ function SignaturePad(selector, options)
 	}
 
 	/**
-	 *	For touch based devices calculates the offset difference to accomodate
+	 *	For touch based devices calculates the offset difference to accommodate
 	 *	for zooming and scrolling
 	 *	Targets iPad specifically, which returns the incorrect .offset().top|.left
 	 *	for an object when zoomed in; appears to ignore scroll position
 	 *
 	 *	@private
-	 *	@param {Object} o The object context registered to the mousedown event; canvas
+	 *	@param {Object} o The object context registered to the mouse down event; canvas
 	 *
 	 *	@return {Object}
 	 */
@@ -459,15 +467,16 @@ function SignaturePad(selector, options)
 
 	/**
 	 *	Draws a line on canvas using the mouse position
-	 *	Checks previous position to not draw over top of pervious drawing
+	 *	Checks previous position to not draw over top of previous drawing
 	 *		(makes the line really thick and poorly anti-aliased)
 	 *	
 	 *	@private
 	 *	@param {Object} e The event object
 	 *	@param {Object} o The object context registered to the event; canvas
 	 *	@param {Number} diff The difference between offset for touch devices
+	 *	@param {Number} newYOffset A pixel value for drawing the newY, used for drawing a single dot on click
 	 */
-	function drawLine(e, o, diff)
+	function drawLine(e, o, diff, newYOffset)
 	{
 		var offset = $(o).offset(), newX, newY
 		
@@ -485,12 +494,18 @@ function SignaturePad(selector, options)
 			newY = Math.floor(e.pageY - offset.top)
 		}
 		
+		if(previous.x == newX && previous.y == newY)
+			return
+
 		if(previous.x === null)
 			previous.x = newX
 
 		if(previous.y === null)
 			previous.y = newY
 		
+		if(newYOffset)
+			newY += newYOffset
+
 		canvasContext.beginPath()
 		canvasContext.moveTo(previous.x, previous.y)
 		canvasContext.lineTo(newX, newY)
