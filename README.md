@@ -1,4 +1,4 @@
-SignaturePad
+Signature Pad
 ===
 
 SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas
@@ -14,6 +14,7 @@ Versioned using Semantic Versioning, <http://semver.org/>
 Complete Documentation
 ---
 <http://thomasjbradley.ca/lab/signature-pad>
+
 
 Source Code
 ---
