@@ -113,6 +113,11 @@ function SignaturePad(selector, options)
 	$(settings.typed, context).bind('selectstart.signaturepad', function(e){ return $(e.target).is(':input') });
 	canvas.bind('selectstart.signaturepad', function(e){ return $(e.target).is(':input') });
 
+    //setting a default type of action to a field
+    if(settings.actionField) {
+        $(settings.actionField, context).val(settings.defaultAction==='typeIt' ? settings.typeActionValue : settings.drawActionValue);
+    }
+
 	if(!element.getContext)
 		FlashCanvas.initElement(element);
 
@@ -251,7 +256,12 @@ function SignaturePad(selector, options)
 	 */
 	function drawIt()
 	{
-		$(settings.typed, context).hide();
+		//setting current type of action to a action field
+        if (settings.actionField) {
+            $(settings.actionField, context).val(settings.drawActionValue);
+        }
+
+        $(settings.typed, context).hide();
 		clearCanvas();
 
 		canvas.bind('mousedown.signaturepad', function(e){ startDrawing(e, this) });
@@ -328,7 +338,12 @@ function SignaturePad(selector, options)
 	 */
 	function typeIt()
 	{
-		clearCanvas();
+		//setting current type of action to a action field
+        if (settings.actionField) {
+            $(settings.actionField, context).val(settings.typeActionValue);
+        }
+
+        clearCanvas();
 		disableCanvas();
 		$(settings.typed, context).show();
 
@@ -669,6 +684,9 @@ $.fn.signaturePad.defaults = {
 	,errorClass: 'error' // The class applied to the new error Html element
 	,errorMessage: 'Please enter your name' // The error message displayed on invalid submission
 	,errorMessageDraw: 'Please sign the document' // The error message displayed when drawOnly and no signature is drawn
+    ,actionField: '.action'
+    ,typeActionValue: 'type'
+    ,drawActionValue: 'draw'
 };
 
 })(jQuery);
