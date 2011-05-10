@@ -23,6 +23,10 @@ Source Code
 
 Version History
 ---
+**2.0.3 (May. 10, 2011)**
+
+- Fixed a bug with bgColour: the colour was not being honoured when clearing the canvas
+
 **2.0.2 (Apr. 7, 2011)**
 
 - Added an unintentional missing feature: when clicking on the pad, a dot is now drawn
