@@ -23,10 +23,9 @@
  *		var api = $('.sigPad').signaturePad({displayOnly:true})
  *		api.regenerate(sig)
  */
-(function($){
+(function($) {
 
-function SignaturePad(selector, options)
-{
+function SignaturePad(selector, options) {
 	/**
 	 *	Reference to the object for use in public methods
 	 *
@@ -82,7 +81,7 @@ function SignaturePad(selector, options)
 	 *	@private
 	 *	@type {Object}
 	 */
-	,previous = {'x':null, 'y':null}
+	,previous = {'x': null, 'y': null}
 
 	/**
 	 *	An array holding all the points and lines to generate the signature
@@ -114,8 +113,7 @@ function SignaturePad(selector, options)
 	 *
 	 *	@private
 	 */
-	function disableCanvas()
-	{
+	function disableCanvas() {
 		canvas.unbind('mousedown.signaturepad')
 		canvas.unbind('mouseup.signaturepad')
 		canvas.unbind('mousemove.signaturepad')
@@ -134,34 +132,30 @@ function SignaturePad(selector, options)
 	 *	@param {Number} diff The difference between offset for touch devices
 	 *	@param {Number} newYOffset A pixel value for drawing the newY, used for drawing a single dot on click
 	 */
-	function drawLine(e, o, diff, newYOffset)
-	{
+	function drawLine(e, o, diff, newYOffset) {
 		var offset = $(o).offset(), newX, newY
 		
 		clearTimeout(mouseLeaveTimeout)
 		mouseLeaveTimeout = false
 		
-		if(typeof e.changedTouches !== 'undefined')
-		{
+		if (typeof e.changedTouches !== 'undefined') {
 			newX = Math.floor(e.changedTouches[0].pageX - offset.left + diff.left)
 			newY = Math.floor(e.changedTouches[0].pageY - offset.top + diff.top)
-		}
-		else
-		{
+		} else {
 			newX = Math.floor(e.pageX - offset.left)
 			newY = Math.floor(e.pageY - offset.top)
 		}
 		
-		if(previous.x === newX && previous.y === newY)
+		if (previous.x === newX && previous.y === newY)
 			return true
 
-		if(previous.x === null)
+		if (previous.x === null)
 			previous.x = newX
 
-		if(previous.y === null)
+		if (previous.y === null)
 			previous.y = newY
 		
-		if(newYOffset)
+		if (newYOffset)
 			newY += newYOffset
 
 		canvasContext.beginPath()
@@ -171,7 +165,12 @@ function SignaturePad(selector, options)
 		canvasContext.stroke()
 		canvasContext.closePath()
 		
-		output.push({'lx': newX, 'ly': newY, 'mx': previous.x, 'my': previous.y})
+		output.push({
+			'lx': newX
+			,'ly': newY
+			,'mx': previous.x
+			,'my': previous.y
+		})
 		
 		previous.x = newX
 		previous.y = newY
@@ -184,14 +183,11 @@ function SignaturePad(selector, options)
 	 *	@private
 	 *	@param {Object} e The event object
 	 */
-	function stopDrawing()
-	{
+	function stopDrawing() {
 		canvas.unbind('mousemove.signaturepad')
 		
-		if(typeof this.ontouchstart !== 'undefined')
-		{
-			canvas.each(function()
-			{
+		if (typeof this.ontouchstart !== 'undefined') {
+			canvas.each(function() {
 				this.ontouchmove = null
 			})
 		}
@@ -199,7 +195,7 @@ function SignaturePad(selector, options)
 		previous.x = null
 		previous.y = null
 		
-		if(output.length > 0)
+		if (output.length > 0)
 			$(settings.output, context).val(JSON.stringify(output))
 	}
 
@@ -208,8 +204,7 @@ function SignaturePad(selector, options)
 	 *
 	 *	@private
 	 */
-	function drawSigLine()
-	{
+	function drawSigLine() {
 		canvasContext.beginPath()
 		canvasContext.lineWidth = settings.lineWidth
 		canvasContext.strokeStyle = settings.lineColour
@@ -224,14 +219,13 @@ function SignaturePad(selector, options)
 	 *
 	 *	@private
 	 */
-	function clearCanvas()
-	{
+	function clearCanvas() {
 		stopDrawing()
 		
 		canvasContext.fillStyle = settings.bgColour
 		canvasContext.fillRect(0, 0, element.width, element.height)
 		
-		if(!settings.displayOnly)
+		if (!settings.displayOnly)
 			drawSigLine()
 		
 		canvasContext.lineWidth = settings.penWidth
@@ -252,12 +246,10 @@ function SignaturePad(selector, options)
 	 *
 	 *	@return {Object}
 	 */
-	function calculateTouchZoomDiff(o)
-	{
+	function calculateTouchZoomDiff(o) {
 		var oldScrollLeft, oldScrollTop = $(document).scrollTop(), newDiffTop = 0, oldDiffTop, newDiffLeft, oldDiffLeft
 		
-		if(oldScrollTop > 0)
-		{
+		if (oldScrollTop > 0) {
 			oldDiffTop = o.offsetTop - $(o).offset().top
 			$(document).scrollTop(0)
 			newDiffTop = o.offsetTop - $(o).offset().top
@@ -267,8 +259,7 @@ function SignaturePad(selector, options)
 		oldScrollLeft = $(document).scrollLeft()
 		newDiffLeft = 0
 		
-		if(oldScrollLeft > 0)
-		{
+		if (oldScrollLeft > 0) {
 			oldDiffLeft = o.offsetLeft - $(o).offset().left
 			$(document).scrollLeft(0)
 			newDiffLeft = o.offsetLeft - $(o).offset().left
@@ -289,25 +280,19 @@ function SignaturePad(selector, options)
 	 *	@param {Object} e The event object
 	 *	@param {Object} o The object context registered to the event; canvas
 	 */
-	function startDrawing(e, o)
-	{
-		canvas.bind('mousemove.signaturepad', function(ev){ drawLine(ev, this) })
+	function startDrawing(e, o) {
+		canvas.bind('mousemove.signaturepad', function(e){ drawLine(e, this) })
 
-		if(typeof this.ontouchstart !== 'undefined')
-		{
-			canvas.each(function()
-			{
-				this.ontouchmove = function(ev)
-				{
-					drawLine(ev, this, calculateTouchZoomDiff(this))
+		if (typeof this.ontouchstart !== 'undefined') {
+			canvas.each(function() {
+				this.ontouchmove = function(e) {
+					drawLine(e, this, calculateTouchZoomDiff(this))
 				}
 			})
 			
 			// Draws a single point on initial mouse down, for people with periods in their name
 			drawLine(e, o, calculateTouchZoomDiff(o), 1)
-		}
-		else
-		{
+		} else {
 			// Draws a single point on initial mouse down, for people with periods in their name
 			drawLine(e, o, null, 1)
 		}
@@ -319,19 +304,15 @@ function SignaturePad(selector, options)
 	 *
 	 *	@private
 	 */
-	function drawIt()
-	{
+	function drawIt() {
 		$(settings.typed, context).hide()
 		clearCanvas()
 	
-		canvas.bind('mousedown.signaturepad', function(e){ startDrawing(e, this) })
-		canvas.bind('mouseup.signaturepad', function(e){ stopDrawing() })
-		canvas.bind('mouseleave.signaturepad', function(e)
-		{
-			if(!mouseLeaveTimeout)
-			{
-				mouseLeaveTimeout = setTimeout(function()
-				{
+		canvas.bind('mousedown.signaturepad', function(e) { startDrawing(e, this) })
+		canvas.bind('mouseup.signaturepad', function(e) { stopDrawing() })
+		canvas.bind('mouseleave.signaturepad', function(e) {
+			if (!mouseLeaveTimeout) {
+				mouseLeaveTimeout = setTimeout(function() {
 					stopDrawing()
 					clearTimeout(mouseLeaveTimeout)
 					mouseLeaveTimeout = false
@@ -339,33 +320,28 @@ function SignaturePad(selector, options)
 			}
 		})
 		
-		if(typeof this.ontouchstart !== 'undefined')
-		{
-			canvas.each(function()
-			{
-				this.ontouchstart = function(e)
-				{
+		if (typeof this.ontouchstart !== 'undefined') {
+			canvas.each(function() {
+				this.ontouchstart = function(e) {
 					e.preventDefault()
 					startDrawing(e, this)
 				}
 				
-				this.ontouchend = function(e)
-				{
+				this.ontouchend = function(e) {
 					stopDrawing()
 				}
 				
-				this.ontouchcancel = function(e)
-				{
+				this.ontouchcancel = function(e) {
 					stopDrawing()
 				}
 			})
 		}
 		
-		$(settings.clear, context).bind('click.signaturepad', function(e){ clearCanvas(); return false })
+		$(settings.clear, context).bind('click.signaturepad', function(e) { clearCanvas(); return false })
 		
-		$(settings.typeIt, context).bind('click.signaturepad', function(e){ typeIt(); return false })
+		$(settings.typeIt, context).bind('click.signaturepad', function(e) { typeIt(); return false })
 		$(settings.drawIt, context).unbind('click.signaturepad')
-		$(settings.drawIt, context).bind('click.signaturepad', function(e){ return false })
+		$(settings.drawIt, context).bind('click.signaturepad', function(e) { return false })
 		
 		$(settings.typeIt, context).removeClass(settings.currentClass)
 		$(settings.drawIt, context).addClass(settings.currentClass)
@@ -382,15 +358,14 @@ function SignaturePad(selector, options)
 	 *
 	 *	@private
 	 */
-	function typeIt()
-	{
+	function typeIt() {
 		clearCanvas()
 		disableCanvas()
 		$(settings.typed, context).show()
 		
-		$(settings.drawIt, context).bind('click.signaturepad', function(e){ drawIt(); return false })
+		$(settings.drawIt, context).bind('click.signaturepad', function(e) { drawIt(); return false })
 		$(settings.typeIt, context).unbind('click.signaturepad')
-		$(settings.typeIt, context).bind('click.signaturepad', function(e){ return false })
+		$(settings.typeIt, context).bind('click.signaturepad', function(e) { return false })
 		
 		$(settings.output, context).val('')
 		
@@ -410,12 +385,10 @@ function SignaturePad(selector, options)
 	 *	@private
 	 *	@param {String} val The value of the input field
 	 */
-	function type(val)
-	{
+	function type(val) {
 		$(settings.typed, context).html(val.replace(/>/g, '&gt;').replace(/</g, '&lt;'))
 		
-		while($(settings.typed, context).width() > element.width)
-		{
+		while ($(settings.typed, context).width() > element.width) {
 			var oldSize = $(settings.typed, context).css('font-size').replace(/px/, '')
 			$(settings.typed, context).css('font-size', oldSize-1+'px')
 		}
@@ -429,26 +402,23 @@ function SignaturePad(selector, options)
 	 *
 	 *	@return {Boolean}
 	 */
-	function validateForm()
-	{
+	function validateForm() {
 		var valid = true
 		
-		$('p.'+settings.errorClass, context).remove()
+		$('p.' + settings.errorClass, context).remove()
 		context.removeClass(settings.errorClass)
 		$('input, label', context).removeClass(settings.errorClass)
 		
-		if(settings.drawOnly && output.length < 1)
-		{
-			$(selector).prepend('<p class="'+settings.errorClass+'">'+settings.errorMessageDraw+'</p>')
+		if (settings.drawOnly && output.length < 1) {
+			$(selector).prepend('<p class="' + settings.errorClass + '">' + settings.errorMessageDraw + '</p>')
 			valid = false
 		}
 		
-		if($(settings.name, context).val() === '')
-		{
-			$(selector).prepend('<p class="'+settings.errorClass+'">'+settings.errorMessage+'</p>')
+		if ($(settings.name, context).val() === '') {
+			$(selector).prepend('<p class="' + settings.errorClass + '">' + settings.errorMessage + '</p>')
 			$(settings.name, context).focus()
 			$(settings.name, context).addClass(settings.errorClass)
-			$('label[for='+$(settings.name).attr('id')+']', context).addClass(settings.errorClass)
+			$('label[for=' + $(settings.name).attr('id') + ']', context).addClass(settings.errorClass)
 			valid = false
 		}
 		
@@ -461,60 +431,46 @@ function SignaturePad(selector, options)
 	 *
 	 * @private
 	 */
-	function init()
-	{
+	function init() {
 		// Disable selection on the typed div and canvas
-		$(settings.typed, context).bind('selectstart.signaturepad', function(e){ return $(e.target).is(':input') })
-		canvas.bind('selectstart.signaturepad', function(e){ return $(e.target).is(':input') })
+		$(settings.typed, context).bind('selectstart.signaturepad', function(e) { return $(e.target).is(':input') })
+		canvas.bind('selectstart.signaturepad', function(e) { return $(e.target).is(':input') })
 		
-		if(!element.getContext && FlashCanvas)
+		if (!element.getContext && FlashCanvas)
 			FlashCanvas.initElement(element)
 		
-		if(element.getContext)
-		{
+		if (element.getContext) {
 			canvasContext = element.getContext('2d')
 			
 			$(settings.sig, context).show()
 			
-			if(!settings.displayOnly)
-			{
-				if(!settings.drawOnly)
-				{
-					$(settings.name, context).bind('keyup.signaturepad', function()
-					{
+			if (!settings.displayOnly) {
+				if (!settings.drawOnly) {
+					$(settings.name, context).bind('keyup.signaturepad', function() {
 						type($(this).val())
 					})
 					
-					$(settings.name, context).bind('blur.signaturepad', function()
-					{
+					$(settings.name, context).bind('blur.signaturepad', function() {
 						type($(this).val())
 					})
 					
-					$(settings.drawIt, context).bind('click.signaturepad', function(e)
-					{
+					$(settings.drawIt, context).bind('click.signaturepad', function(e) {
 						drawIt()
 						return false
 					})
 				}
 				
-				if(settings.drawOnly || settings.defaultAction === 'drawIt')
-				{
+				if (settings.drawOnly || settings.defaultAction === 'drawIt') {
 					drawIt()
-				}
-				else
-				{
+				} else {
 					typeIt()
 				}
 				
-				if(settings.validateFields)
-				{
-					if($(selector).is('form'))
-					{
-						$(selector).bind('submit.signaturepad', function(){ return validateForm() })
-					}
-					else
-					{
-						$(selector).parents('form').bind('submit.signaturepad', function(){ return validateForm() })
+				if (settings.validateFields) {
+					if ($(selector).is('form')) {
+						$(selector).bind('submit.signaturepad', function() { return validateForm() })
+					} else {
+						$(selector).parents('form').bind('submit.signaturepad', function() { return validateForm() })
 					}
 				}
 				
@@ -524,15 +480,11 @@ function SignaturePad(selector, options)
 		}
 	}
 
-	$.extend(self,
-	{
+	$.extend(self, {
 		/**
 		 * Initialises SignaturePad
 		 */
-		init: function()
-		{
-			init()
-		}
+		init: function() { init() }
 
 		/**
 		 *	Regenerates a signature on the canvas using an array of objects
@@ -541,18 +493,15 @@ function SignaturePad(selector, options)
 		 *
 		 *	@param {Array} paths An array of the lines and points
 		 */
-		,regenerate: function(paths)
-		{
+		,regenerate: function(paths) {
 			self.clearCanvas()
 			$(settings.typed, context).hide()
 			
-			if(typeof paths === 'string')
+			if (typeof paths === 'string')
 				paths = JSON.parse(paths)
 			
-			for(var i in paths)
-			{
-				if(typeof paths[i] === 'object')
-				{
+			for(var i in paths) {
+				if (typeof paths[i] === 'object') {
 					canvasContext.beginPath()
 					canvasContext.moveTo(paths[i].mx, paths[i].my)
 					canvasContext.lineTo(paths[i].lx, paths[i].ly)
@@ -560,11 +509,16 @@ function SignaturePad(selector, options)
 					canvasContext.stroke()
 					canvasContext.closePath()
 					
-					output.push({'lx': paths[i].lx, 'ly': paths[i].ly, 'mx': paths[i].mx, 'my': paths[i].my})
+					output.push({
+						'lx': paths[i].lx
+						,'ly': paths[i].ly
+						,'mx': paths[i].mx
+						,'my': paths[i].my
+					})
 				}
 			}
 			
-			if($(settings.output, context).length > 0)
+			if ($(settings.output, context).length > 0)
 				$(settings.output, context).val(JSON.stringify(output))
 		}
 
@@ -572,40 +526,28 @@ function SignaturePad(selector, options)
 		 *	Clears the canvas
 		 *	Redraws the background colour and the signature line
 		 */
-		,clearCanvas: function()
-		{
-			clearCanvas()
-		}
+		,clearCanvas: function() { clearCanvas() }
 
 		/**
 		 *	Returns the signature as a Js array
 		 *
 		 *	@return {Array}
 		 */
-		,getSignature: function()
-		{
-			return output
-		}
+		,getSignature: function() { return output }
 
 		/**
 		 *	Returns the signature as a Json string
 		 *
 		 *	@return {String}
 		 */
-		,getSignatureString: function()
-		{
-			return JSON.stringify(output)
-		}
+		,getSignatureString: function() { return JSON.stringify(output) }
 
 		/**
 		 *	Returns the signature as an image
 		 *
 		 *	@return {String}
 		 */
-		,getSignatureImage: function()
-		{
-			return element.toDataURL()
-		}
+		,getSignatureImage: function() { return element.toDataURL() }
 	})
 }
 
@@ -617,12 +559,10 @@ function SignaturePad(selector, options)
  *
  *	@return {Object} The Api for controlling the instance
  */
-$.fn.signaturePad = function(options)
-{
+$.fn.signaturePad = function(options) {
 	var api = null
 	
-	this.each(function()
-	{
+	this.each(function() {
 		api = new SignaturePad(this, options)
 		api.init()
 	})
@@ -664,5 +604,4 @@ $.fn.signaturePad.defaults = {
 	,errorMessage: 'Please enter your name' // The error message displayed on invalid submission
 	,errorMessageDraw: 'Please sign the document' // The error message displayed when drawOnly and no signature is drawn
 }
-
 }(jQuery))
