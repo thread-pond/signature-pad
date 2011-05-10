@@ -23,7 +23,7 @@ Source Code
 
 Version History
 ---
-**2.0.3 (May. 10, 2011)**
+**2.0.3 (May 10, 2011)**
 
 - Fixed a bug with bgColour: the colour was not being honoured when clearing the canvas
 
