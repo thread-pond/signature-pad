@@ -528,7 +528,8 @@ function SignaturePad(selector, options)
 	{
 		stopDrawing()
 		
-		canvasContext.clearRect(0, 0, element.width, element.height)
+		canvasContext.fillStyle = settings.bgColour;
+		canvasContext.fillRect(0, 0, element.width, element.height);
 		
 		if(!settings.displayOnly)
 			drawSigLine()
@@ -624,7 +625,7 @@ $.fn.signaturePad.defaults = {
 	,canvas: 'canvas' // Selector for selecting the canvas element
 	,sig: '.sig' // Parts of the signature form that require Javascript (hidden by default)
 	,sigNav: '.sigNav' // The TypeIt/DrawIt navigation (hidden by default)
-	,bgColour: '#fff' // The colour fill for the background of the canvas
+	,bgColour: '#ffffff' // The colour fill for the background of the canvas
 	,penColour: '#145394' // Colour of the drawing ink
 	,penWidth: 2 // Thickness of the pen
 	,penCap: 'round' // Determines how the end points of each line are drawn (values: 'butt', 'round', 'square')
