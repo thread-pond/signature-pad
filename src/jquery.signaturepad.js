@@ -239,7 +239,7 @@ function SignaturePad(selector, options) {
    * For touch based devices calculates the offset difference to accommodate
    *  for zooming and scrolling
    * Targets iPad specifically, which returns the incorrect .offset().top|.left
-   * for an object when zoomed in; appears to ignore scroll position
+   *  for an object when zoomed in; appears to ignore scroll position
    *
    * @private
    * @param {Object} o The object context registered to the mouse down event; canvas
