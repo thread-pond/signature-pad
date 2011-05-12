@@ -10,7 +10,7 @@
  * @link http://github.com/thomasjbradley/signature-pad
  * @copyright Copyright MMXI, Thomas J Bradley
  * @license New BSD License
- * @version 2.0.3
+ * @version 2.0.4
  */
 
 /**
@@ -474,7 +474,6 @@ function SignaturePad(selector, options) {
           }
         }
 
-        $(settings.typeItDesc, context).show()
         $(settings.sigNav, context).show()
       }
     }

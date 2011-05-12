@@ -23,6 +23,10 @@ Source Code
 
 Version History
 ---
+**2.0.4 (May 12, 2011)**
+
+- Fixed a bug with defaultAction: drawIt: the .typeItDesc was initially being displayed when it shouldn’t
+
 **2.0.3 (May 10, 2011)**
 
 - Fixed a bug with bgColour: the colour was not being honoured when clearing the canvas
