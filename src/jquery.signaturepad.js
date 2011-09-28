@@ -129,18 +129,17 @@ function SignaturePad(selector, options) {
    * @private
    * @param {Object} e The event object
    * @param {Object} o The object context registered to the event; canvas
-   * @param {Number} diff The difference between offset for touch devices
    * @param {Number} newYOffset A pixel value for drawing the newY, used for drawing a single dot on click
    */
-  function drawLine(e, o, diff, newYOffset) {
+  function drawLine(e, o, newYOffset) {
     var offset = $(o).offset(), newX, newY
 
     clearTimeout(mouseLeaveTimeout)
     mouseLeaveTimeout = false
 
     if (typeof e.changedTouches !== 'undefined') {
-      newX = Math.floor(e.changedTouches[0].pageX - offset.left + diff.left)
-      newY = Math.floor(e.changedTouches[0].pageY - offset.top + diff.top)
+      newX = Math.floor(e.changedTouches[0].pageX - offset.left)
+      newY = Math.floor(e.changedTouches[0].pageY - offset.top)
     } else {
       newX = Math.floor(e.pageX - offset.left)
       newY = Math.floor(e.pageY - offset.top)
@@ -236,43 +235,6 @@ function SignaturePad(selector, options) {
   }
 
   /**
-   * For touch based devices calculates the offset difference to accommodate
-   *  for zooming and scrolling
-   * Targets iPad specifically, which returns the incorrect .offset().top|.left
-   *  for an object when zoomed in; appears to ignore scroll position
-   *
-   * @private
-   * @param {Object} o The object context registered to the mouse down event; canvas
-   *
-   * @return {Object}
-   */
-  function calculateTouchZoomDiff(o) {
-    var oldScrollLeft, oldScrollTop = $(document).scrollTop(), newDiffTop = 0, oldDiffTop, newDiffLeft, oldDiffLeft
-
-    if (oldScrollTop > 0) {
-      oldDiffTop = o.offsetTop - $(o).offset().top
-      $(document).scrollTop(0)
-      newDiffTop = o.offsetTop - $(o).offset().top
-      $(document).scrollTop(oldScrollTop)
-    }
-
-    oldScrollLeft = $(document).scrollLeft()
-    newDiffLeft = 0
-
-    if (oldScrollLeft > 0) {
-      oldDiffLeft = o.offsetLeft - $(o).offset().left
-      $(document).scrollLeft(0)
-      newDiffLeft = o.offsetLeft - $(o).offset().left
-      $(document).scrollLeft(oldScrollLeft)
-    }
-
-    return {
-      'top': (oldDiffTop !== newDiffTop) ? $(document).scrollTop() : 0
-      ,'left': (oldDiffLeft !== newDiffLeft) ? $(document).scrollLeft() : 0
-    }
-  }
-
-  /**
    * Callback registered to mouse/touch events of canvas
    * Triggers the drawLine function
    *
@@ -286,15 +248,15 @@ function SignaturePad(selector, options) {
     if (typeof this.ontouchstart !== 'undefined') {
       canvas.each(function() {
         this.ontouchmove = function(e) {
-          drawLine(e, this, calculateTouchZoomDiff(this))
+          drawLine(e, this)
         }
       })
 
       // Draws a single point on initial mouse down, for people with periods in their name
-      drawLine(e, o, calculateTouchZoomDiff(o), 1)
+      drawLine(e, o, 1)
     } else {
       // Draws a single point on initial mouse down, for people with periods in their name
-      drawLine(e, o, null, 1)
+      drawLine(e, o, 1)
     }
   }
 
@@ -432,6 +394,20 @@ function SignaturePad(selector, options) {
    * @private
    */
   function init() {
+    // Fixes the jQuery.fn.offset() function for Mobile Safari Browsers i.e. iPod Touch, iPad and iPhone
+    // https://gist.github.com/661844
+    // http://bugs.jquery.com/ticket/6446
+    if (parseFloat(((/CPU.+OS ([0-9_]{3}).*AppleWebkit.*Mobile/i.exec(navigator.userAgent)) || [0,'4_2'])[1].replace('_','.')) < 4.1) {
+       $.fn.Oldoffset = $.fn.offset;
+       $.fn.offset = function() {
+          var result = $(this).Oldoffset()
+          result.top -= window.scrollY
+          result.left -= window.scrollX
+
+          return result
+       }
+    }
+
     // Disable selection on the typed div and canvas
     $(settings.typed, context).bind('selectstart.signaturepad', function(e) { return $(e.target).is(':input') })
     canvas.bind('selectstart.signaturepad', function(e) { return $(e.target).is(':input') })
