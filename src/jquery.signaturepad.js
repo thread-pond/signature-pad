@@ -330,7 +330,6 @@ function SignaturePad(selector, options) {
    * @private
    */
   function drawIt () {
-alert('drawIt')
     $(settings.typed, context).hide()
     clearCanvas()
 
@@ -347,11 +346,11 @@ alert('drawIt')
       startDrawing(e, this)
     })
 
-    $(settings.clear, context).bind('click.signaturepad', function (e) { clearCanvas(); return false })
+    $(settings.clear, context).bind('click.signaturepad', function (e) { e.preventDefault(); clearCanvas() })
 
-    $(settings.typeIt, context).bind('click.signaturepad', function (e) { typeIt(); return false })
-    $(settings.drawIt, context).unbind('click.signaturepad')
-    $(settings.drawIt, context).bind('click.signaturepad', function (e) { return false })
+    $(settings.typeIt, context).bind('click.signaturepad', function (e) { e.preventDefault(); typeIt() })
+    $(settings.drawIt, context).unbind('mousedown.signaturepad')
+    $(settings.drawIt, context).bind('mousedown.signaturepad', function (e) { e.preventDefault() })
 
     $(settings.typeIt, context).removeClass(settings.currentClass)
     $(settings.drawIt, context).addClass(settings.currentClass)
@@ -373,9 +372,9 @@ alert('drawIt')
     disableCanvas()
     $(settings.typed, context).show()
 
-    $(settings.drawIt, context).bind('click.signaturepad', function(e) { drawIt(); return false })
+    $(settings.drawIt, context).bind('mousedown.signaturepad', function(e) { e.preventDefault(); drawIt() })
     $(settings.typeIt, context).unbind('click.signaturepad')
-    $(settings.typeIt, context).bind('click.signaturepad', function(e) { return false })
+    $(settings.typeIt, context).bind('click.signaturepad', function(e) { e.preventDefault() })
 
     $(settings.output, context).val('')
 
@@ -478,9 +477,9 @@ alert('drawIt')
             type($(this).val())
           })
 
-          $(settings.drawIt, context).bind('click.signaturepad', function(e) {
+          $(settings.drawIt, context).bind('mousedown.signaturepad', function(e) {
+            e.preventDefault()
             drawIt()
-            return false
           })
         }
 
