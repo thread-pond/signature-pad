@@ -124,29 +124,6 @@ function SignaturePad (selector, options) {
    */
   , eventsBound = false
 
-  /**
-   * Removes all the mouse events from the canvas
-   *
-   * @private
-   */
-  function disableCanvas () {
-    eventsBound = false
-
-    if (touchable) {
-      canvas.each(function () {
-        this.removeEventListener('touchstart', stopDrawing)
-        this.removeEventListener('touchend', stopDrawing)
-        this.removeEventListener('touchmove', drawLine)
-      })
-    } else {
-      canvas.unbind('mousedown.signaturepad')
-      canvas.unbind('mouseup.signaturepad')
-      canvas.unbind('mousemove.signaturepad')
-      canvas.unbind('mouseleave.signaturepad')
-    }
-
-    $(settings.clear, context).unbind('click.signaturepad')
-  }
 
   /**
    * Draws a line on canvas using the mouse position
@@ -279,6 +256,30 @@ function SignaturePad (selector, options) {
 
     // Draws a single point on initial mouse down, for people with periods in their name
     drawLine(e, 1)
+  }
+
+  /**
+   * Removes all the mouse events from the canvas
+   *
+   * @private
+   */
+  function disableCanvas () {
+    eventsBound = false
+
+    if (touchable) {
+      canvas.each(function () {
+        this.removeEventListener('touchstart', stopDrawing)
+        this.removeEventListener('touchend', stopDrawing)
+        this.removeEventListener('touchmove', drawLine)
+      })
+    } else {
+      canvas.unbind('mousedown.signaturepad')
+      canvas.unbind('mouseup.signaturepad')
+      canvas.unbind('mousemove.signaturepad')
+      canvas.unbind('mouseleave.signaturepad')
+    }
+
+    $(settings.clear, context).unbind('click.signaturepad')
   }
 
   /**

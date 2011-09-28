@@ -7,13 +7,13 @@ var fs = require('fs')
 process.stdout.write('JSHinting... ')
 
 var jshintrc = JSON.parse(fs.readFileSync('.jshintrc', 'utf8'))
-  ,source = fs.readFileSync('src/jquery.signaturepad.js', 'utf8')
+  ,source = fs.readFileSync('jquery.signaturepad.js', 'utf8')
   ,valid = jshint(source, jshintrc)
 
 if (valid) {
   process.stdout.write('done.\nMinifying... ')
 
-  exec('java -jar ~/bin/compiler.jar --js src/jquery.signaturepad.js --js_output_file assets/jquery.signaturepad.min.js'
+  exec('java -jar ~/bin/compiler.jar --js jquery.signaturepad.js --js_output_file build/jquery.signaturepad.min.js'
     ,function(err, stdout, stderr) {
       process.stdout.write('done.\n')
   })
