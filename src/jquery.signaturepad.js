@@ -10,6 +10,7 @@
  * @link http://github.com/thomasjbradley/signature-pad
  * @copyright Copyright MMXI, Thomas J Bradley
  * @license New BSD License
+ * @version {version}
  */
 
 /**
@@ -312,7 +313,7 @@ function SignaturePad (selector, options) {
             stopDrawing()
             clearTimeout(mouseLeaveTimeout)
             mouseLeaveTimeout = false
-          }, 200)
+          }, 500)
         }
       })
 
