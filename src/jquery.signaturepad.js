@@ -40,7 +40,7 @@ function SignaturePad(selector, options) {
    * @private
    * @type {Object}
    */
-  ,settings = $.extend({}, $.fn.signaturePad.defaults, options)
+  , settings = $.extend({}, $.fn.signaturePad.defaults, options)
 
   /**
    * The current context, as passed by jQuery, of selected items
@@ -48,7 +48,7 @@ function SignaturePad(selector, options) {
    * @private
    * @type {Object}
    */
-  ,context = $(selector)
+  , context = $(selector)
 
   /**
    * jQuery reference to the canvas element inside the signature pad
@@ -56,7 +56,7 @@ function SignaturePad(selector, options) {
    * @private
    * @type {Object}
    */
-  ,canvas = $(settings.canvas, context)
+  , canvas = $(settings.canvas, context)
 
   /**
    * Dom reference to the canvas element inside the signature pad
@@ -64,7 +64,7 @@ function SignaturePad(selector, options) {
    * @private
    * @type {Object}
    */
-  ,element = canvas.get(0)
+  , element = canvas.get(0)
 
   /**
    * The drawing context for the signature canvas
@@ -72,7 +72,7 @@ function SignaturePad(selector, options) {
    * @private
    * @type {Object}
    */
-  ,canvasContext = null
+  , canvasContext = null
 
   /**
    * Holds the previous point of drawing
@@ -81,7 +81,7 @@ function SignaturePad(selector, options) {
    * @private
    * @type {Object}
    */
-  ,previous = {'x': null, 'y': null}
+  , previous = {'x': null, 'y': null}
 
   /**
    * An array holding all the points and lines to generate the signature
@@ -96,7 +96,7 @@ function SignaturePad(selector, options) {
    * @private
    * @type {Array}
    */
-  ,output = []
+  , output = []
 
   /**
    * Stores a timeout for when the mouse leaves the canvas
@@ -106,7 +106,23 @@ function SignaturePad(selector, options) {
    * @private
    * @type {Object}
    */
-  ,mouseLeaveTimeout = false
+  , mouseLeaveTimeout = false
+
+  /**
+   * Whether the browser is a touch event browser or not
+   *
+   * @private
+   * @type {Boolean}
+   */
+  , touchable = false
+
+  /**
+   * Whether events have already been bound to the canvas or not
+   *
+   * @private
+   * @type {Boolean}
+   */
+  , eventsBound = false
 
   /**
    * Removes all the mouse events from the canvas
@@ -114,10 +130,21 @@ function SignaturePad(selector, options) {
    * @private
    */
   function disableCanvas() {
-    canvas.unbind('mousedown.signaturepad')
-    canvas.unbind('mouseup.signaturepad')
-    canvas.unbind('mousemove.signaturepad')
-    canvas.unbind('mouseleave.signaturepad')
+    eventsBound = false
+
+    if (touchable) {
+      canvas.each(function () {
+        this.removeEventListener('touchstart', stopDrawing)
+        this.removeEventListener('touchend', stopDrawing)
+        this.removeEventListener('touchmove', drawLine)
+      })
+    } else {
+      canvas.unbind('mousedown.signaturepad')
+      canvas.unbind('mouseup.signaturepad')
+      canvas.unbind('mousemove.signaturepad')
+      canvas.unbind('mouseleave.signaturepad')
+    }
+
     $(settings.clear, context).unbind('click.signaturepad')
   }
 
@@ -128,11 +155,10 @@ function SignaturePad(selector, options) {
    *
    * @private
    * @param {Object} e The event object
-   * @param {Object} o The object context registered to the event; canvas
    * @param {Number} newYOffset A pixel value for drawing the newY, used for drawing a single dot on click
    */
-  function drawLine(e, o, newYOffset) {
-    var offset = $(o).offset(), newX, newY
+  function drawLine(e, newYOffset) {
+    var offset = $(e.target).offset(), newX, newY
 
     clearTimeout(mouseLeaveTimeout)
     mouseLeaveTimeout = false
@@ -183,12 +209,12 @@ function SignaturePad(selector, options) {
    * @param {Object} e The event object
    */
   function stopDrawing() {
-    canvas.unbind('mousemove.signaturepad')
-
-    if (typeof this.ontouchstart !== 'undefined') {
+    if (touchable) {
       canvas.each(function() {
         this.ontouchmove = null
       })
+    } else {
+      canvas.unbind('mousemove.signaturepad')
     }
 
     previous.x = null
@@ -243,20 +269,57 @@ function SignaturePad(selector, options) {
    * @param {Object} o The object context registered to the event; canvas
    */
   function startDrawing(e, o) {
-    canvas.bind('mousemove.signaturepad', function(e){ drawLine(e, this) })
-
-    if (typeof this.ontouchstart !== 'undefined') {
+    if (touchable) {
       canvas.each(function() {
-        this.ontouchmove = function(e) {
-          drawLine(e, this)
+        this.addEventListener('touchmove', drawLine, false)
+      })
+    } else {
+      canvas.bind('mousemove.signaturepad', drawLine)
+    }
+
+    // Draws a single point on initial mouse down, for people with periods in their name
+    drawLine(e, 1)
+  }
+
+  /**
+   * Lazy touch event detection
+   * Uses the first press on the canvas to detect either touch or mouse reliably
+   * Will then bind other events as needed
+   *
+   * @private
+   * @param {Object} e The event object
+   */
+  function initDrawEvents (e) {
+    if (eventsBound)
+      return false
+
+    eventsBound = true
+
+    if (typeof e.changedTouches !== 'undefined')
+      touchable = true
+
+    if (touchable) {
+      canvas.each(function () {
+        this.addEventListener('touchend', stopDrawing, false)
+        this.addEventListener('touchcancel', stopDrawing, false)
+      })
+
+      canvas.unbind('mousedown.signaturepad')
+    } else {
+      canvas.bind('mouseup.signaturepad', function (e) { stopDrawing() })
+      canvas.bind('mouseleave.signaturepad', function (e) {
+        if (!mouseLeaveTimeout) {
+          mouseLeaveTimeout = setTimeout(function () {
+            stopDrawing()
+            clearTimeout(mouseLeaveTimeout)
+            mouseLeaveTimeout = false
+          }, 200)
         }
       })
 
-      // Draws a single point on initial mouse down, for people with periods in their name
-      drawLine(e, o, 1)
-    } else {
-      // Draws a single point on initial mouse down, for people with periods in their name
-      drawLine(e, o, 1)
+      canvas.each(function () {
+        this.ontouchstart = null
+      })
     }
   }
 
@@ -266,44 +329,29 @@ function SignaturePad(selector, options) {
    *
    * @private
    */
-  function drawIt() {
+  function drawIt () {
+alert('drawIt')
     $(settings.typed, context).hide()
     clearCanvas()
 
-    canvas.bind('mousedown.signaturepad', function(e) { startDrawing(e, this) })
-    canvas.bind('mouseup.signaturepad', function(e) { stopDrawing() })
-    canvas.bind('mouseleave.signaturepad', function(e) {
-      if (!mouseLeaveTimeout) {
-        mouseLeaveTimeout = setTimeout(function() {
-          stopDrawing()
-          clearTimeout(mouseLeaveTimeout)
-          mouseLeaveTimeout = false
-        }, 200)
+    canvas.each(function () {
+      this.ontouchstart = function (e) {
+        e.preventDefault()
+        initDrawEvents(e)
+        startDrawing(e, this)
       }
     })
 
-    if (typeof this.ontouchstart !== 'undefined') {
-      canvas.each(function() {
-        this.ontouchstart = function(e) {
-          e.preventDefault()
-          startDrawing(e, this)
-        }
+    canvas.bind('mousedown.signaturepad', function (e) {
+      initDrawEvents(e)
+      startDrawing(e, this)
+    })
 
-        this.ontouchend = function(e) {
-          stopDrawing()
-        }
+    $(settings.clear, context).bind('click.signaturepad', function (e) { clearCanvas(); return false })
 
-        this.ontouchcancel = function(e) {
-          stopDrawing()
-        }
-      })
-    }
-
-    $(settings.clear, context).bind('click.signaturepad', function(e) { clearCanvas(); return false })
-
-    $(settings.typeIt, context).bind('click.signaturepad', function(e) { typeIt(); return false })
+    $(settings.typeIt, context).bind('click.signaturepad', function (e) { typeIt(); return false })
     $(settings.drawIt, context).unbind('click.signaturepad')
-    $(settings.drawIt, context).bind('click.signaturepad', function(e) { return false })
+    $(settings.drawIt, context).bind('click.signaturepad', function (e) { return false })
 
     $(settings.typeIt, context).removeClass(settings.currentClass)
     $(settings.drawIt, context).addClass(settings.currentClass)
