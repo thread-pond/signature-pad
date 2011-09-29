@@ -570,7 +570,7 @@ function SignaturePad (selector, options) {
      *
      * @return {String}
      */
-    ,getSignatureImage: function () { return element.toDataURL() }
+    ,getSignatureImage: function () { return element.toDataURL.apply(element, arguments) }
   })
 }
 
