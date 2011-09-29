@@ -2,17 +2,19 @@
 
 **2.1.0 (Sept 28, 2011)**
 
-- Fixed a bug with Playbook and other non-iOS Webkit browsers; caused by a bug fix for iOS browsers
+- Fixed a bug with Playbook and other non-iOS Webkit browsers; caused by a bug fix for iOS browsers—[Issue #8](https://github.com/thomasjbradley/signature-pad/issues/8)
 - Added Firefox Mobile support
 - Cleaned up event creation and removal
+- Can now pass arguments to `getSignatureImage()`, which will be forwarded to `toDataURL()`—[Issue #9](https://github.com/thomasjbradley/signature-pad/issues/9)
+- Fixed [Issue #10](https://github.com/thomasjbradley/signature-pad/issues/10)
 
 **2.0.4 (May 12, 2011)**
 
-- Fixed a bug with defaultAction: drawIt: the .typeItDesc was initially being displayed when it shouldn’t
+- Fixed a bug with `defaultAction: drawIt`: the `.typeItDesc` was initially being displayed when it shouldn’t
 
 **2.0.3 (May 10, 2011)**
 
-- Fixed a bug with bgColour: the colour was not being honoured when clearing the canvas
+- Fixed a bug with `bgColour`: the colour was not being honoured when clearing the canvas
 
 **2.0.2 (Apr. 7, 2011)**
 
@@ -26,6 +28,7 @@
 
 - Switched to FlashCanvas instead of ExplorerCanvas (more reliable, less hacks needed, actively being developed)
 - `.getSignatureImage()` now works cross-browser thanks to FlashCanvas
+- Fixed [Issue #2](https://github.com/thomasjbradley/signature-pad/issues/2)
 
 **1.5.1 (Feb. 23, 2011)**
 

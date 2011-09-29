@@ -207,6 +207,9 @@ function SignaturePad (selector, options) {
    * @private
    */
   function drawSigLine () {
+    if (!settings.lineWidth)
+      return false
+
     canvasContext.beginPath()
     canvasContext.lineWidth = settings.lineWidth
     canvasContext.strokeStyle = settings.lineColour
