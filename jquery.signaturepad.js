@@ -408,6 +408,39 @@ function SignaturePad (selector, options) {
   }
 
   /**
+   * Default onBeforeValidate function to clear errors
+   *
+   * @param {String} selector top selector
+   * @param {Object} context current context object
+   * @param {Object} settings provided settings
+   */
+  function onBeforeValidate (selector, context, settings) {
+    $('p.'+settings.errorClass, context).remove()
+    context.removeClass(settings.errorClass)
+    $('input, label', context).removeClass(settings.errorClass)
+  }
+
+  /**
+   * Default onFormError function to show errors
+   *
+   * @param {Object} errors object contains validation errors (e.g. nameInvalid=true)
+   * @param {String} selector top selector
+   * @param {Object} context current context object
+   * @param {Object} settings provided settings
+   */
+  function onFormError (errors, selector, context, settings) {
+      if (errors.nameInvalid) {
+        $(selector).prepend(['<p class="', settings.errorClass, '">', settings.errorMessage, '</p>'].join(''))
+        $(settings.name, context).focus()
+        $(settings.name, context).addClass(settings.errorClass)
+        $('label[for=' + $(settings.name).attr('id') + ']', context).addClass(settings.errorClass)
+      }
+
+      if (errors.drawInvalid)
+        $(selector).prepend(['<p class="', settings.errorClass, '">', settings.errorMessageDraw, '</p>'].join(''))
+  }
+
+  /**
    * Validates the form to confirm a name was typed in the field
    * If drawOnly also confirms that the user drew a signature
    *
@@ -417,22 +450,30 @@ function SignaturePad (selector, options) {
    */
   function validateForm () {
     var valid = true
+      , errors = {}
+      , onBeforeArguments = [selector, context, settings]
+      , onErrorArguments = [errors, selector, context, settings]
 
-    $('p.' + settings.errorClass, context).remove()
-    context.removeClass(settings.errorClass)
-    $('input, label', context).removeClass(settings.errorClass)
+    if (settings.onBeforeValidate && typeof settings.onBeforeValidate === 'function') {
+      settings.onBeforeValidate.apply(self,onBeforeArguments)
+    } else {
+      onBeforeValidate.apply(self, onBeforeArguments)
+    }
 
     if (settings.drawOnly && output.length < 1) {
-      $(selector).prepend('<p class="' + settings.errorClass + '">' + settings.errorMessageDraw + '</p>')
+      errors.drawInvalid = true
       valid = false
     }
 
     if ($(settings.name, context).val() === '') {
-      $(selector).prepend('<p class="' + settings.errorClass + '">' + settings.errorMessage + '</p>')
-      $(settings.name, context).focus()
-      $(settings.name, context).addClass(settings.errorClass)
-      $('label[for=' + $(settings.name).attr('id') + ']', context).addClass(settings.errorClass)
+      errors.nameInvalid = true
       valid = false
+    }
+
+    if (settings.onFormError && typeof settings.onFormError === 'function') {
+      settings.onFormError.apply(self,onErrorArguments)
+    } else {
+      onFormError.apply(self, onErrorArguments)
     }
 
     return valid
@@ -629,5 +670,7 @@ $.fn.signaturePad.defaults = {
   , errorClass: 'error' // The class applied to the new error Html element
   , errorMessage: 'Please enter your name' // The error message displayed on invalid submission
   , errorMessageDraw: 'Please sign the document' // The error message displayed when drawOnly and no signature is drawn
+  , onBeforeValidate: null // Pass a callback to be used instead of the built-in function
+  , onFormError: null // Pass a callback to be used instead of the built-in function
 }
 }(jQuery))
