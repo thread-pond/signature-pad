@@ -1,10 +1,11 @@
 # Changelog
 
-**2.1.0 (Sept 28, 2011)**
+**2.1.0 (Sept 29, 2011)**
 
-- Fixed a bug with Playbook and other non-iOS Webkit browsers; caused by a bug fix for iOS browsers—[Issue #8](https://github.com/thomasjbradley/signature-pad/issues/8)
 - Added Firefox Mobile support
+- Added callbacks for validation: onBeforeValidate, onFormError—[Issue #7](https://github.com/thomasjbradley/signature-pad/issues/7)
 - Cleaned up event creation and removal
+- Fixed a bug with Playbook and other non-iOS Webkit browsers; caused by a bug fix for iOS browsers—[Issue #8](https://github.com/thomasjbradley/signature-pad/issues/8)
 - Can now pass arguments to `getSignatureImage()`, which will be forwarded to `toDataURL()`—[Issue #9](https://github.com/thomasjbradley/signature-pad/issues/9)
 - Fixed [Issue #10](https://github.com/thomasjbradley/signature-pad/issues/10)
 
