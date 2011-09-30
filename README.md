@@ -3,15 +3,31 @@ SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas b
 
 Copyright MMXI, Thomas J Bradley, <hey@thomasjbradley.ca>
 
-Dependencies: FlashCanvas 1.5, json2, jquery-1.3.2+
+Dependencies: FlashCanvas/1.5, json2, jquery/1.3.2+
 
 Versioned using Semantic Versioning, <http://semver.org/>
 
-# Complete Documentation
+# Quick Start
+1. Include `jquery.signaturepad.css`, `flashcanvas.js`, `jquery.js`, `jquery.signaturepad.js`, `json2.js` in your HTML file
+2. Create the HTML, following the example: <https://github.com/thomasjbradley/signature-pad/blob/master/examples/accept-signature.html>
+3. `$('.sigPad').signaturePad();`
+4. Remember that [most things are configurable](http://thomasjbradley.ca/lab/signature-pad#options)
+
+## Complete Documentation
 <http://thomasjbradley.ca/lab/signature-pad>
+
+# Examples
+- [Accepting a Signature](https://github.com/thomasjbradley/signature-pad/blob/master/examples/accept-signature.html)
+- [Regenerating a Signature](https://github.com/thomasjbradley/signature-pad/blob/master/examples/regenerate-signature.html)
+- [Accepting Multiple Signatures](https://github.com/thomasjbradley/signature-pad/blob/master/examples/accept-multiple-signatures.html)
+
+# Demos
+- [Accepting a Signature](http://thomasjbradley.ca/lab/signature-pad-accept)
+- [Requiring a Drawn Signature](http://thomasjbradley.ca/lab/signature-pad-require-drawn)
+- [Regenerating a Signature](http://thomasjbradley.ca/lab/signature-pad-regenerate)
 
 # Source Code
 <http://github.com/thomasjbradley/signature-pad>
 
 # License
-Signature Pad is licensed under the New BSD license, which is included in the downloadable package.
+Signature Pad is licensed under the [New BSD license](https://github.com/thomasjbradley/signature-pad/blob/master/NEW-BSD-LICENSE.txt).
