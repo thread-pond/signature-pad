@@ -30,6 +30,7 @@ function SignaturePad (selector, options) {
    * Reference to the object for use in public methods
    *
    * @private
+   *
    * @type {Object}
    */
   var self = this
@@ -38,6 +39,7 @@ function SignaturePad (selector, options) {
    * Holds the merged default settings and user passed settings
    *
    * @private
+   *
    * @type {Object}
    */
   , settings = $.extend({}, $.fn.signaturePad.defaults, options)
@@ -46,6 +48,7 @@ function SignaturePad (selector, options) {
    * The current context, as passed by jQuery, of selected items
    *
    * @private
+   *
    * @type {Object}
    */
   , context = $(selector)
@@ -54,6 +57,7 @@ function SignaturePad (selector, options) {
    * jQuery reference to the canvas element inside the signature pad
    *
    * @private
+   *
    * @type {Object}
    */
   , canvas = $(settings.canvas, context)
@@ -62,6 +66,7 @@ function SignaturePad (selector, options) {
    * Dom reference to the canvas element inside the signature pad
    *
    * @private
+   *
    * @type {Object}
    */
   , element = canvas.get(0)
@@ -70,6 +75,7 @@ function SignaturePad (selector, options) {
    * The drawing context for the signature canvas
    *
    * @private
+   *
    * @type {Object}
    */
   , canvasContext = null
@@ -79,6 +85,7 @@ function SignaturePad (selector, options) {
    * Disallows drawing over the same location to make lines more delicate
    *
    * @private
+   *
    * @type {Object}
    */
   , previous = {'x': null, 'y': null}
@@ -94,6 +101,7 @@ function SignaturePad (selector, options) {
    * }
    *
    * @private
+   *
    * @type {Array}
    */
   , output = []
@@ -104,6 +112,7 @@ function SignaturePad (selector, options) {
    * Stops drawing on the canvas
    *
    * @private
+   *
    * @type {Object}
    */
   , mouseLeaveTimeout = false
@@ -112,6 +121,7 @@ function SignaturePad (selector, options) {
    * Whether the browser is a touch event browser or not
    *
    * @private
+   *
    * @type {Boolean}
    */
   , touchable = false
@@ -120,6 +130,7 @@ function SignaturePad (selector, options) {
    * Whether events have already been bound to the canvas or not
    *
    * @private
+   *
    * @type {Boolean}
    */
   , eventsBound = false
@@ -131,6 +142,7 @@ function SignaturePad (selector, options) {
    *  (makes the line really thick and poorly anti-aliased)
    *
    * @private
+   *
    * @param {Object} e The event object
    * @param {Number} newYOffset A pixel value for drawing the newY, used for drawing a single dot on click
    */
@@ -183,6 +195,7 @@ function SignaturePad (selector, options) {
    * Stops the drawing abilities
    *
    * @private
+   *
    * @param {Object} e The event object
    */
   function stopDrawing () {
@@ -245,6 +258,7 @@ function SignaturePad (selector, options) {
    * Triggers the drawLine function
    *
    * @private
+   *
    * @param {Object} e The event object
    * @param {Object} o The object context registered to the event; canvas
    */
@@ -291,6 +305,7 @@ function SignaturePad (selector, options) {
    * Will then bind other events as needed
    *
    * @private
+   *
    * @param {Object} e The event object
    */
   function initDrawEvents (e) {
@@ -396,6 +411,7 @@ function SignaturePad (selector, options) {
    * Writes the text fields value as Html into an element
    *
    * @private
+   *
    * @param {String} val The value of the input field
    */
   function type (val) {
