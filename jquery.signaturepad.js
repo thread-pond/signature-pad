@@ -433,15 +433,15 @@ function SignaturePad (selector, options) {
    * @param {Object} settings provided settings
    */
   function onFormError (errors, selector, context, settings) {
-      if (errors.nameInvalid) {
-        $(selector).prepend(['<p class="', settings.errorClass, '">', settings.errorMessage, '</p>'].join(''))
-        $(settings.name, context).focus()
-        $(settings.name, context).addClass(settings.errorClass)
-        $('label[for=' + $(settings.name).attr('id') + ']', context).addClass(settings.errorClass)
-      }
+    if (errors.nameInvalid) {
+      $(selector).prepend(['<p class="', settings.errorClass, '">', settings.errorMessage, '</p>'].join(''))
+      $(settings.name, context).focus()
+      $(settings.name, context).addClass(settings.errorClass)
+      $('label[for=' + $(settings.name).attr('id') + ']', context).addClass(settings.errorClass)
+    }
 
-      if (errors.drawInvalid)
-        $(selector).prepend(['<p class="', settings.errorClass, '">', settings.errorMessageDraw, '</p>'].join(''))
+    if (errors.drawInvalid)
+      $(selector).prepend(['<p class="', settings.errorClass, '">', settings.errorMessageDraw, '</p>'].join(''))
   }
 
   /**
