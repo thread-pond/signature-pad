@@ -1,20 +1,31 @@
 #! /usr/local/bin/node
 
+/*
+ * Module dependencies
+ */
 var fs = require('fs')
-  ,exec = require('child_process').exec
-  ,jshint = require('jshint').JSHINT
-
-process.stdout.write('JSHinting... ')
+  , exec = require('child_process').exec
+  , jshint = require('jshint').JSHINT
 
 var jshintrc = JSON.parse(fs.readFileSync('.jshintrc', 'utf8'))
-  ,source = fs.readFileSync('jquery.signaturepad.js', 'utf8')
-  ,valid = jshint(source, jshintrc)
+  , sigPadPath = 'jquery.signaturepad.js'
+  , sigPadMinPath = 'build/jquery.signaturepad.min.js'
+  , source = fs.readFileSync(sigPadPath, 'utf8')
+  , valid = jshint(source, jshintrc)
+
+process.stdout.write('JSHinting... ')
 
 if (valid) {
   process.stdout.write('done.\nMinifying... ')
 
-  exec('java -jar ~/bin/compiler.jar --js jquery.signaturepad.js --js_output_file build/jquery.signaturepad.min.js'
-    ,function(err, stdout, stderr) {
+  exec('java -jar ~/bin/compiler.jar --js ' + sigPadPath + ' --js_output_file ' + sigPadMinPath
+    , function(err, stdout, stderr) {
+      var sp = fs.readFileSync(sigPadMinPath, 'utf8')
+        , ver = fs.readFileSync('VERSION.txt', 'utf8')
+        , spVer = sp.replace(/{{version}}/, ver.trim())
+
+      fs.writeFileSync(sigPadMinPath, spVer)
+
       process.stdout.write('done.\n')
   })
 } else {
