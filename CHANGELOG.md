@@ -3,7 +3,8 @@
 **2.1.0 (Sept 29, 2011)**
 
 - Added Firefox Mobile support
-- Added callbacks for validation: onBeforeValidate, onFormError—[Issue #7](https://github.com/thomasjbradley/signature-pad/issues/7)
+- Added callbacks for validation: `onBeforeValidate`, `onFormError`—[Issue #7](https://github.com/thomasjbradley/signature-pad/issues/7)
+- Changed `getSignatureImage()` to use a shadow canvas and render the signature without the line
 - Cleaned up event creation and removal
 - Fixed a bug with Playbook and other non-iOS Webkit browsers; caused by a bug fix for iOS browsers—[Issue #8](https://github.com/thomasjbradley/signature-pad/issues/8)
 - Can now pass arguments to `getSignatureImage()`, which will be forwarded to `toDataURL()`—[Issue #9](https://github.com/thomasjbradley/signature-pad/issues/9)
