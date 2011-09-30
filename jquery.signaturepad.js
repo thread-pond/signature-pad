@@ -353,8 +353,8 @@ function SignaturePad (selector, options) {
     $(settings.clear, context).bind('click.signaturepad', function (e) { e.preventDefault(); clearCanvas() })
 
     $(settings.typeIt, context).bind('click.signaturepad', function (e) { e.preventDefault(); typeIt() })
-    $(settings.drawIt, context).unbind('mousedown.signaturepad')
-    $(settings.drawIt, context).bind('mousedown.signaturepad', function (e) { e.preventDefault() })
+    $(settings.drawIt, context).unbind('click.signaturepad')
+    $(settings.drawIt, context).bind('click.signaturepad', function (e) { e.preventDefault() })
 
     $(settings.typeIt, context).removeClass(settings.currentClass)
     $(settings.drawIt, context).addClass(settings.currentClass)
@@ -376,7 +376,7 @@ function SignaturePad (selector, options) {
     disableCanvas()
     $(settings.typed, context).show()
 
-    $(settings.drawIt, context).bind('mousedown.signaturepad', function (e) { e.preventDefault(); drawIt() })
+    $(settings.drawIt, context).bind('click.signaturepad', function (e) { e.preventDefault(); drawIt() })
     $(settings.typeIt, context).unbind('click.signaturepad')
     $(settings.typeIt, context).bind('click.signaturepad', function (e) { e.preventDefault() })
 
