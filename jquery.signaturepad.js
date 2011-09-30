@@ -573,7 +573,7 @@ function SignaturePad (selector, options) {
             type($(this).val())
           })
 
-          $(settings.drawIt, context).bind('mousedown.signaturepad', function (e) {
+          $(settings.drawIt, context).bind('click.signaturepad', function (e) {
             e.preventDefault()
             drawIt()
           })
