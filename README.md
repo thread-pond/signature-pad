@@ -18,6 +18,7 @@ Versioned using Semantic Versioning, <http://semver.org/>
 
 # Examples
 - [Accepting a Signature](https://github.com/thomasjbradley/signature-pad/blob/master/examples/accept-signature.html)
+- [Requiring a Drawn Signature](https://github.com/thomasjbradley/signature-pad/blob/master/examples/require-drawn-signature.html)
 - [Regenerating a Signature](https://github.com/thomasjbradley/signature-pad/blob/master/examples/regenerate-signature.html)
 - [Accepting Multiple Signatures](https://github.com/thomasjbradley/signature-pad/blob/master/examples/accept-multiple-signatures.html)
 
