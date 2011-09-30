@@ -428,12 +428,11 @@ function SignaturePad (selector, options) {
    *
    * @private
    *
-   * @param {String} selector top selector
    * @param {Object} context current context object
    * @param {Object} settings provided settings
    */
-  function onBeforeValidate (selector, context, settings) {
-    $('p.'+settings.errorClass, context).remove()
+  function onBeforeValidate (context, settings) {
+    $('p.' + settings.errorClass, context).remove()
     context.removeClass(settings.errorClass)
     $('input, label', context).removeClass(settings.errorClass)
   }
@@ -444,20 +443,19 @@ function SignaturePad (selector, options) {
    * @private
    *
    * @param {Object} errors object contains validation errors (e.g. nameInvalid=true)
-   * @param {String} selector top selector
    * @param {Object} context current context object
    * @param {Object} settings provided settings
    */
-  function onFormError (errors, selector, context, settings) {
+  function onFormError (errors, context, settings) {
     if (errors.nameInvalid) {
-      $(selector).prepend(['<p class="', settings.errorClass, '">', settings.errorMessage, '</p>'].join(''))
+      context.prepend(['<p class="', settings.errorClass, '">', settings.errorMessage, '</p>'].join(''))
       $(settings.name, context).focus()
       $(settings.name, context).addClass(settings.errorClass)
       $('label[for=' + $(settings.name).attr('id') + ']', context).addClass(settings.errorClass)
     }
 
     if (errors.drawInvalid)
-      $(selector).prepend(['<p class="', settings.errorClass, '">', settings.errorMessageDraw, '</p>'].join(''))
+      context.prepend(['<p class="', settings.errorClass, '">', settings.errorMessageDraw, '</p>'].join(''))
   }
 
   /**
@@ -470,9 +468,9 @@ function SignaturePad (selector, options) {
    */
   function validateForm () {
     var valid = true
-      , errors = {}
-      , onBeforeArguments = [selector, context, settings]
-      , onErrorArguments = [errors, selector, context, settings]
+      , errors = {drawInvalid: false, nameInvalid: false}
+      , onBeforeArguments = [context, settings]
+      , onErrorArguments = [errors, context, settings]
 
     if (settings.onBeforeValidate && typeof settings.onBeforeValidate === 'function') {
       settings.onBeforeValidate.apply(self,onBeforeArguments)

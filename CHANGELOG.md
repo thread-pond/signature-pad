@@ -1,5 +1,9 @@
 # Changelog
 
+**2.1.1 (Sept 30, 2011)**
+
+- Removed some extra, un-needed arguments from the `onBeforeValidate` and `onFormError` callbacks
+
 **2.1.0 (Sept 29, 2011)**
 
 - Added Firefox Mobile support
