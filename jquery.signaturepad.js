@@ -410,6 +410,8 @@ function SignaturePad (selector, options) {
   /**
    * Default onBeforeValidate function to clear errors
    *
+   * @private
+   *
    * @param {String} selector top selector
    * @param {Object} context current context object
    * @param {Object} settings provided settings
@@ -422,6 +424,8 @@ function SignaturePad (selector, options) {
 
   /**
    * Default onFormError function to show errors
+   *
+   * @private
    *
    * @param {Object} errors object contains validation errors (e.g. nameInvalid=true)
    * @param {String} selector top selector
@@ -477,6 +481,37 @@ function SignaturePad (selector, options) {
     }
 
     return valid
+  }
+
+  /**
+   * Redraws the signature on a specific canvas
+   *
+   * @private
+   *
+   * @param {Array} paths the signature JSON
+   * @param {Object} context the canvas context to draw on
+   * @param {Boolean} saveOutput whether to write the path to the output array or not
+   */
+  function drawSignature (paths, context, saveOutput) {
+    for(var i in paths) {
+      if (typeof paths[i] === 'object') {
+        context.beginPath()
+        context.moveTo(paths[i].mx, paths[i].my)
+        context.lineTo(paths[i].lx, paths[i].ly)
+        context.lineCap = settings.penCap
+        context.stroke()
+        context.closePath()
+
+        if (saveOutput) {
+          output.push({
+            'lx': paths[i].lx
+            ,'ly': paths[i].ly
+            ,'mx': paths[i].mx
+            ,'my': paths[i].my
+          })
+        }
+      }
+    }
   }
 
   /**
@@ -560,30 +595,14 @@ function SignaturePad (selector, options) {
      *
      * @param {Array} paths An array of the lines and points
      */
-    ,regenerate: function (paths) {
+    , regenerate: function (paths) {
       self.clearCanvas()
       $(settings.typed, context).hide()
 
       if (typeof paths === 'string')
         paths = JSON.parse(paths)
 
-      for(var i in paths) {
-        if (typeof paths[i] === 'object') {
-          canvasContext.beginPath()
-          canvasContext.moveTo(paths[i].mx, paths[i].my)
-          canvasContext.lineTo(paths[i].lx, paths[i].ly)
-          canvasContext.lineCap = settings.penCap
-          canvasContext.stroke()
-          canvasContext.closePath()
-
-          output.push({
-            'lx': paths[i].lx
-            ,'ly': paths[i].ly
-            ,'mx': paths[i].mx
-            ,'my': paths[i].my
-          })
-        }
-      }
+      drawSignature(paths, canvasContext, true)
 
       if ($(settings.output, context).length > 0)
         $(settings.output, context).val(JSON.stringify(output))
@@ -593,28 +612,57 @@ function SignaturePad (selector, options) {
      * Clears the canvas
      * Redraws the background colour and the signature line
      */
-    ,clearCanvas: function () { clearCanvas() }
+    , clearCanvas: function () { clearCanvas() }
 
     /**
      * Returns the signature as a Js array
      *
      * @return {Array}
      */
-    ,getSignature: function () { return output }
+    , getSignature: function () { return output }
 
     /**
      * Returns the signature as a Json string
      *
      * @return {String}
      */
-    ,getSignatureString: function () { return JSON.stringify(output) }
+    , getSignatureString: function () { return JSON.stringify(output) }
 
     /**
      * Returns the signature as an image
+     * Re-draws the signature in a shadow canvas to create a clean version
      *
      * @return {String}
      */
-    ,getSignatureImage: function () { return element.toDataURL.apply(element, arguments) }
+    , getSignatureImage: function () {
+      var tmpCanvas = document.createElement('canvas')
+        , tmpContext = null
+        , data = null
+
+      tmpCanvas.style.position = 'absolute'
+      tmpCanvas.style.top = '-999em'
+      tmpCanvas.width = element.width
+      tmpCanvas.height = element.height
+      document.body.appendChild(tmpCanvas)
+
+      if (!tmpCanvas.getContext && FlashCanvas)
+        FlashCanvas.initElement(tmpCanvas)
+
+      tmpContext = tmpCanvas.getContext('2d')
+
+      tmpContext.fillStyle = settings.bgColour
+      tmpContext.fillRect(0, 0, element.width, element.height)
+      tmpContext.lineWidth = settings.penWidth
+      tmpContext.strokeStyle = settings.penColour
+
+      drawSignature(output, tmpContext)
+      data = tmpCanvas.toDataURL.apply(tmpCanvas, arguments)
+
+      document.body.removeChild(tmpCanvas)
+      tmpCanvas = null
+
+      return data
+    }
   })
 }
 
