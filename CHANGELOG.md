@@ -51,13 +51,11 @@
 
 **1.3.2 (Oct. 31, 2010)**
 
-- Fixed a bug on iPhone created by the fix in v1.3.1:
-  if signature pad was at the top iPhone may scroll upwards
+- Fixed a bug on iPhone created by the fix in v1.3.1: if signature pad was at the top iPhone may scroll upwards
 
 **1.3.1 (Oct. 30, 2010)**
 
-- Fixed a bug on iPad when zoomed in:
-  the signature would draw in the wrong location
+- Fixed a bug on iPad when zoomed in: the signature would draw in the wrong location
 
 **1.3.0 (Aug. 29, 2010)**
 
@@ -81,15 +79,11 @@
 
 **1.1.2 (May 26, 2010)**
 
-- Fixed an XSS-like bug, where entering a `<script>` or an `<iframe>` element into
-  the name field would cause the code to be executed
-  < and > are now converted to entities
+- Fixed an XSS-like bug, where entering a `<script>` or an `<iframe>` element into the name field would cause the code to be executed < and > are now converted to entities
 
 **1.1.1 (Jan. 26, 2010)**
 
-- Fixed a bug in IE 8, where IE 8 would not regenerate signatures
-  Required a new version of ExplorerCanvas (r71 from svn trunk)
-  IE6 still requires older release r3 to work
+- Fixed a bug in IE 8, where IE 8 would not regenerate signatures; required a new version of ExplorerCanvas (r71 from svn trunk) IE6 still requires older release r3 to work
 
 **1.1.0 (Jan. 4, 2010)**
 
