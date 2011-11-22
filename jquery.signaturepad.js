@@ -240,6 +240,7 @@ function SignaturePad (selector, options) {
   function clearCanvas () {
     stopDrawing()
 
+    canvasContext.clearRect(0, 0, element.width, element.height)
     canvasContext.fillStyle = settings.bgColour
     canvasContext.fillRect(0, 0, element.width, element.height)
 
