@@ -28,18 +28,7 @@ Versioned using Semantic Versioning, <http://semver.org/>
 - [Regenerating a Signature](http://thomasjbradley.ca/lab/signature-pad-regenerate)
 
 ## Converting to an Image
-
-### Client Side
-The API includes a method called signatureToImage() which will return a Base64 encoded PNG to Javascript.
-
-*Unfortunately, the function doesn’t work in all browsers, only because the underlying `toDataURL()` method of `<canvas>` isn’t implemented well. The primary culprit of poor implementation is Android OS < 3. The function does work in IE thanks to FlashCanvas.*
-
-### Server Side
-- [Signature to Image](http://thomasjbradley.ca/lab/signature-to-image)—PHP to JPEG, PNG or GIF by Thomas J Bradley
-- [sigToSvg](https://github.com/chaz-meister/sigToSvg/)—PHP to SVG by Charles Gebhard
-- [python-signpad2image](https://github.com/videntity/python-signpad2image)—Python to PNG by Alan Viars
-- [SignatureToDotNet](https://github.com/parrots/SignatureToImageDotNet)—C# to JPEG, PNG or GIF by Curtis Herbert
-- [sigJsonToImage](http://www.cflib.org/udf/sigJsonToImage)—ColdFusion to PNG by James Moberg
+<http://thomasjbradley.ca/lab/signature-pad/#images>
 
 ## Source Code
 <http://github.com/thomasjbradley/signature-pad>

@@ -598,7 +598,7 @@ function SignaturePad (selector, options) {
 
   $.extend(self, {
     /**
-     * Initialises SignaturePad
+     * Initializes SignaturePad
      */
     init: function () { init() }
 
@@ -706,7 +706,7 @@ $.fn.signaturePad = function (options) {
  */
 $.fn.signaturePad.defaults = {
   defaultAction: 'typeIt' // What action should be highlighted first: typeIt or drawIt
-  , displayOnly: false // Initialise canvas for signature display only; ignore buttons and inputs
+  , displayOnly: false // Initialize canvas for signature display only; ignore buttons and inputs
   , drawOnly: false // Whether the to allow a typed signature or not
   , canvas: 'canvas' // Selector for selecting the canvas element
   , sig: '.sig' // Parts of the signature form that require Javascript (hidden by default)
