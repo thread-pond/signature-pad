@@ -13,7 +13,7 @@ Versioned using Semantic Versioning, <http://semver.org/>
 3. `$('.sigPad').signaturePad();`
 4. Remember that [most things are configurable](http://thomasjbradley.ca/lab/signature-pad#options)
 
-### Complete Documentation
+## Complete Documentation
 <http://thomasjbradley.ca/lab/signature-pad>
 
 ## Examples
@@ -36,4 +36,4 @@ Versioned using Semantic Versioning, <http://semver.org/>
 ## License
 Signature Pad is licensed under the [New BSD license](https://github.com/thomasjbradley/signature-pad/blob/master/NEW-BSD-LICENSE.txt).
 
-All dependencies: jQuery, JSON 2, and FlashCanvas retain their own licenses.
+All dependencies: jQuery, json2.js, and FlashCanvas retain their own licenses.
