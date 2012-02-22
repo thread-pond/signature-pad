@@ -1,5 +1,9 @@
 # Changelog
 
+**2.1.2 (Feb 21, 2012)**
+
+- Bug fix: added `clearRect()` code to allow transparent backgrounds on the canvas
+
 **2.1.1 (Sept 30, 2011)**
 
 - Removed some extra, un-needed arguments from the `onBeforeValidate` and `onFormError` callbacks
