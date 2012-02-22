@@ -3,7 +3,7 @@ SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas b
 
 Copyright MMXI, Thomas J Bradley, <hey@thomasjbradley.ca>
 
-Dependencies: FlashCanvas/1.5, json2, jquery/1.3.2+
+Dependencies: FlashCanvas/1.5, json2.js, jQuery/1.3.2+
 
 Versioned using Semantic Versioning, <http://semver.org/>
 
