@@ -1,8 +1,13 @@
 # Changelog
 
+**2.2.0 (Feb 26, 2012)**
+
+- Updated the custom cursor to be more browser compatible. Doesn’t work in IE < 8 because FlashCanvas overwrites the cursor. Thanks to: <http://www.useragentman.com/blog/2011/12/21/cross-browser-css-cursor-images-in-depth/>
+- Updated CSS: fixed some glaring vendor prefix bugs, neutralized the colours, and updated the fonts
+
 **2.1.2 (Feb 21, 2012)**
 
-- Bug fix: added `clearRect()` code to allow transparent backgrounds on the canvas
+- Bug fix: added `clearRect()` code to allow transparent backgrounds on the canvas—[Issue #18](https://github.com/thomasjbradley/signature-pad/issues/18)
 
 **2.1.1 (Sept 30, 2011)**
 
