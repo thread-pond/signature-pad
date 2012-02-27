@@ -693,8 +693,13 @@ $.fn.signaturePad = function (options) {
   var api = null
 
   this.each(function () {
-    api = new SignaturePad(this, options)
-    api.init()
+	if (!$.data(this, 'plugin-signaturePad')) {
+		api = new SignaturePad(this, options)
+		api.init()
+		$.data(this, 'plugin-signaturePad', api)
+	} else {
+		api = $.data(this, 'plugin-signaturePad')
+	}
   })
 
   return api
