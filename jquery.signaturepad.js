@@ -602,6 +602,15 @@ function SignaturePad (selector, options) {
      * Initializes SignaturePad
      */
     init: function () { init() }
+	
+	/**
+	 * Allows options to be updated after initialization
+	 *
+	 * @param {Object} options An object containing the options to be changed
+	 */
+	, updateOptions: function (options) {
+		$.extend(settings, options)
+	}
 
     /**
      * Regenerates a signature on the canvas using an array of objects
@@ -699,6 +708,7 @@ $.fn.signaturePad = function (options) {
 		$.data(this, 'plugin-signaturePad', api)
 	} else {
 		api = $.data(this, 'plugin-signaturePad')
+		api.updateOptions(options)
 	}
   })
 
