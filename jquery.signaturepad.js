@@ -210,7 +210,7 @@ function SignaturePad (selector, options) {
     previous.x = null
     previous.y = null
 
-    if (output.length > 0)
+    if (settings.output && output.length > 0)
       $(settings.output, context).val(JSON.stringify(output))
   }
 
@@ -628,7 +628,7 @@ function SignaturePad (selector, options) {
 
       drawSignature(paths, canvasContext, true)
 
-      if ($(settings.output, context).length > 0)
+      if (settings.output && $(settings.output, context).length > 0)
         $(settings.output, context).val(JSON.stringify(output))
     }
 
