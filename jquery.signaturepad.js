@@ -226,8 +226,8 @@ function SignaturePad (selector, options) {
     canvasContext.beginPath()
     canvasContext.lineWidth = settings.lineWidth
     canvasContext.strokeStyle = settings.lineColour
-    canvasContext.moveTo(settings.lineMargin, settings.lineTop)
-    canvasContext.lineTo(element.width - settings.lineMargin, settings.lineTop)
+    canvasContext.moveTo(settings.lineMargin, element.height-settings.lineBottom)
+    canvasContext.lineTo(element.width - settings.lineMargin, element.height-settings.lineBottom)
     canvasContext.stroke()
     canvasContext.closePath()
   }
@@ -719,7 +719,7 @@ $.fn.signaturePad.defaults = {
   , lineColour: '#ccc' // Colour of the signature line
   , lineWidth: 2 // Thickness of the signature line
   , lineMargin: 5 // Margin on right and left of signature line
-  , lineTop: 35 // Distance to draw the line from the top
+  , lineBottom: 25 // Distance to draw the line from the bottom
   , name: '.name' // The input field for typing a name
   , typed: '.typed' // The Html element to accept the printed name
   , clear: '.clearButton' // Button for clearing the canvas
