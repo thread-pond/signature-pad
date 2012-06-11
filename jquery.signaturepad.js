@@ -239,10 +239,12 @@ function SignaturePad (selector, options) {
    */
   function clearCanvas () {
     stopDrawing()
-
-    canvasContext.clearRect(0, 0, element.width, element.height)
-    canvasContext.fillStyle = settings.bgColour
-    canvasContext.fillRect(0, 0, element.width, element.height)
+  
+	canvasContext.clearRect(0, 0, element.width, element.height)
+	if (!settings.bgTrans){
+	    canvasContext.fillStyle = settings.bgColour
+	    canvasContext.fillRect(0, 0, element.width, element.height)
+	}
 
     if (!settings.displayOnly)
       drawSigLine()
@@ -665,8 +667,10 @@ function SignaturePad (selector, options) {
 
       tmpContext = tmpCanvas.getContext('2d')
 
+	if (!settings.bgTrans){
       tmpContext.fillStyle = settings.bgColour
       tmpContext.fillRect(0, 0, element.width, element.height)
+	}
       tmpContext.lineWidth = settings.penWidth
       tmpContext.strokeStyle = settings.penColour
 
@@ -712,6 +716,7 @@ $.fn.signaturePad.defaults = {
   , canvas: 'canvas' // Selector for selecting the canvas element
   , sig: '.sig' // Parts of the signature form that require Javascript (hidden by default)
   , sigNav: '.sigNav' // The TypeIt/DrawIt navigation (hidden by default)
+  , bgTrans: false //Whether to use a transparent background
   , bgColour: '#ffffff' // The colour fill for the background of the canvas
   , penColour: '#145394' // Colour of the drawing ink
   , penWidth: 2 // Thickness of the pen
