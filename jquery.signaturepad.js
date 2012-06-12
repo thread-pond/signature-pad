@@ -314,6 +314,10 @@ function SignaturePad (selector, options) {
       return false
 
     eventsBound = true
+    
+    if ( $('input').is(':focus') ) {
+    	$('input').blur();
+    }
 
     if (typeof e.changedTouches !== 'undefined')
       touchable = true
