@@ -201,7 +201,7 @@ function SignaturePad (selector, options) {
   function stopDrawing () {
     if (touchable) {
       canvas.each(function () {
-        this.ontouchmove = null
+        this.removeEventListener('touchmove', drawLine)
       })
     } else {
       canvas.unbind('mousemove.signaturepad')
@@ -284,18 +284,21 @@ function SignaturePad (selector, options) {
   function disableCanvas () {
     eventsBound = false
 
-    if (touchable) {
-      canvas.each(function () {
-        this.removeEventListener('touchstart', stopDrawing)
+    canvas.each(function () {
+      if (this.removeEventListener) {
         this.removeEventListener('touchend', stopDrawing)
+        this.removeEventListener('touchcancel', stopDrawing)
         this.removeEventListener('touchmove', drawLine)
-      })
-    } else {
-      canvas.unbind('mousedown.signaturepad')
-      canvas.unbind('mouseup.signaturepad')
-      canvas.unbind('mousemove.signaturepad')
-      canvas.unbind('mouseleave.signaturepad')
-    }
+      }
+
+      if (this.ontouchstart)
+        this.ontouchstart = null;
+    })
+
+    canvas.unbind('mousedown.signaturepad')
+    canvas.unbind('mouseup.signaturepad')
+    canvas.unbind('mousemove.signaturepad')
+    canvas.unbind('mouseleave.signaturepad')
 
     $(settings.clear, context).unbind('click.signaturepad')
   }
@@ -314,6 +317,9 @@ function SignaturePad (selector, options) {
       return false
 
     eventsBound = true
+
+    // Closes open keyboards to free up space
+    $('input').blur();
 
     if (typeof e.changedTouches !== 'undefined')
       touchable = true
@@ -602,15 +608,15 @@ function SignaturePad (selector, options) {
      * Initializes SignaturePad
      */
     init : function () { init() }
-	
-	/**
-	 * Allows options to be updated after initialization
-	 *
-	 * @param {Object} options An object containing the options to be changed
-	 */
-	, updateOptions : function (options) {
-		$.extend(settings, options)
-	}
+
+    /**
+     * Allows options to be updated after initialization
+     *
+     * @param {Object} options An object containing the options to be changed
+     */
+    , updateOptions : function (options) {
+      $.extend(settings, options)
+    }
 
     /**
      * Regenerates a signature on the canvas using an array of objects
@@ -687,6 +693,15 @@ function SignaturePad (selector, options) {
 
       return data
     }
+
+    /**
+     * The form validation function
+     * Validates that the signature has been filled in properly
+     * Allows it to be hooked into another validation function and called at a different time
+     *
+     * @return {Boolean}
+     */
+    , validateForm : function () { return validateForm() }
   })
 }
 
@@ -702,14 +717,14 @@ $.fn.signaturePad = function (options) {
   var api = null
 
   this.each(function () {
-	if (!$.data(this, 'plugin-signaturePad')) {
-		api = new SignaturePad(this, options)
-		api.init()
-		$.data(this, 'plugin-signaturePad', api)
-	} else {
-		api = $.data(this, 'plugin-signaturePad')
-		api.updateOptions(options)
-	}
+    if (!$.data(this, 'plugin-signaturePad')) {
+      api = new SignaturePad(this, options)
+      api.init()
+      $.data(this, 'plugin-signaturePad', api)
+    } else {
+      api = $.data(this, 'plugin-signaturePad')
+      api.updateOptions(options)
+    }
   })
 
   return api
@@ -727,7 +742,7 @@ $.fn.signaturePad.defaults = {
   , canvas : 'canvas' // Selector for selecting the canvas element
   , sig : '.sig' // Parts of the signature form that require Javascript (hidden by default)
   , sigNav : '.sigNav' // The TypeIt/DrawIt navigation (hidden by default)
-  , bgColour : '#ffffff' // The colour fill for the background of the canvas
+  , bgColour : '#ffffff' // The colour fill for the background of the canvas; or transparent
   , penColour : '#145394' // Colour of the drawing ink
   , penWidth : 2 // Thickness of the pen
   , penCap : 'round' // Determines how the end points of each line are drawn (values: 'butt', 'round', 'square')

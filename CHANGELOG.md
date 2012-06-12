@@ -1,19 +1,28 @@
 # Changelog
 
-**2.2.0 (Feb 26, 2012)**
+**2.3.0 (Jun. 12, 2012)**
+
+- Added the ability to get the API by re-executing signature pad on the element; [Issue #23](https://github.com/thomasjbradley/signature-pad/issues/23) and many more
+- Added a function to allow updating of options later on
+- Performance fix: if options.output is falsey the JSON will not be calculated; [Issue #15](https://github.com/thomasjbradley/signature-pad/issues/15)
+- Removes focus from input on initialization to close any open keyboards
+- Fixed [Issue #25](https://github.com/thomasjbradley/signature-pad/issues/25)
+- Opened up the `validateForm()` function to allow for inclusion in other form validation code
+
+**2.2.0 (Feb. 26, 2012)**
 
 - Updated the custom cursor to be more browser compatible. Doesn’t work in IE < 8 because FlashCanvas overwrites the cursor. Thanks to: <http://www.useragentman.com/blog/2011/12/21/cross-browser-css-cursor-images-in-depth/>
 - Updated CSS: fixed some glaring vendor prefix bugs, neutralized the colours, and updated the fonts
 
-**2.1.2 (Feb 21, 2012)**
+**2.1.2 (Feb. 21, 2012)**
 
 - Bug fix: added `clearRect()` code to allow transparent backgrounds on the canvas—[Issue #18](https://github.com/thomasjbradley/signature-pad/issues/18)
 
-**2.1.1 (Sept 30, 2011)**
+**2.1.1 (Sep. 30, 2011)**
 
 - Removed some extra, un-needed arguments from the `onBeforeValidate` and `onFormError` callbacks
 
-**2.1.0 (Sept 29, 2011)**
+**2.1.0 (Sep. 29, 2011)**
 
 - Added Firefox Mobile support
 - Added callbacks for validation: `onBeforeValidate`, `onFormError`—[Issue #7](https://github.com/thomasjbradley/signature-pad/issues/7)
