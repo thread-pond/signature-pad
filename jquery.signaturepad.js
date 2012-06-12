@@ -693,6 +693,15 @@ function SignaturePad (selector, options) {
 
       return data
     }
+
+    /**
+     * The form validation function
+     * Validates that the signature has been filled in properly
+     * Allows it to be hooked into another validation function and called at a different time
+     *
+     * @return {Boolean}
+     */
+    , validateForm : function () { return validateForm() }
   })
 }
 
@@ -733,7 +742,7 @@ $.fn.signaturePad.defaults = {
   , canvas : 'canvas' // Selector for selecting the canvas element
   , sig : '.sig' // Parts of the signature form that require Javascript (hidden by default)
   , sigNav : '.sigNav' // The TypeIt/DrawIt navigation (hidden by default)
-  , bgColour : '#ffffff' // The colour fill for the background of the canvas
+  , bgColour : '#ffffff' // The colour fill for the background of the canvas; or transparent
   , penColour : '#145394' // Colour of the drawing ink
   , penWidth : 2 // Thickness of the pen
   , penCap : 'round' // Determines how the end points of each line are drawn (values: 'butt', 'round', 'square')
