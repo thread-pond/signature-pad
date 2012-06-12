@@ -201,7 +201,7 @@ function SignaturePad (selector, options) {
   function stopDrawing () {
     if (touchable) {
       canvas.each(function () {
-        this.ontouchmove = null
+        this.removeEventListener('touchmove', drawLine)
       })
     } else {
       canvas.unbind('mousemove.signaturepad')
@@ -284,18 +284,21 @@ function SignaturePad (selector, options) {
   function disableCanvas () {
     eventsBound = false
 
-    if (touchable) {
-      canvas.each(function () {
-        this.removeEventListener('touchstart', stopDrawing)
+    canvas.each(function () {
+      if (this.removeEventListener) {
         this.removeEventListener('touchend', stopDrawing)
+        this.removeEventListener('touchcancel', stopDrawing)
         this.removeEventListener('touchmove', drawLine)
-      })
-    } else {
-      canvas.unbind('mousedown.signaturepad')
-      canvas.unbind('mouseup.signaturepad')
-      canvas.unbind('mousemove.signaturepad')
-      canvas.unbind('mouseleave.signaturepad')
-    }
+      }
+
+      if (this.ontouchstart)
+        this.ontouchstart = null;
+    })
+
+    canvas.unbind('mousedown.signaturepad')
+    canvas.unbind('mouseup.signaturepad')
+    canvas.unbind('mousemove.signaturepad')
+    canvas.unbind('mouseleave.signaturepad')
 
     $(settings.clear, context).unbind('click.signaturepad')
   }
