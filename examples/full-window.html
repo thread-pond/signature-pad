@@ -8,10 +8,6 @@
 		-moz-user-select: none;
 		user-select: none;
 	}
-  html {
-    /* Direct all IE10+ pointer events to JavaScript code. */
-    -ms-touch-action: none;
-  }
 	html, body {
 		min-height: 100%;
 		height: 100%;
@@ -38,6 +34,8 @@
 	canvas {
 		outline: 5px solid #aaa;
 		background: #fff;
+    /* Direct all IE10+ pointer events to JavaScript code. */
+    -ms-touch-action: none;
 	}
 	input[type=submit], input[type=reset] {
 		font-size: larger;
