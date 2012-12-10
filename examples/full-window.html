@@ -8,6 +8,10 @@
 		-moz-user-select: none;
 		user-select: none;
 	}
+  html {
+    /* Direct all IE10+ pointer events to JavaScript code. */
+    -ms-touch-action: none;
+  }
 	html, body {
 		min-height: 100%;
 		height: 100%;
