@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>Full-Window &middot; Signature Pad</title>
+  <style>
+	* {
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		user-select: none;
+	}
+	html, body {
+		min-height: 100%;
+		height: 100%;
+		max-width: 100%;
+		width: 100%;
+		overflow: hidden;
+	}
+	html, body, form {
+		margin: 0px;
+	}
+	html, form {
+		padding: 0px;
+	}
+	html, body, fieldset {
+		background: #aaa;
+	}
+	fieldset {
+		position: absolute;
+		border: 5px solid #aaa;
+		background: #aaa;
+		right: 0px;
+		bottom: 0px;
+	}
+	canvas {
+		outline: 5px solid #aaa;
+		background: #fff;
+	}
+	input[type=submit], input[type=reset] {
+		font-size: larger;
+	}
+  </style>
+  <link rel="stylesheet" href="../build/jquery.signaturepad.css">
+  <!--[if lt IE 9]><script src="../build/flashcanvas.js"></script><![endif]-->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+</head>
+<body>
+	<form method="POST" action="">
+		<canvas class="pad"></canvas>
+		<fieldset>
+			<input type="reset" value="clear" />
+		</fieldset>
+	</form>
+
+  <script src="../jquery.signaturepad.js"></script>
+  <script>
+  (function(window) {
+    var $canvas,
+        onResize = function(event) {
+          $canvas.attr({
+            height: window.innerHeight,
+            width: window.innerWidth
+          });
+        };
+
+    $(document).ready(function() {
+      $canvas = $('canvas');
+      window.addEventListener('orientationchange', onResize, false);
+      window.addEventListener('resize', onResize, false);
+      onResize();
+
+      $('form').signaturePad({
+        drawOnly: true,
+        defaultAction: 'drawIt',
+        validateFields: false,
+        lineWidth: 0,
+        output: null,
+        sigNav: null,
+        name: null,
+        typed: null,
+        clear: 'input[type=reset]',
+        typeIt: null,
+        drawIt: null,
+        typeItDesc: null,
+        drawItDesc: null
+      });
+    });
+  }(this));
+  </script>
+  <script src="../build/json2.min.js"></script>
+</body>
