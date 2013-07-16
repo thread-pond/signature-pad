@@ -189,10 +189,8 @@ function SignaturePad (selector, options) {
     previous.x = newX
     previous.y = newY
 
-    if (settings.onDraw && typeof settings.onDraw === 'function') {
+    if (settings.onDraw && typeof settings.onDraw === 'function')
       settings.onDraw.apply(self)
-    }
-
   }
 
   /**
@@ -217,6 +215,9 @@ function SignaturePad (selector, options) {
 
     if (settings.output && output.length > 0)
       $(settings.output, context).val(JSON.stringify(output))
+
+    if (settings.onDrawEnd && typeof settings.onDrawEnd === 'function')
+      settings.onDrawEnd.apply(self)
   }
 
   /**
@@ -771,5 +772,7 @@ $.fn.signaturePad.defaults = {
   , onBeforeValidate : null // Pass a callback to be used instead of the built-in function
   , onFormError : null // Pass a callback to be used instead of the built-in function
   , onDraw : null // Pass a callback to be used to capture the drawing process
+  , onDrawEnd : null // Pass a callback to be exectued after the drawing process
 }
+
 }(jQuery))
