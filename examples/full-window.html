@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8">
-  <title>Full-Window &middot; Signature Pad</title>
+  <title>Full-Window · Signature Pad</title>
   <style>
 	* {
 		-webkit-user-select: none;
@@ -34,8 +34,6 @@
 	canvas {
 		outline: 5px solid #aaa;
 		background: #fff;
-    /* Direct all IE10+ pointer events to JavaScript code. */
-    -ms-touch-action: none;
 	}
 	input[type=submit], input[type=reset] {
 		font-size: larger;
@@ -53,7 +51,7 @@
 		</fieldset>
 	</form>
 
-  <script src="../jquery.signaturepad.js"></script>
+  <script src="../build/jquery.signaturepad.js"></script>
   <script>
   (function(window) {
     var $canvas,
