@@ -129,6 +129,33 @@ function SignaturePad (selector, options) {
    */
   , eventsBound = false
 
+  /**
+   * Remembers the default font-size when typing, and will allow it to be scaled for bigger/smaller names
+   *
+   * @private
+   *
+   * @type {Number}
+   */
+  , typeItDefaultFontSize = 30
+
+  /**
+   * Remembers the current font-size when typing
+   *
+   * @private
+   *
+   * @type {Number}
+   */
+  , typeItCurrentFontSize = typeItDefaultFontSize
+
+  /**
+   * Remembers how many characters are in the name field, to help with the scaling feature
+   *
+   * @private
+   *
+   * @type {Number}
+   */
+  , typeItNumChars = 0
+
 
   /**
    * Draws a line on canvas using the mouse position
@@ -449,6 +476,8 @@ function SignaturePad (selector, options) {
     $(settings.drawItDesc, context).hide()
     $(settings.clear, context).hide()
     $(settings.typeItDesc, context).show()
+
+    typeItCurrentFontSize = typeItDefaultFontSize = $(settings.typed, context).css('font-size').replace(/px/, '')
   }
 
   /**
@@ -460,11 +489,31 @@ function SignaturePad (selector, options) {
    * @param {String} val The value of the input field
    */
   function type (val) {
-    $(settings.typed, context).html(val.replace(/>/g, '&gt;').replace(/</g, '&lt;'))
+    var typed = $(settings.typed, context)
+      , cleanedVal = val.replace(/>/g, '&gt;').replace(/</g, '&lt;').trim()
+      , oldLength = typeItNumChars
+      , edgeOffset = typeItCurrentFontSize * 0.5
 
-    while ($(settings.typed, context).width() > element.width) {
-      var oldSize = $(settings.typed, context).css('font-size').replace(/px/, '')
-      $(settings.typed, context).css('font-size', oldSize-1+'px')
+    typeItNumChars = cleanedVal.length
+    typed.html(cleanedVal)
+
+    if (!cleanedVal) {
+      typed.css('font-size', typeItDefaultFontSize + 'px')
+      return
+    }
+
+    if (typeItNumChars > oldLength && typed.outerWidth() > element.width) {
+      while (typed.outerWidth() > element.width) {
+        typeItCurrentFontSize--
+        typed.css('font-size', typeItCurrentFontSize + 'px')
+      }
+    }
+
+    if (typeItNumChars < oldLength && typed.outerWidth() + edgeOffset < element.width && typeItCurrentFontSize < typeItDefaultFontSize) {
+      while (typed.outerWidth() + edgeOffset < element.width && typeItCurrentFontSize < typeItDefaultFontSize) {
+        typeItCurrentFontSize++
+        typed.css('font-size', typeItCurrentFontSize + 'px')
+      }
     }
   }
 
