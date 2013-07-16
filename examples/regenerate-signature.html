@@ -6,8 +6,8 @@
     body { font: normal 100.01%/1.375 "Helvetica Neue",Helvetica,Arial,sans-serif; }
     p { margin: 0.515em 0 0; padding: 0 6px; }
   </style>
-  <link href="../build/jquery.signaturepad.css" rel="stylesheet">
-  <!--[if lt IE 9]><script src="../build/flashcanvas.js"></script><![endif]-->
+  <link href="../assets/jquery.signaturepad.css" rel="stylesheet">
+  <!--[if lt IE 9]><script src="../assets/flashcanvas.js"></script><![endif]-->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 </head>
 <body>
@@ -19,12 +19,12 @@
     <p>Sir John A. Macdonald<br>July 1, 1867</p>
   </div>
 
-  <script src="../build/jquery.signaturepad.js"></script>
+  <script src="../jquery.signaturepad.min.js"></script>
   <script src="sample-signature-output.js"></script>
   <script>
     $(document).ready(function() {
       $('.sigPad').signaturePad({displayOnly:true}).regenerate(sig);
     });
   </script>
-  <script src="../build/json2.min.js"></script>
+  <script src="../assets/json2.min.js"></script>
 </body>
