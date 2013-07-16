@@ -132,7 +132,11 @@ function SignaturePad (selector, options) {
    * @param {Number} newYOffset A pixel value for drawing the newY, used for drawing a single dot on click
    */
   function drawLine (e, newYOffset) {
-    var offset = $(e.target).offset(), newX, newY
+    var offset, newX, newY
+
+    e.preventDefault()
+
+    offset = $(e.target).offset()
 
     clearTimeout(mouseLeaveTimeout)
     mouseLeaveTimeout = false
