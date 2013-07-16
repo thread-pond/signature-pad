@@ -1,19 +1,4 @@
 /**
- * @preserve SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas
- * based signature pad. Records the drawn signature in JSON for later regeneration.
- *
- * Dependencies: FlashCanvas/1.5, json2.js, jQuery/1.3.2+
- *
- * @project ca.thomasjbradley.applications.signaturepad
- * @author Thomas J Bradley <hey@thomasjbradley.ca>
- * @link http://thomasjbradley.ca/lab/signature-pad
- * @link http://github.com/thomasjbradley/signature-pad
- * @copyright Copyright MMXI, Thomas J Bradley
- * @license New BSD License
- * @version {{version}}
- */
-
-/**
  * Usage for accepting signatures:
  *  $('.sigPad').signaturePad()
  *
