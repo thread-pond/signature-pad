@@ -102,6 +102,15 @@ function SignaturePad (selector, options) {
    */
   , mouseLeaveTimeout = false
 
+    /**
+     * Whether the mouse button is currently pressed down or not
+     *
+     * @private
+     *
+     * @type {Boolean}
+     */
+  , mouseButtonDown = false
+
   /**
    * Whether the browser is a touch event browser or not
    *
@@ -190,13 +199,17 @@ function SignaturePad (selector, options) {
    *
    * @param {Object} e The event object
    */
-  function stopDrawing () {
-    if (touchable) {
-      canvas.each(function () {
-        this.removeEventListener('touchmove', drawLine)
-      })
+  function stopDrawing (e) {
+    if (!!e) {
+      drawLine(e, 1)
     } else {
-      canvas.unbind('mousemove.signaturepad')
+      if (touchable) {
+        canvas.each(function () {
+          this.removeEventListener('touchmove', drawLine)
+        })
+      } else {
+        canvas.unbind('mousemove.signaturepad')
+      }
     }
 
     previous.x = null
@@ -250,6 +263,23 @@ function SignaturePad (selector, options) {
   }
 
   /**
+   * Callback registered to mouse/touch events of the canvas
+   * Draws a line at the mouse cursor location, starting a new line if necessary
+   *
+   * @private
+   *
+   * @param {Object} e The event object
+   * @param {Object} o The object context registered to the event; canvas
+   */
+  function onMouseMove(e, o) {
+    if (previous.x == null) {
+      drawLine(e, 1)
+    } else {
+      drawLine(e, o)
+    }
+  }
+
+  /**
    * Callback registered to mouse/touch events of canvas
    * Triggers the drawLine function
    *
@@ -261,10 +291,10 @@ function SignaturePad (selector, options) {
   function startDrawing (e, o) {
     if (touchable) {
       canvas.each(function () {
-        this.addEventListener('touchmove', drawLine, false)
+        this.addEventListener('touchmove', onMouseMove, false)
       })
     } else {
-      canvas.bind('mousemove.signaturepad', drawLine)
+      canvas.bind('mousemove.signaturepad', onMouseMove)
     }
 
     // Draws a single point on initial mouse down, for people with periods in their name
@@ -290,6 +320,7 @@ function SignaturePad (selector, options) {
         this.ontouchstart = null;
     })
 
+    $(document).unbind('mouseup.signaturepad')
     canvas.unbind('mousedown.signaturepad')
     canvas.unbind('mouseup.signaturepad')
     canvas.unbind('mousemove.signaturepad')
@@ -327,13 +358,22 @@ function SignaturePad (selector, options) {
 
       canvas.unbind('mousedown.signaturepad')
     } else {
+      $(document).bind('mouseup.signaturepad', function (e) {
+        if (mouseButtonDown) {
+          stopDrawing()
+          mouseButtonDown = false
+        }
+      })
       canvas.bind('mouseup.signaturepad', function (e) { stopDrawing() })
       canvas.bind('mouseleave.signaturepad', function (e) {
+        stopDrawing(e)
+
         if (!mouseLeaveTimeout) {
           mouseLeaveTimeout = setTimeout(function () {
             stopDrawing()
             clearTimeout(mouseLeaveTimeout)
             mouseLeaveTimeout = false
+            mouseButtonDown = false
           }, 500)
         }
       })
@@ -357,12 +397,15 @@ function SignaturePad (selector, options) {
     canvas.each(function () {
       this.ontouchstart = function (e) {
         e.preventDefault()
+        mouseButtonDown = true
         initDrawEvents(e)
         startDrawing(e, this)
       }
     })
 
     canvas.bind('mousedown.signaturepad', function (e) {
+      e.preventDefault()
+      mouseButtonDown = true
       initDrawEvents(e)
       startDrawing(e, this)
     })
