@@ -172,7 +172,7 @@
    *
    * http://www.useragentman.com/blog/2011/12/21/cross-browser-css-cursor-images-in-depth/
    */
-  cursor: url("../build/pen.cur"), crosshair;
+  cursor: url("../assets/pen.cur"), crosshair;
   /**
    * IE will ignore this line because of the hotspot position
    * Unfortunately we need this twice, because some browsers ignore the hotspot inside the .cur
