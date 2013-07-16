@@ -188,6 +188,11 @@ function SignaturePad (selector, options) {
 
     previous.x = newX
     previous.y = newY
+
+    if (settings.onDraw && typeof settings.onDraw === 'function') {
+      settings.onDraw.apply(self)
+    }
+
   }
 
   /**
@@ -765,5 +770,6 @@ $.fn.signaturePad.defaults = {
   , errorMessageDraw : 'Please sign the document' // The error message displayed when drawOnly and no signature is drawn
   , onBeforeValidate : null // Pass a callback to be used instead of the built-in function
   , onFormError : null // Pass a callback to be used instead of the built-in function
+  , onDraw : null // Pass a callback to be used to capture the drawing process
 }
 }(jQuery))
