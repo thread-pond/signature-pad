@@ -178,6 +178,11 @@
    * Unfortunately we need this twice, because some browsers ignore the hotspot inside the .cur
    */
   cursor: url("pen.cur") 16 16, crosshair;
+
+  -ms-touch-action: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
 .typed {
