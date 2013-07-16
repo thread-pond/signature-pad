@@ -4,7 +4,6 @@
     , "typeIt"
   ]
 
-  , "es5": true
   , "browser": true
   , "jquery": true
 
@@ -14,6 +13,7 @@
   , "immed": true
   , "newcap": true
   , "laxbreak": true
+  , "laxcomma": true
   , "noarg": true
   , "onevar": true
   , "undef": true
