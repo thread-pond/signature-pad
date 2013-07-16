@@ -313,13 +313,11 @@ function SignaturePad (selector, options) {
    * @private
    *
    * @param {Object} e The event object
-   * @param {Object} o The object context registered to the event; canvas
+   * @param {Object} touchObject The object context registered to the event; canvas
    */
-  function startDrawing (e, o) {
+  function startDrawing (e, touchObject) {
     if (touchable) {
-      canvas.each(function () {
-        this.addEventListener('touchmove', onMouseMove, false)
-      })
+      touchObject.addEventListener('touchmove', onMouseMove, false)
     } else {
       canvas.bind('mousemove.signaturepad', onMouseMove)
     }
@@ -385,13 +383,13 @@ function SignaturePad (selector, options) {
 
       canvas.unbind('mousedown.signaturepad')
     } else {
-      $(document).bind('mouseup.signaturepad', function (e) {
+      $(document).bind('mouseup.signaturepad', function () {
         if (mouseButtonDown) {
           stopDrawing()
           mouseButtonDown = false
         }
       })
-      canvas.bind('mouseup.signaturepad', function (e) { stopDrawing() })
+      canvas.bind('mouseup.signaturepad', function () { stopDrawing() })
       canvas.bind('mouseleave.signaturepad', function (e) {
         stopDrawing(e)
 
@@ -434,7 +432,7 @@ function SignaturePad (selector, options) {
       e.preventDefault()
       mouseButtonDown = true
       initDrawEvents(e)
-      startDrawing(e, this)
+      startDrawing(e)
     })
 
     $(settings.clear, context).bind('click.signaturepad', function (e) { e.preventDefault(); clearCanvas() })
