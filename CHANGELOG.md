@@ -1,5 +1,17 @@
 # Changelog
 
+**2.4.0 (Jul. 16, 2013)**
+
+- Added Grunt.js as the build tool
+- Added an `onDraw` callback; [Pull Request #60](https://github.com/thomasjbradley/signature-pad/pull/60)
+- Added an `onDrawEnd` callback; [Pull Request #70](https://github.com/thomasjbradley/signature-pad/pull/70)
+- Added a new full window example; [Pull Request #49](https://github.com/thomasjbradley/signature-pad/pull/49)
+- Updated the examples to be more modern; [Pull Request #49](https://github.com/thomasjbradley/signature-pad/pull/49)
+- Improved the signature handling when leaving the `<canvas>`; [Issue #38](https://github.com/thomasjbradley/signature-pad/issues/38)
+- Fixed some event and touch related bugs for: IE/10 with [Pull Request #49](https://github.com/thomasjbradley/signature-pad/pull/49); Android/4 with [Issue #78](https://github.com/thomasjbradley/signature-pad/issues/78); more browsers with [Issue #38](https://github.com/thomasjbradley/signature-pad/issues/38)
+- Fixed the typed signature scaling bug [Issue #54](https://github.com/thomasjbradley/signature-pad/issues/54)
+- Fixed up the .jshintrc file
+
 **2.3.0 (Jun. 12, 2012)**
 
 - Added the ability to get the API by re-executing signature pad on the element; [Issue #23](https://github.com/thomasjbradley/signature-pad/issues/23) and many more
