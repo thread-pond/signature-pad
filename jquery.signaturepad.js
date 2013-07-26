@@ -391,7 +391,7 @@ function SignaturePad (selector, options) {
       })
       canvas.bind('mouseup.signaturepad', function () { stopDrawing() })
       canvas.bind('mouseleave.signaturepad', function (e) {
-        stopDrawing(e)
+        if (mouseButtonDown) stopDrawing(e)
 
         if (!mouseLeaveTimeout) {
           mouseLeaveTimeout = setTimeout(function () {
