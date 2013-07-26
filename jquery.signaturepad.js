@@ -158,6 +158,18 @@ function SignaturePad (selector, options) {
 
 
   /**
+   * Clears the mouseLeaveTimeout
+   * Resets some other variables that may be active
+   *
+   * @private
+   */
+  function clearMouseLeaveTimeout () {
+    clearTimeout(mouseLeaveTimeout)
+    mouseLeaveTimeout = false
+    mouseButtonDown = false
+  }
+
+  /**
    * Draws a line on canvas using the mouse position
    * Checks previous position to not draw over top of previous drawing
    *  (makes the line really thick and poorly anti-aliased)
@@ -237,6 +249,9 @@ function SignaturePad (selector, options) {
       } else {
         canvas.unbind('mousemove.signaturepad')
       }
+
+      if (output.length > 0 && settings.onDrawEnd && typeof settings.onDrawEnd === 'function')
+        settings.onDrawEnd.apply(self)
     }
 
     previous.x = null
@@ -244,9 +259,6 @@ function SignaturePad (selector, options) {
 
     if (settings.output && output.length > 0)
       $(settings.output, context).val(JSON.stringify(output))
-
-    if (settings.onDrawEnd && typeof settings.onDrawEnd === 'function')
-      settings.onDrawEnd.apply(self)
   }
 
   /**
@@ -273,8 +285,6 @@ function SignaturePad (selector, options) {
    * @private
    */
   function clearCanvas () {
-    stopDrawing()
-
     canvasContext.clearRect(0, 0, element.width, element.height)
     canvasContext.fillStyle = settings.bgColour
     canvasContext.fillRect(0, 0, element.width, element.height)
@@ -287,6 +297,8 @@ function SignaturePad (selector, options) {
 
     $(settings.output, context).val('')
     output = []
+
+    stopDrawing()
   }
 
   /**
@@ -347,7 +359,6 @@ function SignaturePad (selector, options) {
 
     $(document).unbind('mouseup.signaturepad')
     canvas.unbind('mousedown.signaturepad')
-    canvas.unbind('mouseup.signaturepad')
     canvas.unbind('mousemove.signaturepad')
     canvas.unbind('mouseleave.signaturepad')
 
@@ -386,19 +397,16 @@ function SignaturePad (selector, options) {
       $(document).bind('mouseup.signaturepad', function () {
         if (mouseButtonDown) {
           stopDrawing()
-          mouseButtonDown = false
+          clearMouseLeaveTimeout()
         }
       })
-      canvas.bind('mouseup.signaturepad', function () { stopDrawing() })
       canvas.bind('mouseleave.signaturepad', function (e) {
         if (mouseButtonDown) stopDrawing(e)
 
-        if (!mouseLeaveTimeout) {
+        if (mouseButtonDown && !mouseLeaveTimeout) {
           mouseLeaveTimeout = setTimeout(function () {
             stopDrawing()
-            clearTimeout(mouseLeaveTimeout)
-            mouseLeaveTimeout = false
-            mouseButtonDown = false
+            clearMouseLeaveTimeout()
           }, 500)
         }
       })
