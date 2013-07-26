@@ -1,5 +1,9 @@
 # Changelog
 
+**2.4.1 (Jul. 26, 2013)**
+
+- Fixed a bug where onDrawEnd was firing too often and at incorrect times, [Issue #84](https://github.com/thomasjbradley/signature-pad/issues/84)
+
 **2.4.0 (Jul. 16, 2013)**
 
 - Added Grunt.js as the build tool
