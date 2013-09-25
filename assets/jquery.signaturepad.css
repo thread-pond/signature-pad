@@ -150,9 +150,7 @@
 
 .pad {
   position: relative;
-}
 
-.current .pad {
   /**
    * For cross browser compatibility, this should be an absolute URL
    * In IE the cursor is relative to the HTML document
