@@ -189,9 +189,9 @@ function SignaturePad (selector, options) {
     clearTimeout(mouseLeaveTimeout)
     mouseLeaveTimeout = false
 
-    if (typeof e.changedTouches !== 'undefined') {
-      newX = Math.floor(e.changedTouches[0].pageX - offset.left)
-      newY = Math.floor(e.changedTouches[0].pageY - offset.top)
+    if (typeof e.targetTouches !== 'undefined') {
+      newX = Math.floor(e.targetTouches[0].pageX - offset.left)
+      newY = Math.floor(e.targetTouches[0].pageY - offset.top)
     } else {
       newX = Math.floor(e.pageX - offset.left)
       newY = Math.floor(e.pageY - offset.top)
@@ -231,6 +231,16 @@ function SignaturePad (selector, options) {
   }
 
   /**
+   * Callback wrapper for executing stopDrawing without the event
+   * Put up here so that it can be removed at a later time
+   *
+   * @private
+   */
+  function stopDrawingWrapper () {
+    stopDrawing()
+  }
+
+  /**
    * Callback registered to mouse/touch events of the canvas
    * Stops the drawing abilities
    *
@@ -245,6 +255,7 @@ function SignaturePad (selector, options) {
       if (touchable) {
         canvas.each(function () {
           this.removeEventListener('touchmove', drawLine)
+          // this.removeEventListener('MSPointerMove', drawLine)
         })
       } else {
         canvas.unbind('mousemove.signaturepad')
@@ -330,6 +341,7 @@ function SignaturePad (selector, options) {
   function startDrawing (e, touchObject) {
     if (touchable) {
       touchObject.addEventListener('touchmove', onMouseMove, false)
+      // touchObject.addEventListener('MSPointerMove', onMouseMove, false)
     } else {
       canvas.bind('mousemove.signaturepad', onMouseMove)
     }
@@ -348,9 +360,12 @@ function SignaturePad (selector, options) {
 
     canvas.each(function () {
       if (this.removeEventListener) {
-        this.removeEventListener('touchend', stopDrawing)
-        this.removeEventListener('touchcancel', stopDrawing)
+        this.removeEventListener('touchend', stopDrawingWrapper)
+        this.removeEventListener('touchcancel', stopDrawingWrapper)
         this.removeEventListener('touchmove', drawLine)
+        // this.removeEventListener('MSPointerUp', stopDrawingWrapper)
+        // this.removeEventListener('MSPointerCancel', stopDrawingWrapper)
+        // this.removeEventListener('MSPointerMove', drawLine)
       }
 
       if (this.ontouchstart)
@@ -383,13 +398,15 @@ function SignaturePad (selector, options) {
     // Closes open keyboards to free up space
     $('input').blur();
 
-    if (typeof e.changedTouches !== 'undefined')
+    if (typeof e.targetTouches !== 'undefined')
       touchable = true
 
     if (touchable) {
       canvas.each(function () {
-        this.addEventListener('touchend', stopDrawing, false)
-        this.addEventListener('touchcancel', stopDrawing, false)
+        this.addEventListener('touchend', stopDrawingWrapper, false)
+        this.addEventListener('touchcancel', stopDrawingWrapper, false)
+        // this.addEventListener('MSPointerUp', stopDrawingWrapper, false)
+        // this.addEventListener('MSPointerCancel', stopDrawingWrapper, false)
       })
 
       canvas.unbind('mousedown.signaturepad')
