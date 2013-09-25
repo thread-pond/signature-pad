@@ -455,6 +455,10 @@ function SignaturePad (selector, options) {
 
     canvas.bind('mousedown.signaturepad', function (e) {
       e.preventDefault()
+
+      // Only allow left mouse clicks to trigger signature drawing
+      if (e.which > 1) return false
+
       mouseButtonDown = true
       initDrawEvents(e)
       startDrawing(e)
