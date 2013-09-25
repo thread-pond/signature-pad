@@ -3,7 +3,8 @@
 **2.4.2 (Sep. 25, 2013)**
 
 - Fixed a bug where onDrawEnd wasn’t firing properly on touch devices, [Issue #92](https://github.com/thomasjbradley/signature-pad/issues/92)
-- Changed a CSS selector for better Windows 8 support
+- Changed a CSS selector for better Windows 8 support, [Issue #91](https://github.com/thomasjbradley/signature-pad/issues/91)
+- Fixed a bug where right clicking would cause a dot to be drawn, [Issue #80](https://github.com/thomasjbradley/signature-pad/issues/80)
 
 **2.4.1 (Jul. 26, 2013)**
 
