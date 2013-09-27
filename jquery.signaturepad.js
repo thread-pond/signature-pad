@@ -719,9 +719,14 @@ function SignaturePad (selector, options) {
 
   $.extend(self, {
     /**
+     * A property to store the current version of Signature Pad
+     */
+    signaturePad : '{{version}}'
+
+    /**
      * Initializes SignaturePad
      */
-    init : function () { init() }
+    , init : function () { init() }
 
     /**
      * Allows options to be updated after initialization
