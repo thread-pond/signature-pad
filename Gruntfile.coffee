@@ -35,8 +35,7 @@ module.exports = (grunt) ->
             'jquery.signaturepad.js'
           ]
 
-  grunt.loadNpmTasks 'grunt-contrib-jshint'
-  grunt.loadNpmTasks 'grunt-contrib-uglify'
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
 
   grunt.registerTask 'default', [
     'jshint'
