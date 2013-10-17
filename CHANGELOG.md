@@ -1,5 +1,9 @@
 # Changelog
 
+**2.5.0 (Oct. 16, 2013)**
+
+- Added an API to retrieve the version programmatically, [Issue #96](https://github.com/thomasjbradley/signature-pad/issues/96)
+
 **2.4.2 (Sep. 25, 2013)**
 
 - Fixed a bug where onDrawEnd wasn’t firing properly on touch devices, [Issue #92](https://github.com/thomasjbradley/signature-pad/issues/92)
