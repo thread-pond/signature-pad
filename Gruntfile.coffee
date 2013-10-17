@@ -35,9 +35,22 @@ module.exports = (grunt) ->
             'jquery.signaturepad.js'
           ]
 
+    replace:
+      version:
+        src: [
+          'jquery.signaturepad.min.js'
+        ]
+        overwrite: true
+        replacements: [{
+          from: /\{\{version\}\}/
+          to: '<%= pkg.version %>'
+        }]
+
+
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
 
   grunt.registerTask 'default', [
     'jshint'
     'uglify'
+    'replace'
   ]
