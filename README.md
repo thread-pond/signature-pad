@@ -4,8 +4,6 @@ SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas b
 
 • Dependencies: FlashCanvas/1.5, json2.js, jQuery/1.3.2+
 
-• Browser support: IE 6+, FF 3+, Safari 3+, Chrome, Opera 9+
-
 ---
 
 ## Quick Start
