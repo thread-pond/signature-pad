@@ -1,5 +1,9 @@
 # Changelog
 
+**2.5.1 (Apr. 15, 2014)**
+
+- Fixed a bug in IE 8 related to `trim()`, [Issue #113](https://github.com/thomasjbradley/signature-pad/issues/113)
+
 **2.5.0 (Oct. 16, 2013)**
 
 - Added an API to retrieve the version programmatically, [Issue #96](https://github.com/thomasjbradley/signature-pad/issues/96)
