@@ -787,6 +787,10 @@ function SignaturePad (selector, options) {
       var tmpCanvas = document.createElement('canvas')
         , tmpContext = null
         , data = null
+        , drawBackground = true
+      
+      if (typeof arguments[0] != 'undefined' && typeof arguments[0].drawBackground != 'undefined')
+        drawBackground = arguments[0].drawBackground
 
       tmpCanvas.style.position = 'absolute'
       tmpCanvas.style.top = '-999em'
@@ -799,8 +803,10 @@ function SignaturePad (selector, options) {
 
       tmpContext = tmpCanvas.getContext('2d')
 
-      tmpContext.fillStyle = settings.bgColour
-      tmpContext.fillRect(0, 0, element.width, element.height)
+      if (drawBackground) {
+        tmpContext.fillStyle = settings.bgColour
+        tmpContext.fillRect(0, 0, element.width, element.height)
+      }
       tmpContext.lineWidth = settings.penWidth
       tmpContext.strokeStyle = settings.penColour
 
