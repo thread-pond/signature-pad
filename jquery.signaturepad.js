@@ -363,6 +363,7 @@ function SignaturePad (selector, options) {
         this.removeEventListener('touchend', stopDrawingWrapper)
         this.removeEventListener('touchcancel', stopDrawingWrapper)
         this.removeEventListener('touchmove', drawLine)
+        this.removeEventListener('touchmove', onMouseMove)
         // this.removeEventListener('MSPointerUp', stopDrawingWrapper)
         // this.removeEventListener('MSPointerCancel', stopDrawingWrapper)
         // this.removeEventListener('MSPointerMove', drawLine)
