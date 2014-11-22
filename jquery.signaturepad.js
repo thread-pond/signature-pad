@@ -397,7 +397,8 @@ function SignaturePad (selector, options) {
     eventsBound = true
 
     // Closes open keyboards to free up space
-    $('input').blur();
+    //Commenting this line because it is making the signature pad slow when doing signature.
+    //$('input').blur();
 
     if (typeof e.targetTouches !== 'undefined')
       touchable = true
