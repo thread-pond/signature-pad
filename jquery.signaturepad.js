@@ -444,14 +444,12 @@ function SignaturePad (selector, options) {
     $(settings.typed, context).hide()
     clearCanvas()
 
-    // canvas.each(function () {
-      canvas.on('touchstart', function (e) {
-        e.preventDefault()
-        mouseButtonDown = true
-        initDrawEvents(e)
-        startDrawing(e, this)
-      });
-    // })
+    canvas.on('touchstart', function (e) {
+      e.preventDefault()
+      mouseButtonDown = true
+      initDrawEvents(e)
+      startDrawing(e, this)
+    });
 
     canvas.bind('mousedown.signaturepad', function (e) {
       e.preventDefault()
@@ -888,4 +886,4 @@ $.fn.signaturePad.defaults = {
   , onDrawEnd : null // Pass a callback to be exectued after the drawing process
 }
 
-}(jQuery))
+}(jQuery));
