@@ -398,7 +398,7 @@ function SignaturePad (selector, options) {
     // Closes open keyboards to free up space
     $('input').blur();
 
-    if (typeof e.targetTouches !== 'undefined')
+    if (typeof e.originalEvent.targetTouches !== 'undefined')
       touchable = true
 
     if (touchable) {
@@ -444,14 +444,14 @@ function SignaturePad (selector, options) {
     $(settings.typed, context).hide()
     clearCanvas()
 
-    canvas.each(function () {
-      this.ontouchstart = function (e) {
+    // canvas.each(function () {
+      canvas.on('touchstart', function (e) {
         e.preventDefault()
         mouseButtonDown = true
         initDrawEvents(e)
         startDrawing(e, this)
-      }
-    })
+      });
+    // })
 
     canvas.bind('mousedown.signaturepad', function (e) {
       e.preventDefault()
@@ -888,4 +888,4 @@ $.fn.signaturePad.defaults = {
   , onDrawEnd : null // Pass a callback to be exectued after the drawing process
 }
 
-}(jQuery));
+}(jQuery))
