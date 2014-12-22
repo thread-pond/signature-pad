@@ -1,5 +1,9 @@
 # Changelog
 
+**2.5.2 (Dec. 22, 2014)**
+
+- Merged [Pull Request #124](https://github.com/thomasjbradley/signature-pad/issues/124) to fix a missing semi-colon at the end.
+
 **2.5.1 (Apr. 15, 2014)**
 
 - Fixed a bug in IE 8 related to `trim()`, [Issue #113](https://github.com/thomasjbradley/signature-pad/issues/113)
