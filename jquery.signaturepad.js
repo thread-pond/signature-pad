@@ -300,14 +300,27 @@ function SignaturePad (selector, options) {
     canvasContext.fillStyle = settings.bgColour
     canvasContext.fillRect(0, 0, element.width, element.height)
 
+    /*
     if (!settings.displayOnly)
       drawSigLine()
-
+    */
     canvasContext.lineWidth = settings.penWidth
     canvasContext.strokeStyle = settings.penColour
 
-    $(settings.output, context).val('')
-    output = []
+
+    if(settings.bgImage != null){
+        var  background = new Image();
+        background.src = settings.bgImage;
+
+        // Make sure the image is loaded first otherwise nothing will draw.
+        background.onload = function(){
+            canvasContext.drawImage(background,0,0);
+        };
+    }
+
+
+    $(settings.output, context).val('');
+    output = [];
 
     stopDrawing()
   }
@@ -714,7 +727,12 @@ function SignaturePad (selector, options) {
 
         $(settings.sigNav, context).show()
       }
-    }
+
+
+
+  }
+
+
   }
 
   $.extend(self, {
@@ -748,10 +766,22 @@ function SignaturePad (selector, options) {
       self.clearCanvas()
       $(settings.typed, context).hide()
 
+
       if (typeof paths === 'string')
         paths = JSON.parse(paths)
 
-      drawSignature(paths, canvasContext, true)
+      if(settings.bgImage != null){
+          var  background = new Image();
+          background.src = settings.bgImage;
+
+          // Make sure the image is loaded first otherwise nothing will draw.
+          background.onload = function(){
+              canvasContext.drawImage(background,0,0);
+              drawSignature(paths, canvasContext, true);
+          };
+      }else{
+          drawSignature(paths, canvasContext, true);
+      }
 
       if (settings.output && $(settings.output, context).length > 0)
         $(settings.output, context).val(JSON.stringify(output))
@@ -886,6 +916,7 @@ $.fn.signaturePad.defaults = {
   , onFormError : null // Pass a callback to be used instead of the built-in function
   , onDraw : null // Pass a callback to be used to capture the drawing process
   , onDrawEnd : null // Pass a callback to be exectued after the drawing process
+  , bgImage : null  // Pass an image url to draw in the background of the canvas
 }
 
 }(jQuery));
