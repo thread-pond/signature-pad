@@ -517,7 +517,7 @@ function SignaturePad (selector, options) {
    */
   function type (val) {
     var typed = $(settings.typed, context)
-      , cleanedVal = $.trim(val.replace(/>/g, '&gt;').replace(/</g, '&lt;'))
+      , cleanedVal = $.trim(val.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/\s+/gi, "&nbsp;" ))
       , oldLength = typeItNumChars
       , edgeOffset = typeItCurrentFontSize * 0.5
 
