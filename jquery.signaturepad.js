@@ -270,6 +270,9 @@ function SignaturePad (selector, options) {
 
     if (settings.output && output.length > 0)
       $(settings.output, context).val(JSON.stringify(output))
+      
+    if (settings.callChange)
+      $(settings.output, context).change()      
   }
 
   /**
@@ -886,6 +889,7 @@ $.fn.signaturePad.defaults = {
   , onFormError : null // Pass a callback to be used instead of the built-in function
   , onDraw : null // Pass a callback to be used to capture the drawing process
   , onDrawEnd : null // Pass a callback to be exectued after the drawing process
+  , callChange : true // Call change on the hidden input field (output)
 }
 
 }(jQuery));
