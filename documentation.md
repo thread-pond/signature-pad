@@ -6,9 +6,9 @@
 
 - [Introduction](#introduction)
 - [Demos](#demos)
-	- [Demo of accepting a signature](/lab/signature-pad/accept/)
-	- [Demo of requiring a drawn signature](/lab/signature-pad/require-drawn/)
-	- [Demo of regenerating a signature](/lab/signature-pad/regenerate/)
+	- [Demo of accepting a signature](https://thomasjbradley.github.io/signature-pad/examples/accept-signature.html)
+	- [Demo of requiring a drawn signature](https://thomasjbradley.github.io/signature-pad/examples/require-drawn-signature.html)
+	- [Demo of regenerating a signature](https://thomasjbradley.github.io/signature-pad/examples/regenerate-signature.html)
 - [Using the Plugin](#using-the-plugin)
 	- [How to Use the Plugin](#how-to-use-the-plugin)
 		- [Javascript](#javascript)
@@ -56,11 +56,11 @@ Get the source code on GitHub: <https://github.com/thomasjbradley/signature-pad/
 
 ## Demos
 
-[Demo of accepting a signature](/lab/signature-pad/accept/)—this demo showcases an HTML form and the Signature Pad ready to accept a new signature.
+[Demo of accepting a signature](https://thomasjbradley.github.io/signature-pad/examples/accept-signature.html)—this demo showcases an HTML form and the Signature Pad ready to accept a new signature.
 
-[Demo of requiring a drawn signature](/lab/signature-pad/require-drawn/)—this demo showcases an HTML form where the user is required to draw their signature before submission.
+[Demo of requiring a drawn signature](https://thomasjbradley.github.io/signature-pad/examples/require-drawn-signature.html)—this demo showcases an HTML form where the user is required to draw their signature before submission.
 
-[Demo of regenerating a signature](/lab/signature-pad/regenerate/)—this demo showcases regeneration of a signature from a stored JSON array.
+[Demo of regenerating a signature](https://thomasjbradley.github.io/signature-pad/examples/regenerate-signature.html)—this demo showcases regeneration of a signature from a stored JSON array.
 
 ---
 
@@ -97,7 +97,7 @@ Calling the `signaturePad()` method also returns an API for the Signature Pad in
 
 ### Accepting Signatures
 
-**[Demo of accepting a signature](/lab/signature-pad/accept/)**
+**[Demo of accepting a signature](https://thomasjbradley.github.io/signature-pad/examples/accept-signature.html)**
 
 When accepting a signature, it is best to wrap the Signature Pad in a form so the signature can be submitted to the server for storage.
 
@@ -196,7 +196,7 @@ Both the error message and error class are [options](#options) that can be chang
 
 ### Require a Drawn Signature
 
-**[Demo of requiring a drawn signature](/lab/signature-pad/require-drawn/)**
+**[Demo of requiring a drawn signature](https://thomasjbradley.github.io/signature-pad/examples/require-drawn-signature.html)**
 
 The form can be set up to require the user to draw their signature as well as type their name into the field.
 
@@ -222,7 +222,7 @@ $(document).ready(function () {
 
 ### Regenerating Signatures
 
-**[Demo of regenerating a signature](/lab/signature-pad/regenerate/)**
+**[Demo of regenerating a signature](https://thomasjbradley.github.io/signature-pad/examples/regenerate-signature.html)**
 
 Regenerating signatures from a JSON representation is quite simple. Signature Pad accepts the JSON (string or native Javascript array) and simply redraws the signature onto the canvas element.
 
@@ -308,7 +308,7 @@ The API includes a method called `getSignatureImage()` which will return a Base6
 
 ### Server Side
 
-PHP to JPEG, PNG or GIF: [Signature to Image](/lab/signature-to-image/) is a simple PHP script that will take the JSON output and convert it to an image server-side. [Read more about Signature to Image](/lab/signature-to-image/).
+PHP to JPEG, PNG or GIF: [Signature to Image](https://github.com/thomasjbradley/signature-to-image/) is a simple PHP script that will take the JSON output and convert it to an image server-side. [Read more about Signature to Image](https://github.com/thomasjbradley/signature-to-image/).
 
 PHP to SVG
 : [sigToSvg](https://github.com/chaz-meister/sigToSvg/) by [Charles Gebhard](http://www.pointsystems.com/) is a script for converting the signature JSON to SVG using PHP. Check out the amazing [sigToSvg on GitHub](https://github.com/chaz-meister/sigToSvg/).
@@ -717,7 +717,7 @@ var sig = api.getSignature();
       <td class="return"><code><i>string</i></code><p>The Base64 encoded PNG of the signature</p></td>
       <td>
         <p style="margin-bottom:0;">Returns a Base64 encoded PNG of the canvas</p>
-        <p><a href="/lab/signature-to-image/">Check out Signature to Image for a server-side solution</a></p>
+        <p><a href="https://github.com/thomasjbradley/signature-to-image/">Check out Signature to Image for a server-side solution</a></p>
       </td>
     </tr>
     <tr>
