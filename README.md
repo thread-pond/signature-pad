@@ -9,7 +9,7 @@ SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas b
 ## Quick Start
 
 1. Include `jquery.signaturepad.css`, `flashcanvas.js`, `jquery.js`, `jquery.signaturepad.js`, `json2.js` in your HTML file
-2. Create the HTML, following the example: <examples/accept-signature.html>
+2. Create the HTML, [following the example](examples/accept-signature.html)
 3. `$('.sigPad').signaturePad();`
 4. Remember that [most things are configurable](documentation.md#options)
 
