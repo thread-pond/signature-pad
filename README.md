@@ -15,7 +15,7 @@ SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas b
 
 ## Complete Documentation
 
-**[Signature Pad Documentation](documentation.md)**
+#### [☛ Signature Pad Documentation](documentation.md)
 
 ## Examples
 
@@ -32,7 +32,7 @@ SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas b
 
 ## Converting to an Image
 
-<http://thomasjbradley.ca/lab/signature-pad/#images>
+#### [☛ Converting to an image](documentation.md#converting-to-an-image)
 
 ## Source Code
 
