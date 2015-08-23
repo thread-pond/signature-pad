@@ -9,9 +9,9 @@ SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas b
 ## Quick Start
 
 1. Include `jquery.signaturepad.css`, `flashcanvas.js`, `jquery.js`, `jquery.signaturepad.js`, `json2.js` in your HTML file
-2. Create the HTML, following the example: <https://github.com/thomasjbradley/signature-pad/blob/master/examples/accept-signature.html>
+2. Create the HTML, following the example: <examples/accept-signature.html>
 3. `$('.sigPad').signaturePad();`
-4. Remember that [most things are configurable](http://thomasjbradley.ca/lab/signature-pad#options)
+4. Remember that [most things are configurable](documentation.md#options)
 
 ## Complete Documentation
 
@@ -19,10 +19,10 @@ SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas b
 
 ## Examples
 
-- [Accepting a Signature](https://github.com/thomasjbradley/signature-pad/blob/master/examples/accept-signature.html)
-- [Requiring a Drawn Signature](https://github.com/thomasjbradley/signature-pad/blob/master/examples/require-drawn-signature.html)
-- [Regenerating a Signature](https://github.com/thomasjbradley/signature-pad/blob/master/examples/regenerate-signature.html)
-- [Accepting Multiple Signatures](https://github.com/thomasjbradley/signature-pad/blob/master/examples/accept-multiple-signatures.html)
+- [Accepting a Signature](examples/accept-signature.html)
+- [Requiring a Drawn Signature](examples/require-drawn-signature.html)
+- [Regenerating a Signature](examples/regenerate-signature.html)
+- [Accepting Multiple Signatures](examples/accept-multiple-signatures.html)
 
 ## Demos
 
@@ -33,10 +33,6 @@ SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas b
 ## Converting to an Image
 
 #### [☛ Converting to an image](documentation.md#converting-to-an-image)
-
-## Source Code
-
-<http://github.com/thomasjbradley/signature-pad>
 
 ---
 
