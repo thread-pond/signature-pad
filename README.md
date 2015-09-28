@@ -40,6 +40,6 @@ SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas b
 
 © 2014, Thomas J Bradley, <hey@thomasjbradley.ca>
 
-Signature Pad is licensed under the [New BSD license](NEW-BSD-LICENSE.txt).
+Signature Pad is licensed under the [New BSD license](LICENSE).
 
 All dependencies: jQuery, json2.js, and FlashCanvas retain their own licenses.
