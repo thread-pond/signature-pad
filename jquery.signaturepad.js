@@ -451,7 +451,6 @@ function SignaturePad (selector, options) {
         initDrawEvents(e);
         startDrawing(e, this);
         //http://stackoverflow.com/questions/9975352/javascript-html5-canvas-drawing-instead-of-dragging-scrolling-on-mobile-devic
-        //if (e.touches) e = e.touches[0];
         return false;
       }
     })
