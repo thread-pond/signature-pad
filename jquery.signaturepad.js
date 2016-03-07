@@ -637,7 +637,7 @@ function SignaturePad (selector, options) {
         context.stroke()
         context.closePath()
 
-        if (saveOutput) {
+        if (saveOutput && paths[i].lx) {
           output.push({
             'lx' : paths[i].lx
             , 'ly' : paths[i].ly
