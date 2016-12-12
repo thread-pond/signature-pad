@@ -446,10 +446,12 @@ function SignaturePad (selector, options) {
 
     canvas.each(function () {
       this.ontouchstart = function (e) {
-        e.preventDefault()
-        mouseButtonDown = true
-        initDrawEvents(e)
-        startDrawing(e, this)
+        e.preventDefault();
+        mouseButtonDown = true;
+        initDrawEvents(e);
+        startDrawing(e, this);
+        //http://stackoverflow.com/questions/9975352/javascript-html5-canvas-drawing-instead-of-dragging-scrolling-on-mobile-devic
+        return false;
       }
     })
 

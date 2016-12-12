@@ -12,7 +12,7 @@
 .sigPad {
   margin: 0;
   padding: 0;
-  width: 200px;
+  /*width: 200px;*/
 }
 
 .sigPad label {
@@ -31,10 +31,8 @@
 .sigPad input {
   margin: 0;
   padding: 0.2em 0;
-  width: 198px;
-
-  border: 1px solid #666;
-
+  /*width: 198px;*/
+  /*border: 1px solid #666;*/
   font-size: 1em;
 }
 
