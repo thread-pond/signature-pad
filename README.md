@@ -1,11 +1,3 @@
-## This project is no longer maintained.
-
-**Even though it isn’t maintained it should most likely be functional.**
-
----
----
----
-
 # Signature Pad
 
 SignaturePad: A jQuery plugin for assisting in the creation of an HTML5 canvas based signature pad. Records the drawn signature in JSON for later regeneration.
