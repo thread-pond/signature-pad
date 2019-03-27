@@ -445,12 +445,12 @@ function SignaturePad (selector, options) {
     clearCanvas()
 
     canvas.each(function () {
-      this.ontouchstart = function (e) {
+      this.addEventListener('touchstart', function(e) {
         e.preventDefault()
         mouseButtonDown = true
         initDrawEvents(e)
         startDrawing(e, this)
-      }
+      })
     })
 
     canvas.bind('mousedown.signaturepad', function (e) {
