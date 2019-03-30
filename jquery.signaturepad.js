@@ -363,14 +363,12 @@ function SignaturePad (selector, options) {
         this.removeEventListener('touchend', stopDrawingWrapper)
         this.removeEventListener('touchcancel', stopDrawingWrapper)
         this.removeEventListener('touchmove', drawLine)
+        this.removeEventListener('touchstart', touchStartProcedure)
         // this.removeEventListener('MSPointerUp', stopDrawingWrapper)
         // this.removeEventListener('MSPointerCancel', stopDrawingWrapper)
         // this.removeEventListener('MSPointerMove', drawLine)
       }
 
-      if (this.ontouchstart)
-        this.ontouchstart = null;
-    })
 
     $(document).unbind('mouseup.signaturepad')
     canvas.unbind('mousedown.signaturepad')
@@ -429,11 +427,17 @@ function SignaturePad (selector, options) {
       })
 
       canvas.each(function () {
-        this.ontouchstart = null
+        this.removeEventListener('touchstart', touchStartProcedure)
       })
     }
   }
+  function touchStartProcedure(e) {
+      e.preventDefault()
+      mouseButtonDown = true
+      initDrawEvents(e)
+      startDrawing(e, this)
 
+  }
   /**
    * Triggers the abilities to draw on the canvas
    * Sets up mouse/touch events, hides and shows descriptions and sets current classes
@@ -445,12 +449,7 @@ function SignaturePad (selector, options) {
     clearCanvas()
 
     canvas.each(function () {
-      this.addEventListener('touchstart', function(e) {
-        e.preventDefault()
-        mouseButtonDown = true
-        initDrawEvents(e)
-        startDrawing(e, this)
-      })
+        this.addEventListener('touchstart', touchStartProcedure)
     })
 
     canvas.bind('mousedown.signaturepad', function (e) {
