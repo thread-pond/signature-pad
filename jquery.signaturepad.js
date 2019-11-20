@@ -368,8 +368,7 @@ function SignaturePad (selector, options) {
         // this.removeEventListener('MSPointerCancel', stopDrawingWrapper)
         // this.removeEventListener('MSPointerMove', drawLine)
       }
-
-
+       })
     $(document).unbind('mouseup.signaturepad')
     canvas.unbind('mousedown.signaturepad')
     canvas.unbind('mousemove.signaturepad')
