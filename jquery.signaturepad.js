@@ -430,7 +430,7 @@ function SignaturePad (selector, options) {
       })
     }
   }
-  function startTouchDrawing {
+  function startTouchDrawing(e) {
       e.preventDefault()
       mouseButtonDown = true
       initDrawEvents(e)
