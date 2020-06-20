@@ -2,45 +2,45 @@
 
 **2.5.2 (Dec. 22, 2014)**
 
-- Merged [Pull Request #124](https://github.com/thomasjbradley/signature-pad/issues/124) to fix a missing semi-colon at the end.
+- Merged [Pull Request #124](https://github.com/thread-pond/signature-pad/issues/124) to fix a missing semi-colon at the end.
 
 **2.5.1 (Apr. 15, 2014)**
 
-- Fixed a bug in IE 8 related to `trim()`, [Issue #113](https://github.com/thomasjbradley/signature-pad/issues/113)
+- Fixed a bug in IE 8 related to `trim()`, [Issue #113](https://github.com/thread-pond/signature-pad/issues/113)
 
 **2.5.0 (Oct. 16, 2013)**
 
-- Added an API to retrieve the version programmatically, [Issue #96](https://github.com/thomasjbradley/signature-pad/issues/96)
+- Added an API to retrieve the version programmatically, [Issue #96](https://github.com/thread-pond/signature-pad/issues/96)
 
 **2.4.2 (Sep. 25, 2013)**
 
-- Fixed a bug where onDrawEnd wasn’t firing properly on touch devices, [Issue #92](https://github.com/thomasjbradley/signature-pad/issues/92)
-- Changed a CSS selector for better Windows 8 support, [Issue #91](https://github.com/thomasjbradley/signature-pad/issues/91)
-- Fixed a bug where right clicking would cause a dot to be drawn, [Issue #80](https://github.com/thomasjbradley/signature-pad/issues/80)
+- Fixed a bug where onDrawEnd wasn’t firing properly on touch devices, [Issue #92](https://github.com/thread-pond/signature-pad/issues/92)
+- Changed a CSS selector for better Windows 8 support, [Issue #91](https://github.com/thread-pond/signature-pad/issues/91)
+- Fixed a bug where right clicking would cause a dot to be drawn, [Issue #80](https://github.com/thread-pond/signature-pad/issues/80)
 
 **2.4.1 (Jul. 26, 2013)**
 
-- Fixed a bug where onDrawEnd was firing too often and at incorrect times, [Issue #84](https://github.com/thomasjbradley/signature-pad/issues/84)
+- Fixed a bug where onDrawEnd was firing too often and at incorrect times, [Issue #84](https://github.com/thread-pond/signature-pad/issues/84)
 
 **2.4.0 (Jul. 16, 2013)**
 
 - Added Grunt.js as the build tool
-- Added an `onDraw` callback; [Pull Request #60](https://github.com/thomasjbradley/signature-pad/pull/60)
-- Added an `onDrawEnd` callback; [Pull Request #70](https://github.com/thomasjbradley/signature-pad/pull/70)
-- Added a new full window example; [Pull Request #49](https://github.com/thomasjbradley/signature-pad/pull/49)
-- Updated the examples to be more modern; [Pull Request #49](https://github.com/thomasjbradley/signature-pad/pull/49)
-- Improved the signature handling when leaving the `<canvas>`; [Issue #38](https://github.com/thomasjbradley/signature-pad/issues/38)
-- Fixed some event and touch related bugs for: IE/10 with [Pull Request #49](https://github.com/thomasjbradley/signature-pad/pull/49); Android/4 with [Issue #78](https://github.com/thomasjbradley/signature-pad/issues/78); more browsers with [Issue #38](https://github.com/thomasjbradley/signature-pad/issues/38)
-- Fixed the typed signature scaling bug [Issue #54](https://github.com/thomasjbradley/signature-pad/issues/54)
+- Added an `onDraw` callback; [Pull Request #60](https://github.com/thread-pond/signature-pad/pull/60)
+- Added an `onDrawEnd` callback; [Pull Request #70](https://github.com/thread-pond/signature-pad/pull/70)
+- Added a new full window example; [Pull Request #49](https://github.com/thread-pond/signature-pad/pull/49)
+- Updated the examples to be more modern; [Pull Request #49](https://github.com/thread-pond/signature-pad/pull/49)
+- Improved the signature handling when leaving the `<canvas>`; [Issue #38](https://github.com/thread-pond/signature-pad/issues/38)
+- Fixed some event and touch related bugs for: IE/10 with [Pull Request #49](https://github.com/thread-pond/signature-pad/pull/49); Android/4 with [Issue #78](https://github.com/thread-pond/signature-pad/issues/78); more browsers with [Issue #38](https://github.com/thread-pond/signature-pad/issues/38)
+- Fixed the typed signature scaling bug [Issue #54](https://github.com/thread-pond/signature-pad/issues/54)
 - Fixed up the .jshintrc file
 
 **2.3.0 (Jun. 12, 2012)**
 
-- Added the ability to get the API by re-executing signature pad on the element; [Issue #23](https://github.com/thomasjbradley/signature-pad/issues/23) and many more
+- Added the ability to get the API by re-executing signature pad on the element; [Issue #23](https://github.com/thread-pond/signature-pad/issues/23) and many more
 - Added a function to allow updating of options later on
-- Performance fix: if options.output is falsey the JSON will not be calculated; [Issue #15](https://github.com/thomasjbradley/signature-pad/issues/15)
+- Performance fix: if options.output is falsey the JSON will not be calculated; [Issue #15](https://github.com/thread-pond/signature-pad/issues/15)
 - Removes focus from input on initialization to close any open keyboards
-- Fixed [Issue #25](https://github.com/thomasjbradley/signature-pad/issues/25)
+- Fixed [Issue #25](https://github.com/thread-pond/signature-pad/issues/25)
 - Opened up the `validateForm()` function to allow for inclusion in other form validation code
 
 **2.2.0 (Feb. 26, 2012)**
@@ -50,7 +50,7 @@
 
 **2.1.2 (Feb. 21, 2012)**
 
-- Bug fix: added `clearRect()` code to allow transparent backgrounds on the canvas—[Issue #18](https://github.com/thomasjbradley/signature-pad/issues/18)
+- Bug fix: added `clearRect()` code to allow transparent backgrounds on the canvas—[Issue #18](https://github.com/thread-pond/signature-pad/issues/18)
 
 **2.1.1 (Sep. 30, 2011)**
 
@@ -59,12 +59,12 @@
 **2.1.0 (Sep. 29, 2011)**
 
 - Added Firefox Mobile support
-- Added callbacks for validation: `onBeforeValidate`, `onFormError`—[Issue #7](https://github.com/thomasjbradley/signature-pad/issues/7)
+- Added callbacks for validation: `onBeforeValidate`, `onFormError`—[Issue #7](https://github.com/thread-pond/signature-pad/issues/7)
 - Changed `getSignatureImage()` to use a shadow canvas and render the signature without the line
 - Cleaned up event creation and removal
-- Fixed a bug with Playbook and other non-iOS Webkit browsers; caused by a bug fix for iOS browsers—[Issue #8](https://github.com/thomasjbradley/signature-pad/issues/8)
-- Can now pass arguments to `getSignatureImage()`, which will be forwarded to `toDataURL()`—[Issue #9](https://github.com/thomasjbradley/signature-pad/issues/9)
-- Fixed [Issue #10](https://github.com/thomasjbradley/signature-pad/issues/10)
+- Fixed a bug with Playbook and other non-iOS Webkit browsers; caused by a bug fix for iOS browsers—[Issue #8](https://github.com/thread-pond/signature-pad/issues/8)
+- Can now pass arguments to `getSignatureImage()`, which will be forwarded to `toDataURL()`—[Issue #9](https://github.com/thread-pond/signature-pad/issues/9)
+- Fixed [Issue #10](https://github.com/thread-pond/signature-pad/issues/10)
 
 **2.0.4 (May 12, 2011)**
 
@@ -86,7 +86,7 @@
 
 - Switched to FlashCanvas instead of ExplorerCanvas (more reliable, less hacks needed, actively being developed)
 - `.getSignatureImage()` now works cross-browser thanks to FlashCanvas
-- Fixed [Issue #2](https://github.com/thomasjbradley/signature-pad/issues/2)
+- Fixed [Issue #2](https://github.com/thread-pond/signature-pad/issues/2)
 
 **1.5.1 (Feb. 23, 2011)**
 
