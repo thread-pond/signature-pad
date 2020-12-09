@@ -156,6 +156,14 @@ function SignaturePad (selector, options) {
    */
   , typeItNumChars = 0
 
+  /**
+   * Remembers last scroll position
+   *
+   * @private
+   *
+   * @type {Number}
+   */
+  , lastScrollY = 0
 
   /**
    * Clears the mouseLeaveTimeout
@@ -193,8 +201,8 @@ function SignaturePad (selector, options) {
       newX = Math.floor(e.targetTouches[0].pageX - offset.left)
       newY = Math.floor(e.targetTouches[0].pageY - offset.top)
     } else {
-      newX = Math.floor(e.pageX - offset.left)
-      newY = Math.floor(e.pageY - offset.top)
+      newX = Math.floor(e.originalEvent.pageX - offset.left)
+      newY = Math.floor(e.originalEvent.pageY - offset.top)
     }
 
     if (previous.x === newX && previous.y === newY)
@@ -258,12 +266,16 @@ function SignaturePad (selector, options) {
           // this.removeEventListener('MSPointerMove', drawLine)
         })
       } else {
-        canvas.unbind('mousemove.signaturepad')
+        canvas.unbind('pointermove.signaturepad')
       }
 
       if (output.length > 0 && settings.onDrawEnd && typeof settings.onDrawEnd === 'function')
         settings.onDrawEnd.apply(self)
     }
+	
+	document.body.style.position = '';
+	document.body.style.top = '';
+	window.scrollTo(0, lastScrollY); 
 
     previous.x = null
     previous.y = null
@@ -339,11 +351,18 @@ function SignaturePad (selector, options) {
    * @param {Object} touchObject The object context registered to the event; canvas
    */
   function startDrawing (e, touchObject) {
+	if($(document).height() > $(window).height())
+		document.body.style.overflowY = "scroll";
+	
+	  lastScrollY = window.scrollY;
+	  document.body.style.position = 'fixed';
+	  document.body.style.top = -lastScrollY+"px";
+	  
     if (touchable) {
       touchObject.addEventListener('touchmove', onMouseMove, false)
       // touchObject.addEventListener('MSPointerMove', onMouseMove, false)
     } else {
-      canvas.bind('mousemove.signaturepad', onMouseMove)
+      canvas.bind('pointermove.signaturepad', onMouseMove)
     }
 
     // Draws a single point on initial mouse down, for people with periods in their name
@@ -369,10 +388,10 @@ function SignaturePad (selector, options) {
         // this.removeEventListener('MSPointerMove', drawLine)
       }
        })
-    $(document).unbind('mouseup.signaturepad')
-    canvas.unbind('mousedown.signaturepad')
-    canvas.unbind('mousemove.signaturepad')
-    canvas.unbind('mouseleave.signaturepad')
+    $(document).unbind('pointerup.signaturepad')
+    canvas.unbind('pointerdown.signaturepad')
+    canvas.unbind('pointermove.signaturepad')
+    canvas.unbind('pointerleave.signaturepad')
 
     $(settings.clear, context).unbind('click.signaturepad')
   }
@@ -406,15 +425,15 @@ function SignaturePad (selector, options) {
         // this.addEventListener('MSPointerCancel', stopDrawingWrapper, false)
       })
 
-      canvas.unbind('mousedown.signaturepad')
+      canvas.unbind('pointerdown.signaturepad')
     } else {
-      $(document).bind('mouseup.signaturepad', function () {
+      $(document).bind('pointerup.signaturepad', function () {
         if (mouseButtonDown) {
           stopDrawing()
           clearMouseLeaveTimeout()
         }
       })
-      canvas.bind('mouseleave.signaturepad', function (e) {
+      canvas.bind('pointerleave.signaturepad', function (e) {
         if (mouseButtonDown) stopDrawing(e)
 
         if (mouseButtonDown && !mouseLeaveTimeout) {
@@ -451,7 +470,7 @@ function SignaturePad (selector, options) {
         this.addEventListener('touchstart', startTouchDrawing)
     })
 
-    canvas.bind('mousedown.signaturepad', function (e) {
+    canvas.bind('pointerdown.signaturepad', function (e) {
       e.preventDefault()
 
       // Only allow left mouse clicks to trigger signature drawing
