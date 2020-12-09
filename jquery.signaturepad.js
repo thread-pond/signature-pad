@@ -366,7 +366,7 @@ function SignaturePad (selector, options) {
     }
 
     // Draws a single point on initial mouse down, for people with periods in their name
-    drawLine(e, 1)
+    //drawLine(e, 1) //had to be removed because of "jumping" when fixing the body
   }
 
   /**
