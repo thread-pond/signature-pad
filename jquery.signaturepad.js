@@ -528,14 +528,14 @@ function SignaturePad (selector, options) {
     }
 
     if (typeItNumChars > oldLength && typed.outerWidth() > element.width) {
-      while (typed.outerWidth() > element.width) {
+      while (typeItCurrentFontSize > 4 && typed.outerWidth() > element.width) {
         typeItCurrentFontSize--
         typed.css('font-size', typeItCurrentFontSize + 'px')
       }
     }
 
     if (typeItNumChars < oldLength && typed.outerWidth() + edgeOffset < element.width && typeItCurrentFontSize < typeItDefaultFontSize) {
-      while (typed.outerWidth() + edgeOffset < element.width && typeItCurrentFontSize < typeItDefaultFontSize) {
+      while (typeItCurrentFontSize < 512 && typed.outerWidth() + edgeOffset < element.width && typeItCurrentFontSize < typeItDefaultFontSize) {
         typeItCurrentFontSize++
         typed.css('font-size', typeItCurrentFontSize + 'px')
       }
