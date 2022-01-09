@@ -756,12 +756,12 @@ Check out [Jake’s output compression algorithm Gist](https://gist.github.com/2
 
 ## Version History
 
-Check out the [changelog on GitHub](https://github.com/thread-pond/signature-pad/blob/master/CHANGELOG.md).
+Check out the [changelog on GitHub](https://github.com/thread-pond/signature-pad/blob/main/CHANGELOG.md).
 
 ---
 
 ## License
 
-Signature Pad is licensed under the <a href="https://github.com/thread-pond/signature-pad/blob/master/NEW-BSD-LICENSE.txt" rel="license">New BSD license</a>, which is included in the downloadable package.
+Signature Pad is licensed under the <a href="https://github.com/thread-pond/signature-pad/blob/main/NEW-BSD-LICENSE.txt" rel="license">New BSD license</a>, which is included in the downloadable package.
 
 All dependencies: [jQuery](http://jquery.com/), [json2.js](http://www.json.org/js.html), and [FlashCanvas](http://flashcanvas.net/) retain their own licenses.
